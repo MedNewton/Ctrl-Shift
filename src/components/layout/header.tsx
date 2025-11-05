@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { Stack, Typography, Button, IconButton } from "@mui/material";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import theme from "@/theme/theme";
 
 import logo from "@/assets/images/logo/Asset 192.svg?url";
@@ -21,10 +22,24 @@ import {
 
 import pillar1 from "@/assets/images/hero/pillar1.webp";
 import ornanment1 from "@/assets/images/hero/ornament1.webp";
+import map1 from "@/assets/images/hero/map1.webp";
 import napulethCoin1 from "@/assets/images/hero/napulEthCoin.webp";
-import napulethTickets from "@/assets/images/hero/napulethTickets.webp";
+import wifi1 from "@/assets/images/hero/wifi1.webp";
+import { useState } from "react";
 
 export default function Header() {
+
+    const [hoveredAboutItem, setHoveredAboutItem] = useState<number>(0);
+    const isReduced = useReducedMotion();
+    const aboutPreview: Record<number, StaticImageData> = {
+        0: ornanment1,     // default / idle
+        1: ornanment1,     // Speakers
+        2: pillar1,  // Team (example)
+        3: wifi1,// FAQ (example)
+        4: map1,        // Map/Archive (example)
+        5: napulethCoin1,        // Map/Archive (example)
+    };
+
     return (
         <header className="z-50 w-full bg-transparent">
             <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-10">
@@ -68,7 +83,11 @@ export default function Header() {
                                                 flexGrow: 1,
                                                 gap: 2,
                                             }}>
-                                                <Stack direction={"row"} alignItems={"center"} gap={1.5}>
+                                                <Stack direction={"row"} alignItems={"center"} gap={1.5} component={"div"} onMouseEnter={() => {
+                                                    setHoveredAboutItem(1);
+                                                }} onMouseLeave={() => {
+                                                    setHoveredAboutItem(0);
+                                                }}>
                                                     <Stack height={40} width={40} sx={{
                                                         backgroundColor: theme.palette.brand.napulETHGrey1.main,
                                                         borderRadius: 1,
@@ -79,7 +98,11 @@ export default function Header() {
                                                         <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the speakers of ctrl/shift 2026.</Typography>
                                                     </Stack>
                                                 </Stack>
-                                                <Stack direction={"row"} alignItems={"center"} gap={1.5}>
+                                                <Stack direction={"row"} alignItems={"center"} gap={1.5} component={"div"} onMouseEnter={() => {
+                                                    setHoveredAboutItem(2);
+                                                }} onMouseLeave={() => {
+                                                    setHoveredAboutItem(0);
+                                                }}>
                                                     <Stack height={40} width={40} sx={{
                                                         backgroundColor: theme.palette.brand.napulETHGrey1.main,
                                                         borderRadius: 1,
@@ -90,7 +113,11 @@ export default function Header() {
                                                         <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Meet the team behind the event.</Typography>
                                                     </Stack>
                                                 </Stack>
-                                                <Stack direction={"row"} alignItems={"center"} gap={1.5}>
+                                                <Stack direction={"row"} alignItems={"center"} gap={1.5} onMouseEnter={() => {
+                                                    setHoveredAboutItem(3);
+                                                }} onMouseLeave={() => {
+                                                    setHoveredAboutItem(0);
+                                                }}>
                                                     <Stack height={40} width={40} sx={{
                                                         backgroundColor: theme.palette.brand.napulETHGrey1.main,
                                                         borderRadius: 1,
@@ -101,7 +128,11 @@ export default function Header() {
                                                         <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Answers to common questions.</Typography>
                                                     </Stack>
                                                 </Stack>
-                                                <Stack direction={"row"} alignItems={"center"} gap={1.5}>
+                                                <Stack direction={"row"} alignItems={"center"} gap={1.5} onMouseEnter={() => {
+                                                    setHoveredAboutItem(4);
+                                                }} onMouseLeave={() => {
+                                                    setHoveredAboutItem(0);
+                                                }}>
                                                     <Stack height={40} width={40} sx={{
                                                         backgroundColor: theme.palette.brand.napulETHGrey1.main,
                                                         borderRadius: 1,
@@ -112,7 +143,11 @@ export default function Header() {
                                                         <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the location of the event.</Typography>
                                                     </Stack>
                                                 </Stack>
-                                                <Stack direction={"row"} alignItems={"center"} gap={1.5}>
+                                                <Stack direction={"row"} alignItems={"center"} gap={1.5} onMouseEnter={() => {
+                                                    setHoveredAboutItem(5);
+                                                }} onMouseLeave={() => {
+                                                    setHoveredAboutItem(0);
+                                                }}>
                                                     <Stack height={40} width={40} sx={{
                                                         backgroundColor: theme.palette.brand.napulETHGrey1.main,
                                                         borderRadius: 1,
@@ -125,18 +160,57 @@ export default function Header() {
                                                 </Stack>
                                             </Stack>
                                         </NavigationMenuContentItem>
-                                        <NavigationMenuContentItem href="/services/smart-contracts" className="flex flex-1"  >
-                                            <Stack minWidth={200} className="h-full" height={"100%"} gap={1.5} sx={{
-                                                backgroundColor: theme.palette.brand.napulETHYellow2.main,
-                                                borderRadius: 2,
-                                                padding: 1,
-                                                display: "flex",
-                                                flex: 1,
-                                                flexGrow: 1,
-                                            }}>
-                                                <Image src={ornanment1} alt="ornanment1" fill style={{ objectFit: "cover" }} />
+                                        <NavigationMenuContentItem href="/services/smart-contracts" className="flex flex-1">
+                                            <Stack
+                                                minWidth={200}
+                                                className="h-full"
+                                                height="100%"
+                                                sx={{
+                                                    position: "relative",
+                                                    transition: "background-color 300ms cubic-bezier(0.22, 1, 0.36, 1)", // keep your eased bg
+                                                    backgroundColor: theme.palette.brand.napulETHYellow2.main,
+                                                    borderRadius: 2,
+                                                    display: "flex",
+                                                    flex: 1,
+                                                    overflow: "hidden", // clip the fade
+                                                }}
+                                            >
+                                                <AnimatePresence mode="wait">
+                                                    <motion.div
+                                                        key={hoveredAboutItem} // triggers crossfade when the state changes
+                                                        initial={isReduced ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={isReduced ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                                                        transition={{
+                                                            duration: isReduced ? 0.15 : 0.28,
+                                                            ease: [0.22, 1, 0.36, 1], // same vibe as your bg easing
+                                                        }}
+                                                        style={{
+                                                            position: "absolute",
+                                                            inset: 0,
+                                                            borderRadius: 8,
+                                                            overflow: "hidden",
+                                                            willChange: "opacity, transform",
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            justifyContent: "center",
+                                                        }}
+                                                    >
+                                                        <Image
+                                                            src={aboutPreview[hoveredAboutItem]}
+                                                            alt="about preview"
+                                                            fill = {hoveredAboutItem != 4 && hoveredAboutItem != 5 ? true : false}
+                                                            style={{ 
+                                                                objectFit: hoveredAboutItem === 4 ? "contain" : "cover",
+                                                                marginLeft: hoveredAboutItem === 4 ? "-5%" : hoveredAboutItem === 5 ? "-2%" : "auto",
+                                                            }}
+                                                            priority={false}
+                                                        />
+                                                    </motion.div>
+                                                </AnimatePresence>
                                             </Stack>
                                         </NavigationMenuContentItem>
+
                                     </Stack>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>

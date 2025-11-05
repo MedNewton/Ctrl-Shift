@@ -47,8 +47,8 @@ const data: Testimonial[] = [
 const responsive: ResponsiveType = {
     desktop: {
         breakpoint: { max: 3000, min: 1200 },
-        items: 1,
-        partialVisibilityGutter: 350,
+        items: 2,
+        partialVisibilityGutter: 600,
     },
     tablet: {
         breakpoint: { max: 1199, min: 768 },
@@ -96,37 +96,7 @@ export default function TestimonialsCarousel() {
                 py: { xs: 2, md: 3 },
             }}
         >
-            {current > 0 && (
-                <Box
-                    aria-hidden
-                    sx={{
-                        pointerEvents: "none",
-                        position: "absolute",
-                        zIndex: 2,
-                        left: 0,
-                        top: 0,
-                        bottom: 32,
-                        width: { xs: 32, sm: 64, md: 96 },
-                        background: `linear-gradient(90deg, ${theme.palette.common.white} 0%, rgba(255,255,255,0) 100%)`,
-                    }}
-                />
-            )}
-
-            {current < lastIndex && (
-                <Box
-                    aria-hidden
-                    sx={{
-                        pointerEvents: "none",
-                        position: "absolute",
-                        zIndex: 2,
-                        right: 0,
-                        top: 0,
-                        bottom: 32,
-                        width: { xs: 32, sm: 64, md: 96 },
-                        background: `linear-gradient(270deg, ${theme.palette.common.white} 0%, rgba(255,255,255,0) 100%)`,
-                    }}
-                />
-            )}
+            
 
             <Carousel
                 ref={carouselRef}
@@ -157,7 +127,7 @@ export default function TestimonialsCarousel() {
                         <Stack
                             className="no-select"
                             sx={{
-                                bgcolor: (t) => t.palette.brand.napulETHGrey1.main,
+                                bgcolor: (t) => t.palette.brand.napulETHRed.main,
                                 borderRadius: 3,
                                 p: { xs: 2, md: 3 },
                                 minHeight: { xs: 180, md: 220 },

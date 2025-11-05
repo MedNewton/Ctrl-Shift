@@ -7,25 +7,23 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 
 const Newsletter = () => {
     return (
-        <Stack width={"100%"} direction={"row"} alignItems={"center"} justifyContent={"space-between"} gap={4} className="max-w-7xl mx-auto" mb={4} px={20} position={"relative"} overflow={"hidden"}>
+        <Stack width={"100%"} direction={"row"} alignItems={"start"} justifyContent={"space-between"} gap={4} mb={4} position={"relative"} overflow={"hidden"}>
             <Typography variant="h5" fontWeight={600} lineHeight={1.2} sx={{
                 width: "35%",
             }}>
-                Be the first to hear Aave ecosystem news.
+                Be the first to know about the news and updates about ctrl/shift 2026.
             </Typography>
             <Stack gap={2} sx={{
-                backgroundColor: theme.palette.brand.napulETHGrey1.main,
+                backgroundColor: theme.palette.brand.napulETHRed.main,
                 borderRadius: 2,
                 p: 5,
                 minWidth: "50%",
             }}>
                 <Stack direction={"row"} alignItems={"end"} gap={0.5}>
-                    <Typography variant="body1" fontWeight={600} lineHeight={1.2} sx={{
-                        opacity: 0.7,
-                    }}>
+                    <Typography variant="body1" fontWeight={600} lineHeight={1.2}>
                         Email
                     </Typography>
-                    <GoDotFill size={16} color={theme.palette.brand.napulETHPurple1.main} />
+                    <GoDotFill size={16} color={theme.palette.brand.napulETHYellow2.main} />
                 </Stack>
                 <Stack direction={"row"} alignItems={"center"} gap={0.5}>
                     <TextField
@@ -39,7 +37,7 @@ const Newsletter = () => {
                             "& .MuiOutlinedInput-root": {
                                 backgroundColor: "#fff",
                                 borderRadius: "10rem 2rem 2rem 10rem",
-                                color: theme.palette.text.primary,
+                                color: theme.palette.background.default,
                                 fontWeight: 400,
                                 // kill any focus ring/outline/box-shadow
                                 outline: "none !important",
@@ -74,14 +72,14 @@ const Newsletter = () => {
                         }}
                     />
                     <Button variant="contained" size="small" sx={{
-                        backgroundColor: theme.palette.text.primary,
+                        background: `linear-gradient(180deg, ${theme.palette.brand.napulETHYellow2.main} 0%, rgba(227, 154, 1, 0.8) 50%, ${theme.palette.brand.napulETHYellow2.main} 100%)`,
                         color: theme.palette.background.default,
                         borderTopLeftRadius: "2rem",
                         borderBottomLeftRadius: "2rem",
                         borderTopRightRadius: "10rem",
                         borderBottomRightRadius: "10rem",
                         px: 2,
-                        py: 1.25,
+                        py: 1.5,
                         textTransform: "none",
                     }}>
                         <Stack direction={"row"} alignItems={"center"} gap={1}>
