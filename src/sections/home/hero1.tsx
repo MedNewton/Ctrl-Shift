@@ -7,12 +7,6 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 import { motion, useReducedMotion } from "motion/react";
 
 import Image from "next/image";
-
-import heroAsset1 from "@/assets/images/hero/heroAsset1.webp";
-import heroAsset2 from "@/assets/images/hero/heroAsset2.webp";
-import heroAsset3 from "@/assets/images/hero/heroAsset3.webp";
-import heroAsset4 from "@/assets/images/hero/heroAsset4.webp";
-import heroAsset5 from "@/assets/images/hero/heroAsset5.webp";
 import skyline from "@/assets/images/hero/skyline.webp";
 
 export default function Hero1({ borderRadius, backgroundColor }: { borderRadius: number, backgroundColor: string }) {

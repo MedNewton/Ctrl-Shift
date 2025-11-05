@@ -32,24 +32,23 @@ export default function Header() {
     const [hoveredAboutItem, setHoveredAboutItem] = useState<number>(0);
     const isReduced = useReducedMotion();
     const aboutPreview: Record<number, StaticImageData> = {
-        0: ornanment1,     // default / idle
-        1: ornanment1,     // Speakers
-        2: pillar1,  // Team (example)
-        3: wifi1,// FAQ (example)
-        4: map1,        // Map/Archive (example)
-        5: napulethCoin1,        // Map/Archive (example)
+        0: ornanment1,
+        1: ornanment1,
+        2: pillar1,
+        3: wifi1,
+        4: map1,
+        5: napulethCoin1,
     };
 
     return (
         <header className="z-50 w-full bg-transparent">
             <motion.div
-                // fade in from bottom (once on mount)
                 initial={isReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                     duration: isReduced ? 0.2 : 0.45,
                     ease: [0.22, 1, 0.36, 1],
-                    delay: 0.05, // tiny lead-in
+                    delay: 0.5,
                 }}
                 style={{ willChange: "transform, opacity" }}
             >
@@ -178,23 +177,23 @@ export default function Header() {
                                                     height="100%"
                                                     sx={{
                                                         position: "relative",
-                                                        transition: "background-color 300ms cubic-bezier(0.22, 1, 0.36, 1)", // keep your eased bg
+                                                        transition: "background-color 300ms cubic-bezier(0.22, 1, 0.36, 1)",
                                                         backgroundColor: theme.palette.brand.napulETHYellow2.main,
                                                         borderRadius: 2,
                                                         display: "flex",
                                                         flex: 1,
-                                                        overflow: "hidden", // clip the fade
+                                                        overflow: "hidden",
                                                     }}
                                                 >
                                                     <AnimatePresence mode="wait">
                                                         <motion.div
-                                                            key={hoveredAboutItem} // triggers crossfade when the state changes
+                                                            key={hoveredAboutItem}
                                                             initial={isReduced ? { opacity: 0 } : { opacity: 0, y: 6 }}
                                                             animate={{ opacity: 1, y: 0 }}
                                                             exit={isReduced ? { opacity: 0 } : { opacity: 0, y: -6 }}
                                                             transition={{
                                                                 duration: isReduced ? 0.15 : 0.28,
-                                                                ease: [0.22, 1, 0.36, 1], // same vibe as your bg easing
+                                                                ease: [0.22, 1, 0.36, 1],
                                                             }}
                                                             style={{
                                                                 position: "absolute",
