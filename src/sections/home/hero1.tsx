@@ -15,14 +15,14 @@ import heroAsset4 from "@/assets/images/hero/heroAsset4.webp";
 import heroAsset5 from "@/assets/images/hero/heroAsset5.webp";
 import skyline from "@/assets/images/hero/skyline.webp";
 
-export default function Hero1({borderRadius, backgroundColor}: {borderRadius: number, backgroundColor: string}) {
+export default function Hero1({ borderRadius, backgroundColor }: { borderRadius: number, backgroundColor: string }) {
     const isReduced = useReducedMotion();
 
-    const tImage = 0.0;
+    const tImage = 0.10;
     const tNews = tImage + 0.15;
     const tTitles = tImage + 0.3;
     const tCta = tTitles + 0.45;
-    
+
 
     return (
         <Stack
@@ -137,24 +137,38 @@ export default function Hero1({borderRadius, backgroundColor}: {borderRadius: nu
                     </Stack>
                 </motion.div>
             </Stack>
-            <Stack width="100%" position="absolute" sx={{
-                top: "70%",
-                left: 0,
-                right: 0,
-            }}>
-                <Stack position="absolute" width={"100%"} height={"fit-content"} sx={{
-                    top: 0,
-                    right: 0,
-                    zIndex: 1,
-                }}>
-                    
-                    <Image src={skyline} alt="skyline" width={1000} height={1000} style={{
-                        width: "100%",
-                        height: "auto",
-                        objectFit: "cover",
-                    }} />
+            {/* SKYLINE */}
+            <Stack
+                width="100%"
+                position="absolute"
+                sx={{ top: "70%", left: 0, right: 0 }}
+            >
+                <Stack
+                    component={motion.div}
+                    initial={isReduced ? { opacity: 0 } : { y: 28, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{
+                        delay: tImage,
+                        duration: isReduced ? 0.25 : 0.6,
+                        ease: "easeOut",
+                    }}
+                    style={{ willChange: "transform, opacity" }}
+                    position="absolute"
+                    width="100%"
+                    height="fit-content"
+                    sx={{ top: 0, right: 0, zIndex: 1 }}
+                >
+                    <Image
+                        src={skyline}
+                        alt="skyline"
+                        width={1000}
+                        height={1000}
+                        style={{ width: "100%", height: "auto", objectFit: "cover" }}
+                        priority
+                    />
                 </Stack>
             </Stack>
+
         </Stack>
     );
 }
