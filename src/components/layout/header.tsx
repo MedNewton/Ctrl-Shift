@@ -33,12 +33,12 @@ export default function Header() {
     const [hoveredAboutItem, setHoveredAboutItem] = useState<number>(0);
     const isReduced = useReducedMotion();
     const aboutPreview: Record<number, StaticImageData> = {
-        0: ornanment1,     // default / idle
-        1: ornanment1,     // Speakers
-        2: pillar1,  // Team (example)
-        3: wifi1,// FAQ (example)
-        4: map1,        // Map/Archive (example)
-        5: napulethCoin1,        // Map/Archive (example)
+        0: ornanment1,
+        1: ornanment1,
+        2: pillar1,
+        3: wifi1,
+        4: map1,
+        5: napulethCoin1,
     };
 
     return (
