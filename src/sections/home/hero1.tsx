@@ -79,6 +79,7 @@ export default function Hero1({ borderRadius, backgroundColor }: { borderRadius:
                         >
                             <Typography variant="h3" fontWeight={600} color={theme.palette.text.primary} textAlign={"center"} sx={{
                                 width: "60%",
+                                maxWidth: 920
                             }}>
                                 The Biggest Blockchain Event in Southern Italy
                             </Typography>
