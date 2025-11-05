@@ -10,7 +10,9 @@ export default function Home() {
   const isReduced = useReducedMotion();
 
   return (
-    <Stack width={"100%"} alignItems={"center"} gap={4}>
+    <Stack width={"100%"} alignItems={"center"} gap={4} position={"relative"} sx={{
+      zIndex: 0,
+    }}>
       <Stack width={"100%"} className="max-w-7xl mx-auto px-10" borderRadius={4} overflow={"hidden"}>
         <motion.div
           initial={isReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
