@@ -16,7 +16,8 @@ const Newsletter = () => {
             <Stack gap={2} sx={{
                 backgroundColor: theme.palette.brand.napulETHRed.main,
                 borderRadius: 2,
-                p: 5,
+                px: 5,
+                py: 3,
                 minWidth: "50%",
             }}>
                 <Stack direction={"row"} alignItems={"end"} gap={0.5}>
