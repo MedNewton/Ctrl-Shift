@@ -38,79 +38,22 @@ export default function Header() {
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="nav-pill">
                                     <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary}>
-                                        Event
+                                        Home
                                     </Typography>
                                 </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <Stack alignItems={"center"}>
-                                        <NavigationMenuContentItem href="/services/smart-contracts">
-                                            <Stack minWidth={300} gap={1.5} sx={{
-                                                backgroundColor: theme.palette.brand.napulETHYellow2.main,
-                                                borderRadius: 2,
-                                                padding: 1,
-                                                position: "relative",
-                                                overflow: "hidden",
-                                            }}>
-                                                <Image src={napulethCoin1} alt="ornament1" width={120} height={120} style={{
-                                                    position: "absolute",
-                                                    top: "-20%",
-                                                    right: "-10%",
-                                                    zIndex: 0,
-                                                }} />
-                                                <Stack height={40} width={40} sx={{
-                                                    backgroundColor: theme.palette.background.default,
-                                                    borderRadius: "50%",
-                                                    position: "relative",
-                                                    zIndex: 1,
-                                                }}>
-                                                </Stack>
-                                                <Stack sx={{
-                                                    position: "relative",
-                                                    zIndex: 1,
-                                                }}>
-                                                    <Typography component="span" variant="subtitle1" fontWeight={600} color={theme.palette.info.main}>Apps</Typography>
-                                                    <Typography component="span" variant="body2" color={theme.palette.info.main}>Interact with Aave easily and securely.</Typography>
-                                                </Stack>
-                                            </Stack>
-                                        </NavigationMenuContentItem>
-                                        <NavigationMenuContentItem href="/services/smart-contracts">
-                                            <Stack minWidth={300} gap={1.5} sx={{
-                                                backgroundColor: theme.palette.brand.napulETHYellow2.main,
-                                                borderRadius: 2,
-                                                padding: 1,
-                                                position: "relative",
-                                                overflow: "hidden",
-                                            }}>
-                                                <Image src={napulethTickets} alt="ornament1" width={150} height={150} style={{
-                                                    position: "absolute",
-                                                    top: "-20%",
-                                                    right: "-10%",
-                                                    zIndex: 0,
-                                                }} />
-                                                <Stack height={40} width={40} sx={{
-                                                    backgroundColor: theme.palette.background.default,
-                                                    borderRadius: "50%",
-                                                    position: "relative",
-                                                    zIndex: 1,
-                                                }}>
-                                                </Stack>
-                                                <Stack sx={{
-                                                    position: "relative",
-                                                    zIndex: 1,
-                                                }}>
-                                                    <Typography component="span" variant="subtitle1" fontWeight={600} color={theme.palette.info.main}>GHO</Typography>
-                                                    <Typography component="span" variant="body2" color={theme.palette.info.main}>The Aave native stablecoin.</Typography>
-                                                </Stack>
-                                            </Stack>
-                                        </NavigationMenuContentItem>
-                                    </Stack>
-                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger className="nav-pill">
+                                    <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary}>
+                                        Agenda
+                                    </Typography>
+                                </NavigationMenuTrigger>
                             </NavigationMenuItem>
 
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger className="nav-pill">
                                     <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary}>
-                                        Ressources
+                                        About
                                     </Typography>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
@@ -132,8 +75,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Blog</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>The latest news & updates.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Speakers</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the speakers of ctrl/shift 2026.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -143,8 +86,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Brand</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Assets, examples & guides.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Team</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Meet the team behind the event.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -155,7 +98,7 @@ export default function Header() {
                                                     </Stack>
                                                     <Stack gap={0.5}>
                                                         <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >FAQ</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>AssAnswers to common questions.</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Answers to common questions.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -165,8 +108,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Help & Support</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Guides, articles & more</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Map</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the location of the event.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -176,8 +119,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Governance</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>AsseThe Aave governance forum.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Archive</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Previous editions of NapulETH.</Typography>
                                                     </Stack>
                                                 </Stack>
                                             </Stack>
@@ -203,7 +146,7 @@ export default function Header() {
                                     <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary} sx={{
                                         whiteSpace: "nowrap"
                                     }}>
-                                        Developers
+                                        Events
                                     </Typography>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
@@ -225,8 +168,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Build</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Integrate Aave.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Meetups</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Vibrant gatherings, held monthly.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -236,8 +179,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Documentation</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Technical guides for developers.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Side Events</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>To explore the Ethereum community.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -247,8 +190,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Security</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Audit reports & information.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Hackathon</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Build and compete for prizes.</Typography>
                                                     </Stack>
                                                 </Stack>
                                                 <Stack direction={"row"} alignItems={"center"} gap={1.5}>
@@ -258,8 +201,8 @@ export default function Header() {
                                                     }}>
                                                     </Stack>
                                                     <Stack gap={0.5}>
-                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Bug Bounty</Typography>
-                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Report responsobly and get rewarded.</Typography>
+                                                        <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Pitch Battle</Typography>
+                                                        <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Present your ideas and get rewarded.</Typography>
                                                     </Stack>
                                                 </Stack>
                                             </Stack>

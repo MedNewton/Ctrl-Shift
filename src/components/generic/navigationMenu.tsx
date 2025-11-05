@@ -54,21 +54,66 @@ export function NavigationMenuTrigger({ className, children, ...props }: Navigat
   return (
     <RadixNavigationMenu.Trigger
       data-slot="navigation-menu-trigger"
+      {...props}
       className={cn(
-        "group inline-flex items-center justify-center cursor-pointer",
-        "h-10 w-auto px-3 md:px-4 gap-[3px] rounded-[10px]",
-        "bg-transparent text-white font-medium text-sm",
-        "border-b border-transparent outline-none select-none transition-all",
-        // pill hover like Link:
-        "hover:rounded-[10rem] hover:bg-[#6e1b1d]",
-        // optional: tone down the old dark hover/ focus styles:
-        // "hover:border-b-[#575757]",
-        // "focus-visible:bg-[#1D1D1D] focus-visible:border-b-[#575757]",
+        // base (flat)
+        "relative group/btn inline-flex items-center justify-center cursor-pointer select-none",
+        "h-10 px-3 md:px-4 gap-1 rounded-[999px] text-sm font-medium",
+        "text-white/92 border border-transparent",
+        "transition-all duration-200 will-change-[background,box-shadow,transform,filter]",
+        "overflow-hidden isolate",                // <-- clip effects; own stacking context
+        // hover/open/focus → turn on glass
+        "hover:bg-[rgba(149,37,39,0.26)]",
+        "hover:backdrop-blur-md hover:backdrop-saturate-150 hover:backdrop-contrast-125",
+        "hover:border-white/5",
+        "hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-10px_28px_rgba(149,37,39,0.32),0_10px_34px_-14px_rgba(0,0,0,0.6)]",
+        "data-[state=open]:bg-[rgba(149,37,39,0.26)] data-[state=open]:backdrop-blur-md data-[state=open]:border-white/20",
+        "data-[state=open]:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-10px_28px_rgba(149,37,39,0.32),0_10px_34px_-14px_rgba(0,0,0,0.6)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E39A01] focus-visible:ring-offset-2 focus-visible:ring-offset-black",
         className
       )}
-      {...props}
     >
-      {children}
+      {/* TOP sheen */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[999px] opacity-0
+                   shadow-[inset_0_16px_28px_-18px_rgba(255,255,255,0.25)]
+                   transition-opacity duration-200
+                   group-hover/btn:opacity-100
+                   data-[state=open]:opacity-100
+                   group-focus-visible/btn:opacity-100" />
+
+      {/* Edge rim */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[999px] opacity-0
+                   ring-1 ring-inset ring-[rgba(227,154,1,0.08)]
+                   transition-opacity duration-200
+                   group-hover/btn:opacity-100
+                   data-[state=open]:opacity-100
+                   group-focus-visible/btn:opacity-100" />
+
+      {/* Specular glare (now clipped by overflow-hidden) */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-1 left-0 h-[140%] w-full rounded-[999px]
+                   bg-[radial-gradient(120px_60px_at_50%_0%,rgba(255,255,255,0.35),transparent_60%)]
+                   opacity-0 translate-y-1 transition-all duration-300
+                   group-hover/btn:opacity-20 group-hover/btn:translate-y-0
+                   data-[state=open]:opacity-20 data-[state=open]:translate-y-0
+                   group-focus-visible/btn:opacity-20 group-focus-visible/btn:translate-y-0" />
+
+      {/* Noise grain */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[999px] opacity-0
+                   [background-image:var(--noise)] [background-size:120px_120px]
+                   transition-opacity duration-200
+                   group-hover/btn:opacity-[0.08]
+                   data-[state=open]:opacity-[0.08]
+                   group-focus-visible/btn:opacity-[0.08]" />
+
+      <span className="relative z-[1]">{children}</span>
     </RadixNavigationMenu.Trigger>
   );
 }
@@ -81,7 +126,7 @@ export function NavigationMenuContent({ className, ...props }: NavigationMenuCon
       data-slot="navigation-menu-content"
       className={cn(
         "top-full left-0 p-1 mt-1.5 z-50 w-full overflow-hidden rounded-xl md:absolute md:left-1/2 md:w-auto md:-translate-x-1/2",
-        "bg-[#6e1b1d] backdrop-blur-sm",
+        "bg-[#952527]/45 backdrop-blur-2xl backdrop-saturate-125 border border-white/10",
         "motion-safe:data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52",
         "motion-safe:data-[motion=to-end]:slide-out-to-right-52 motion-safe:data-[motion=to-start]:slide-out-to-left-52",
         "motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[motion^=from-]:animate-in motion-safe:data-[motion^=to-]:animate-out",
