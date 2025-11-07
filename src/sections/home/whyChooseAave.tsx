@@ -1,11 +1,12 @@
 "use client";
 
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { JSX } from "react";
 import theme from "@/theme/theme";
 import { Box, Stack, Typography } from "@mui/material";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Image from "next/image";
 
 import svgOrnament1 from "@/assets/svg/svgOrnament1.svg?url";
@@ -13,41 +14,43 @@ import svgOrnament2 from "@/assets/svg/svgOrnament2.svg?url";
 import svgOrnament3 from "@/assets/svg/svgOrnament3.svg?url";
 import svgOrnament4 from "@/assets/svg/svgOrnament4.svg?url";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+// Safe, shared ref shape (no `any`)
+type RefLike<T> = { current: T | null };
+function getCurrent<T extends HTMLElement>(ref: RefLike<T>): T | null {
+  return ref.current;
+}
 
 export default function WhyChooseAave(): JSX.Element {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const rightRef = useRef<HTMLDivElement | null>(null);
-  const leftColRef = useRef<HTMLDivElement | null>(null);
-  const leftInnerRef = useRef<HTMLDivElement | null>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const leftColRef = useRef<HTMLDivElement>(null);
+  const leftInnerRef = useRef<HTMLDivElement>(null);
 
   const stRef = useRef<ScrollTrigger | null>(null);
-  const roRightRef = useRef<ResizeObserver | null>(null);
-  const roLeftRef = useRef<ResizeObserver | null>(null);
-
   const wheelTweenRef = useRef<gsap.core.Tween | null>(null);
   const leftTweenRef = useRef<gsap.core.Tween | null>(null);
   const leftAtBottomRef = useRef<boolean>(false);
+
+  const roRightRef = useRef<ResizeObserver | null>(null);
+  const roLeftRef = useRef<ResizeObserver | null>(null);
 
   const [spacer, setSpacer] = useState<number>(0);
   const travelRef = useRef<number>(0);
 
   const SNAP_AT = 0.75;
 
-const measureLeftTravel = (): number => {
+  const measureLeftTravel = (): number => {
     const outer = leftColRef.current;
     const inner = leftInnerRef.current;
     if (!outer || !inner) return 0;
-  
     const cs = window.getComputedStyle(inner);
     const paddingBottom = parseFloat(cs.paddingBottom) || 0;
-  
     const travel = Math.max(0, outer.clientHeight - inner.offsetHeight - paddingBottom);
-  
     travelRef.current = travel;
     return travel;
   };
-  
 
   const setLeftPosition = (toBottom: boolean): void => {
     const inner = leftInnerRef.current;
@@ -98,14 +101,18 @@ const measureLeftTravel = (): number => {
 
         if (Math.abs(current - target) < 1) {
           right.scrollTop = target;
+          ScrollTrigger.update();
         } else {
           wheelTweenRef.current?.kill();
           wheelTweenRef.current = gsap.to(right, {
-            scrollTop: target,
+            scrollTo: { y: target, autoKill: false },
             duration: 0.12,
             ease: "power2.out",
             overwrite: "auto",
-            onComplete: () => { wheelTweenRef.current = null; },
+            onUpdate: () => ScrollTrigger.update(),
+            onComplete: () => {
+              wheelTweenRef.current = null;
+            },
           });
         }
 
@@ -113,12 +120,15 @@ const measureLeftTravel = (): number => {
       },
 
       onEnter: (self) => {
-        right.scrollTop = Math.round(self.progress * maxScroll);
+        const target = Math.round(self.progress * maxScroll);
+        right.scrollTop = target;
+        ScrollTrigger.update();
         setLeftPosition(self.progress >= SNAP_AT);
       },
-
       onEnterBack: (self) => {
-        right.scrollTop = Math.round(self.progress * maxScroll);
+        const target = Math.round(self.progress * maxScroll);
+        right.scrollTop = target;
+        ScrollTrigger.update();
         setLeftPosition(self.progress >= SNAP_AT);
       },
 
@@ -126,13 +136,14 @@ const measureLeftTravel = (): number => {
         wheelTweenRef.current?.kill();
         wheelTweenRef.current = null;
         right.scrollTop = maxScroll;
+        ScrollTrigger.update();
         setLeftPosition(true);
       },
-
       onLeaveBack: () => {
         wheelTweenRef.current?.kill();
         wheelTweenRef.current = null;
         right.scrollTop = 0;
+        ScrollTrigger.update();
         setLeftPosition(false);
       },
     });
@@ -179,12 +190,7 @@ const measureLeftTravel = (): number => {
     <Stack width="100%">
       <Box
         ref={sectionRef}
-        sx={{
-          position: "sticky",
-          top: 0,
-          height: "100dvh",
-          zIndex: 1,
-        }}
+        sx={{ position: "sticky", top: 0, height: "100dvh", zIndex: 1 }}
       >
         <Stack
           width="100%"
@@ -198,6 +204,7 @@ const measureLeftTravel = (): number => {
           justifyContent="space-between"
           sx={{ height: "100%" }}
         >
+          {/* LEFT */}
           <Stack
             ref={leftColRef}
             width="50%"
@@ -219,6 +226,7 @@ const measureLeftTravel = (): number => {
             </Box>
           </Stack>
 
+          {/* RIGHT — scroller */}
           <Stack
             ref={rightRef}
             width="50%"
@@ -229,76 +237,201 @@ const measureLeftTravel = (): number => {
               pr: 2,
               WebkitOverflowScrolling: "touch",
               overscrollBehavior: "contain",
-              willChange: "transform",
-              transform: "translateZ(0)",
-              contain: "layout paint",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               "&::-webkit-scrollbar": { display: "none" },
             }}
           >
             <ContentBlock
-              title="$64.03B"
-              description="Net deposits supplied across 12+ networks."
-              color={theme.palette.brand.napulETHRed.main}
-              image={<Image src={svgOrnament1} alt="Ornament" fill style={{
-                objectFit: "cover",
-                borderRadius: 2,
-              }}/>}
-            />
-            <ContentBlock
-              title="$176.82B"
-              description="Volume, past 30 days."
-              color={theme.palette.brand.napulETHRed.main}
-              image={<Image src={svgOrnament2} alt="Ornament" fill />}
-            />
-            <ContentBlock
+              scrollerRef={rightRef}
               title="4.87%"
               description="Average stablecoin supply APY Ethereum network, past year."
               color={theme.palette.brand.napulETHRed.main}
-              image={<Image src={svgOrnament3} alt="Ornament" fill />}
+              image={
+                <Image
+                  src={svgOrnament3}
+                  alt="Ornament"
+                  fill
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
+              }
             />
             <ContentBlock
+              scrollerRef={rightRef}
+              title="4.87%"
+              description="Average stablecoin supply APY Ethereum network, past year."
+              color={theme.palette.brand.napulETHRed.main}
+              image={
+                <Image
+                  src={svgOrnament3}
+                  alt="Ornament"
+                  fill
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
+              }
+            />
+            <ContentBlock
+              scrollerRef={rightRef}
+              title="4.87%"
+              description="Average stablecoin supply APY Ethereum network, past year."
+              color={theme.palette.brand.napulETHRed.main}
+              image={
+                <Image
+                  src={svgOrnament3}
+                  alt="Ornament"
+                  fill
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
+              }
+            />
+            <ContentBlock
+              scrollerRef={rightRef}
               title="7.69%"
               description="Average stablecoin borrow APR Ethereum network, past year."
               color={theme.palette.brand.napulETHRed.main}
-              image={<Image src={svgOrnament4} alt="Ornament" fill />}
+              image={
+                <Image
+                  src={svgOrnament4}
+                  alt="Ornament"
+                  fill
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
+              }
             />
           </Stack>
         </Stack>
       </Box>
 
+      {/* Spacer so sticky section can "scroll" */}
       <Box sx={{ height: spacer }} />
     </Stack>
   );
 }
 
+/* ---------- Card with on-scroll fade-in of the actual <img> using IntersectionObserver ---------- */
 function ContentBlock({
+  scrollerRef,
   title,
   description,
   color,
   image,
 }: {
+  scrollerRef: RefLike<HTMLDivElement>;
   title: string;
   description: string;
   color: string;
-  image: React.ReactElement;
+  image: React.ReactElement<React.ComponentProps<typeof Image>>;
 }): JSX.Element {
+  const blockRef = useRef<HTMLDivElement>(null);
+  const imgWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wrapper = imgWrapRef.current;
+    const scroller = getCurrent(scrollerRef);
+    if (!wrapper || !scroller) return;
+
+    const getImg = (): HTMLImageElement | null => wrapper.querySelector("img");
+
+    const ensureHidden = (el: HTMLImageElement) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(18px)";
+      el.style.transition =
+        "opacity 480ms cubic-bezier(0.22,1,0.36,1), transform 480ms cubic-bezier(0.22,1,0.36,1)";
+      el.style.willChange = "opacity, transform";
+    };
+    const show = (el: HTMLImageElement) => {
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+    };
+    const hide = (el: HTMLImageElement) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(18px)";
+    };
+
+    // Prepare current img (if any) and also react to Next/Image swaps
+    let img = getImg();
+    if (img) ensureHidden(img);
+
+    const mo = new MutationObserver(() => {
+      const candidate = getImg();
+      if (candidate && candidate !== img) {
+        img = candidate;
+        ensureHidden(img);
+        // run immediate check again after swap
+        firstCheck();
+      }
+    });
+    mo.observe(wrapper, { childList: true, subtree: true });
+
+    // Use the wrapper as the target (has the fixed height)
+    const io = new IntersectionObserver(
+      (entries) => {
+        const currentImg = getImg();
+        if (!currentImg) return;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            show(currentImg);
+          } else {
+            // comment out to reveal once-only
+            hide(currentImg);
+          }
+        }
+      },
+      {
+        root: scroller,
+        // Slightly forgiving so items at top edge still trigger
+        rootMargin: "5% 0px -10% 0px",
+        threshold: [0, 0.01, 0.1],
+      }
+    );
+
+    io.observe(wrapper);
+
+    // Manual first-check for items already visible when observer attaches
+    const firstCheck = () => {
+      const currentImg = getImg();
+      if (!currentImg) return;
+      const rootRect = scroller.getBoundingClientRect();
+      const targetRect = wrapper.getBoundingClientRect();
+      const isInView = !(targetRect.bottom <= rootRect.top || targetRect.top >= rootRect.bottom);
+      if (isInView) show(currentImg);
+    };
+    requestAnimationFrame(firstCheck);
+    setTimeout(firstCheck, 60);
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
+  }, [scrollerRef]);
+
   return (
-    <Stack p={3} gap={1.5}>
-      <Box sx={{ height: 220, borderRadius: 2, bgcolor: color, position: "relative", overflow: "hidden" }} >
-        {image}
-      </Box>
-      <Stack
-        width="100%"
-        direction="row"
-        alignItems="start"
-        gap={2}
+    <Stack ref={blockRef} p={3} gap={1.5}>
+      <Box
+        ref={imgWrapRef}
+        sx={{
+          height: 220,
+          borderRadius: 2,
+          bgcolor: color,
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
+        {React.cloneElement(image, { priority: true })}
+      </Box>
+
+      <Stack width="100%" direction="row" alignItems="start" gap={2}>
         <Typography variant="h5" fontWeight={600}>
           {title}
         </Typography>
-        <Typography variant="subtitle1" sx={{ opacity: 0.75, width: "90%", fontWeight: 500 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ opacity: 0.75, width: "90%", fontWeight: 500 }}
+        >
           {description}
         </Typography>
       </Stack>
