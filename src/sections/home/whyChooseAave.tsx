@@ -6,6 +6,12 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+
+import svgOrnament1 from "@/assets/svg/svgOrnament1.svg?url";
+import svgOrnament2 from "@/assets/svg/svgOrnament2.svg?url";
+import svgOrnament3 from "@/assets/svg/svgOrnament3.svg?url";
+import svgOrnament4 from "@/assets/svg/svgOrnament4.svg?url";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -183,9 +189,9 @@ const measureLeftTravel = (): number => {
         <Stack
           width="100%"
           className="max-w-7xl mx-auto"
-          px={16}
+          px={0}
           mb={4}
-          gap={4}
+          gap={10}
           position="relative"
           overflow="hidden"
           direction="row"
@@ -198,7 +204,7 @@ const measureLeftTravel = (): number => {
             justifyContent="start"
             sx={{ position: "relative", overflow: "visible" }}
           >
-            <Box ref={leftInnerRef} pt={8} pb={4}>
+            <Box ref={leftInnerRef} pt={8} pb={4} pl={6}>
               <Typography variant="h3" fontWeight={700} sx={{ fontSize: "2.5rem !important" }}>
                 Why Choose Aave?
               </Typography>
@@ -206,7 +212,7 @@ const measureLeftTravel = (): number => {
                 variant="h6"
                 fontWeight={600}
                 lineHeight={1.2}
-                sx={{ opacity: 0.6, width: "70%" }}
+                sx={{ opacity: 0.6, width: "75%" }}
               >
                 Aave handles tens of billions of dollars across 12+ networks.
               </Typography>
@@ -234,22 +240,29 @@ const measureLeftTravel = (): number => {
             <ContentBlock
               title="$64.03B"
               description="Net deposits supplied across 12+ networks."
-              color={theme.palette.brand.napulETHPurple1.main}
+              color={theme.palette.brand.napulETHRed.main}
+              image={<Image src={svgOrnament1} alt="Ornament" fill style={{
+                objectFit: "cover",
+                borderRadius: 2,
+              }}/>}
             />
             <ContentBlock
               title="$176.82B"
               description="Volume, past 30 days."
-              color={theme.palette.brand.napulETHCyan1.main}
+              color={theme.palette.brand.napulETHRed.main}
+              image={<Image src={svgOrnament2} alt="Ornament" fill />}
             />
             <ContentBlock
               title="4.87%"
               description="Average stablecoin supply APY Ethereum network, past year."
-              color={theme.palette.brand.napulETHLightBlue1.main}
+              color={theme.palette.brand.napulETHRed.main}
+              image={<Image src={svgOrnament3} alt="Ornament" fill />}
             />
             <ContentBlock
               title="7.69%"
               description="Average stablecoin borrow APR Ethereum network, past year."
-              color={theme.palette.brand.napulETHBlue1.main}
+              color={theme.palette.brand.napulETHRed.main}
+              image={<Image src={svgOrnament4} alt="Ornament" fill />}
             />
           </Stack>
         </Stack>
@@ -264,14 +277,18 @@ function ContentBlock({
   title,
   description,
   color,
+  image,
 }: {
   title: string;
   description: string;
   color: string;
+  image: React.ReactElement;
 }): JSX.Element {
   return (
     <Stack p={3} gap={1.5}>
-      <Box sx={{ height: 220, borderRadius: 2, bgcolor: color }} />
+      <Box sx={{ height: 220, borderRadius: 2, bgcolor: color, position: "relative", overflow: "hidden" }} >
+        {image}
+      </Box>
       <Stack
         width="100%"
         direction="row"

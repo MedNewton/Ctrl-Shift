@@ -6,10 +6,10 @@ const Testimonials = () => {
     return (
         <Stack width={"100%"} mb={4} gap={2} position={"relative"} overflow={"hidden"}>
             <Typography variant="h3" fontWeight={700} lineHeight={1.2} sx={{
-                width: "90%",
-                fontSize: "2.5rem !important",
+                width: "70%",
+                fontSize: "2rem !important",
             }}>
-                Trusted by the best. <span style={{ color: theme.palette.secondary.main }} >Aave is used by leading institutions and companies.</span>
+                Trusted by the best. <span style={{ opacity: 0.7 }} >Aave is used by leading institutions and companies.</span>
             </Typography>
             <TestimonialsCarousel />
         </Stack>

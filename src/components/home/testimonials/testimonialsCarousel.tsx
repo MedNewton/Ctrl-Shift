@@ -10,6 +10,7 @@ import {
     useTheme,
     ButtonBase,
 } from "@mui/material";
+import theme from "@/theme/theme";
 
 type Testimonial = {
     quote: string;
@@ -47,7 +48,7 @@ const data: Testimonial[] = [
 const responsive: ResponsiveType = {
     desktop: {
         breakpoint: { max: 3000, min: 1200 },
-        items: 2,
+        items: 1,
         partialVisibilityGutter: 600,
     },
     tablet: {
@@ -75,7 +76,7 @@ const Dot = forwardRef<
                 width: 5,
                 height: 5,
                 borderRadius: 4,
-                bgcolor: active ? "text.primary" : "text.disabled",
+                bgcolor: active ? theme.palette.brand.napulETHRed.main : theme.palette.brand.napulETHGrey1.main,
                 opacity: active ? 1 : 0.4,
             }}
         />
@@ -96,8 +97,6 @@ export default function TestimonialsCarousel() {
                 py: { xs: 2, md: 3 },
             }}
         >
-            
-
             <Carousel
                 ref={carouselRef}
                 responsive={responsive}
@@ -105,7 +104,7 @@ export default function TestimonialsCarousel() {
                 arrows={false}
                 draggable
                 swipeable
-                infinite={false}
+                infinite={true}
                 showDots
                 renderDotsOutside={true}
                 customDot={<Dot />}
