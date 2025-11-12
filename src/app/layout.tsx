@@ -3,7 +3,6 @@ import "react-multi-carousel/lib/styles.css"
 import { type Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import ThemeRegistry from "@/components/layout/ThemeRegistry";
-import Header from "@/components/layout/header";
 
 export const metadata: Metadata = {
   title: "NapulETH 2026 | Biggest Web3 event in southern Italy",
@@ -18,7 +17,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className={urbanist.className}>
         <ThemeRegistry>
-          <Header />
           {children}
         </ThemeRegistry>
       </body>

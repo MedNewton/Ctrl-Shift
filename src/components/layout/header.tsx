@@ -3,14 +3,12 @@
 import * as React from "react";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
-import { Stack, Typography, Button, IconButton } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import theme from "@/theme/theme";
+import GlowButton from "@/components/ui/glowButton";
 
-import logo from "@/assets/images/logo/Asset 192.svg?url";
-import logo2 from "@/assets/images/logo/Asset 301.svg?url";
-
-import { FiSearch } from "react-icons/fi";
+import logo from "@/assets/images/logo/Asset 190.svg?url";
 
 import {
     NavigationMenu,
@@ -49,7 +47,15 @@ export default function Header() {
                 transition={{ duration: isReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                 className="relative z-120"
             >
-                <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-10">
+                <Stack
+                    marginX={"auto"}
+                    direction={"row"}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    gap={1}
+                    paddingX={6}
+                    className="h-20 max-w-7xl"
+                >
                     <Link href="/" className="inline-flex items-center gap-3">
                         <Image src={logo} alt="mood global services mgs logo" width={120} height={27} priority />
                     </Link>
@@ -260,35 +266,20 @@ export default function Header() {
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu>
-                        <Stack direction={"row"} alignItems={"center"} gap={1}>
-                            <Button variant="contained" color="primary" sx={{
-                                borderRadius: "10rem",
-                                backgroundColor: theme.palette.brand.napulETHYellow2.main,
-                                textTransform: "none",
-                                boxShadow: "none",
-                                "&:hover": {
-                                    backgroundColor: theme.palette.brand.napulETHYellow1.main,
-                                    boxShadow: "none",
-                                }
-                            }}>
-                                <Typography component={"span"} variant="subtitle2" fontWeight={600} color={theme.palette.background.default}>
-                                    Get Your Tickets
-                                </Typography>
-                            </Button>
-                            <IconButton sx={{
-                                backgroundColor: theme.palette.brand.napulETHYellow2.main,
-                                borderRadius: "50%",
-                                boxShadow: "none",
-                                "&:hover": {
-                                    backgroundColor: theme.palette.brand.napulETHYellow1.main,
-                                    boxShadow: "none",
-                                }
-                            }}>
-                                <FiSearch color={theme.palette.background.default} size={18} />
-                            </IconButton>
-                        </Stack>
                     </Stack>
-                </div>
+
+                    <Stack direction={"row"} alignItems={"center"} gap={1}>
+                        <GlowButton sx={{
+                            paddingX: 3,
+                            paddingY: 1,
+                        }}>
+                            <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+                                Get Your Tickets
+                            </Typography>
+                        </GlowButton>
+
+                    </Stack>
+                </Stack>
             </motion.div>
 
         </header>
