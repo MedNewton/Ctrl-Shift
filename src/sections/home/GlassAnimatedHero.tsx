@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import FractalGlassOverlay from "@/components/home/hero/FractalGlassOverlay";
 import Header from "@/components/layout/header";
+import MobileHeader from "@/components/layout/mobileHeader";
 import GlowButton from "@/components/ui/glowButton";
 import BlackButton from "@/components/ui/blackButton";
 import StylishPill from "@/components/home/hero/stylishPill";
@@ -34,7 +35,7 @@ const GlassAnimatedHero = () => {
                     position: "absolute",
                     inset: 0,
                     display: "flex",
-                    width: { xs: "480%", md: "200%" },
+                    width: { xs: "100%", md: "200%" },
                     height: "100%",
                     zIndex: 0,
                     opacity: { xs: 0.75, md: 1 },
@@ -112,6 +113,22 @@ const GlassAnimatedHero = () => {
                 }}
             >
                 <Header />
+            </Stack>
+
+            <Stack
+                width="100%"
+                height="fit-content"
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 6,
+                    display: { xs: "flex", md: "none" },
+                }}
+            >
+                <MobileHeader />
             </Stack>
 
             <Stack

@@ -40,7 +40,7 @@ export default function Header() {
     };
 
     return (
-        <header className="z-50 w-full bg-transparent">
+        <header className="z-50 w-full bg-transparent hidden md:block">
             <motion.div
                 initial={isReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                 animate={{ opacity: 1, marginTop: 0 }}

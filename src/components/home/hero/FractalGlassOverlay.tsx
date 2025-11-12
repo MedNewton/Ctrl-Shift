@@ -8,7 +8,7 @@ const FractalGlassOverlay = () => {
         aria-hidden
         sx={{
           position: "absolute",
-          width: { xs: "100%", sm: "100%", md: "100%" },
+          width: { xs: "246%", sm: "100%", md: "100%" },
           height: { xs: "100%", sm: "100%", md: "100%" },
           right: { xs: "0", md: "0" },
           top: { xs: "0", md: "0" },
