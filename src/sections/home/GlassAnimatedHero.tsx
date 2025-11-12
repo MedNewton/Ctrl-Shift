@@ -128,7 +128,7 @@ const GlassAnimatedHero = () => {
                     zIndex: 5,
                     gap: 4,
                     marginY: "auto",
-                    transform: { xs: "translateY(-30%)", md: "translateY(0%)" },
+                    transform: { xs: "translateY(-10%)", md: "translateY(0%)" },
                 }}
             >
                 <StylishPill />
