@@ -6,8 +6,10 @@ import FractalGlassOverlay from "@/components/home/hero/FractalGlassOverlay";
 import Header from "@/components/layout/header";
 import GlowButton from "@/components/ui/glowButton";
 import BlackButton from "@/components/ui/blackButton";
+import StylishPill from "@/components/home/hero/stylishPill";
 
 import bars from "@/assets/svg/bars.svg?url";
+
 
 
 const LOOP_SECONDS = 26;
@@ -114,6 +116,7 @@ const GlassAnimatedHero = () => {
                     marginY: "auto",
                 }}
             >
+                <StylishPill />
                 <Stack width="35%" alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
                     <Typography variant="h3" component="h3" fontWeight={600} textAlign={"center"}>
                         The biggest Web3 event in southern Italy
