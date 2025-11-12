@@ -21,7 +21,8 @@ const GlassAnimatedHero = () => {
     return (
         <Stack
             width="100%"
-            minHeight="100vh"
+            minHeight={{ xs: "100dvh", md: "100vh" }}
+            height={{xs: "100dvh", md: "fit-content"}}
             position="relative"
             overflow="hidden"
             sx={{ backgroundColor: theme.palette.background.default }}
@@ -33,9 +34,10 @@ const GlassAnimatedHero = () => {
                     position: "absolute",
                     inset: 0,
                     display: "flex",
-                    width: "200%",
+                    width: { xs: "480%", md: "200%" },
                     height: "100%",
                     zIndex: 0,
+                    opacity: { xs: 0.75, md: 1 },
                 }}
                 animate={prefersReduced ? undefined : { x: ["0%", "0%"] }}
                 transition={
@@ -96,7 +98,19 @@ const GlassAnimatedHero = () => {
 
             <FractalGlassOverlay />
 
-            <Stack width="100%" height="fit-content" sx={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 6 }}>
+            <Stack
+                width="100%"
+                height="fit-content"
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 6,
+                    display: { xs: "none", md: "flex" },
+                }}
+            >
                 <Header />
             </Stack>
 
@@ -114,14 +128,17 @@ const GlassAnimatedHero = () => {
                     zIndex: 5,
                     gap: 4,
                     marginY: "auto",
+                    transform: { xs: "translateY(-30%)", md: "translateY(0%)" },
                 }}
             >
                 <StylishPill />
-                <Stack width="35%" alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
+                <Stack width={{ xs: "85%", md: "35%" }} alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
                     <Typography variant="h3" component="h3" fontWeight={600} textAlign={"center"}>
                         The biggest Web3 event in southern Italy
                     </Typography>
-                    <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"}>
+                    <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"} sx={{
+                        width: { xs: "85%", md: "100%" },
+                    }}>
                         17-19 September, Villa Doria D’Angri, Naples, Italy
                     </Typography>
                 </Stack>

@@ -52,8 +52,8 @@ const StylishPill = ({ left = "Ctrl", right = "Shift", sx }: StylishPillProps) =
         sx={{
           position: "absolute",
           right: 6,
-          top: 6,
-          bottom: 6,
+          top: 4,
+          bottom: 4,
           width: 92,
           borderRadius: 9999,
           display: "flex",
