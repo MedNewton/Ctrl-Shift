@@ -35,7 +35,7 @@ const GlassAnimatedHero = () => {
                     position: "absolute",
                     inset: 0,
                     display: "flex",
-                    width: { xs: "100%", md: "200%" },
+                    width: { xs: "200%", md: "200%" },
                     height: "100%",
                     zIndex: 0,
                     opacity: { xs: 0.75, md: 1 },
