@@ -13,7 +13,7 @@ import bars from "@/assets/svg/bars.svg?url";
 
 
 
-const LOOP_SECONDS = 26;
+const LOOP_SECONDS = 44;
 const PULSE_SECONDS = 6.5;
 
 const GlassAnimatedHero = () => {
@@ -22,8 +22,8 @@ const GlassAnimatedHero = () => {
     return (
         <Stack
             width="100%"
-            minHeight={{ xs: "100dvh", md: "100vh" }}
-            height={{xs: "100dvh", md: "fit-content"}}
+            minHeight={{ xs: "105dvh", md: "105vh" }}
+            height={{ xs: "100dvh", md: "fit-content" }}
             position="relative"
             overflow="hidden"
             sx={{ backgroundColor: theme.palette.background.default }}
@@ -40,7 +40,7 @@ const GlassAnimatedHero = () => {
                     zIndex: 0,
                     opacity: { xs: 0.75, md: 1 },
                 }}
-                animate={prefersReduced ? undefined : { x: ["0%", "0%"] }}
+                animate={prefersReduced ? undefined : { x: ["0%", "-50%", "0%", "-40%", "0%"] }}
                 transition={
                     prefersReduced
                         ? undefined
@@ -67,32 +67,22 @@ const GlassAnimatedHero = () => {
 
                 <Box
                     component={motion.div}
-                    sx={{ position: "relative", width: "50%", height: "100%" }}
+                    sx={{ position: "relative", width: "50%", height: "100%", opacity: { xs: 0.85, md: 1 } }}
                     style={{ transformOrigin: "bottom" }}
                     initial={{ scaleY: 0.7 }}
-                    animate={
-                        prefersReduced ? undefined : { scaleY: [0.67, 0.73, 0.67] }
-                    }
+                    animate={prefersReduced ? undefined : { scaleY: [0.55, 0.8, 0.55] }}
                     transition={
                         prefersReduced
                             ? undefined
-                            : {
-                                duration: PULSE_SECONDS,
-                                ease: "easeInOut",
-                                repeat: Infinity,
-                                delay: PULSE_SECONDS / 2,
-                            }
+                            : { duration: PULSE_SECONDS, ease: "easeInOut", repeat: Infinity }
                     }
                 >
                     <Image
                         src={bars}
-                        alt="bars duplicate"
+                        alt="bars"
                         fill
                         priority
-                        style={{
-                            objectFit: "cover",
-                            objectPosition: "center",
-                        }}
+                        style={{ objectFit: "cover", objectPosition: "center" }}
                     />
                 </Box>
             </Box>
@@ -177,6 +167,17 @@ const GlassAnimatedHero = () => {
                         </Typography>
                     </BlackButton>
                 </Stack>
+            </Stack>
+
+            <Stack width={"100%"} height={"25vh"} sx={{
+                background: "linear-gradient(180deg, rgba(11, 11, 11, 0) 0%, #0B0B0B 90%)",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: 7,
+            }}>
+
             </Stack>
         </Stack>
     );

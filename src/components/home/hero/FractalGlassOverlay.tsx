@@ -12,7 +12,7 @@ const FractalGlassOverlay = () => {
           height: { xs: "100%", sm: "100%", md: "100%" },
           right: { xs: "0", md: "0" },
           top: { xs: "0", md: "0" },
-          opacity: 0.75,
+          opacity: { xs: 0.75, md: 1 },
           borderRadius: "0px",
           transform: "rotate(0deg)",
           overflow: "hidden",
