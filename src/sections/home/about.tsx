@@ -78,8 +78,8 @@ const About = () => {
             ease: "none",
             scrollTrigger: {
               trigger: sectionRef.current!,
-              start: "top 85%",
-              end: "top 55%",
+              start: "top 75%",
+              end: "top 15%",
               scrub: true,
               immediateRender: false,
               invalidateOnRefresh: true,
@@ -234,7 +234,7 @@ const About = () => {
       </Stack>
 
       {/* Right column blocks (each fades out near top) */}
-      <Stack ref={rightColRef} width="100%" alignItems="end" gap={24} pt={40}>
+      <Stack ref={rightColRef} width="100%" alignItems="end" gap={24} pt={20}>
         <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
           <Box width="30%" sx={{
             aspectRatio: 1,
