@@ -5,7 +5,12 @@ import theme from "@/theme/theme";
 import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+
 import CallMadeIcon from "@mui/icons-material/CallMade";
+import aboutAsset1 from "@/assets/images/about/aboutAsset1.svg?url";
+import aboutAsset2 from "@/assets/images/about/aboutAsset2.svg?url";
+import aboutAsset3 from "@/assets/images/about/aboutAsset3.svg?url";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -145,7 +150,7 @@ const About = () => {
           pointerEvents: "none",
           display: "flex",
           justifyContent: "center",
-          
+
         }}
       >
         <Box
@@ -229,74 +234,101 @@ const About = () => {
       </Stack>
 
       {/* Right column blocks (each fades out near top) */}
-      <Stack ref={rightColRef} width="100%" alignItems="end" gap={36} pt={40}>
+      <Stack ref={rightColRef} width="100%" alignItems="end" gap={30} pt={40}>
         <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
-          <Stack gap={1}>
-            <Typography variant="h5" fontWeight={600}>
-              Explore Our <span style={{ color: theme.palette.brand.napulETHRed.main }}>Agenda</span>
-            </Typography>
-            <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
-              Explore the event agenda and find the best talks, panels, workshops & more.
-            </Typography>
-          </Stack>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
-          >
-            <Stack direction={"row"} alignItems={"center"} gap={1}>
-              <Typography component={"span"} variant="subtitle1" fontWeight={600}>
-                See Our Agenda
+          <Box width="30%" sx={{
+            aspectRatio: 1,
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            <Image src={aboutAsset1} alt="aboutAsset1" fill />
+          </Box>
+          <Stack gap={2}>
+            <Stack gap={1}>
+              <Typography variant="h5" fontWeight={600}>
+                Explore Our <span style={{ color: theme.palette.brand.napulETHRed.main }}>Agenda</span>
               </Typography>
-              <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+              <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
+                Explore the event agenda and find the best talks, panels, workshops & more.
+              </Typography>
             </Stack>
-          </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
+            >
+              <Stack direction={"row"} alignItems={"center"} gap={1}>
+                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+                  See Our Agenda
+                </Typography>
+                <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+              </Stack>
+            </Button>
+          </Stack>
         </Stack>
 
         <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
-          <Stack gap={1}>
-            <Typography variant="h5" fontWeight={600}>
-              Become A <span style={{ color: theme.palette.brand.napulETHRed.main }}>Sponsor</span>
-            </Typography>
-            <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
-              Join us as a sponsor and reach our community of developers, investors, and enthusiasts.
-            </Typography>
-          </Stack>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
-          >
-            <Stack direction={"row"} alignItems={"center"} gap={1}>
-              <Typography component={"span"} variant="subtitle1" fontWeight={600}>
-                See Our Agenda
+          <Box width="30%" sx={{
+            aspectRatio: 1,
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            <Image src={aboutAsset2} alt="aboutAsset1" fill />
+          </Box>
+          <Stack gap={2}>
+            <Stack gap={1}>
+              <Typography variant="h5" fontWeight={600}>
+                Become A <span style={{ color: theme.palette.brand.napulETHRed.main }}>Sponsor</span>
               </Typography>
-              <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+              <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
+                Become a sponsor and get the opportunity to showcase your brand to a global audience.
+              </Typography>
             </Stack>
-          </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
+            >
+              <Stack direction={"row"} alignItems={"center"} gap={1}>
+                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+                  See Our Agenda
+                </Typography>
+                <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+              </Stack>
+            </Button>
+          </Stack>
         </Stack>
 
         <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
-          <Stack gap={1}>
-            <Typography variant="h5" fontWeight={600}>
-              <span style={{ color: theme.palette.brand.napulETHRed.main }}>Volunteer</span> with us
-            </Typography>
-            <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
-              Join us as a volunteer and help us make the event a success.
-            </Typography>
-          </Stack>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
-          >
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Typography component="span" variant="subtitle1" fontWeight={600}>
-                See Our Agenda
+          <Box width="30%" sx={{
+            aspectRatio: 1,
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            <Image src={aboutAsset3} alt="aboutAsset1" fill />
+          </Box>
+          <Stack gap={2}>
+            <Stack gap={1}>
+              <Typography variant="h5" fontWeight={600}>
+                Become A <span style={{ color: theme.palette.brand.napulETHRed.main }}>Speaker</span>
               </Typography>
-              <CallMadeIcon sx={{ fontSize: 16, mt: 0.1 }} />
+              <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
+                Become a speaker and share your expertise with a global audience.
+              </Typography>
             </Stack>
-          </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
+            >
+              <Stack direction={"row"} alignItems={"center"} gap={1}>
+                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+                  See Our Agenda
+                </Typography>
+                <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+              </Stack>
+            </Button>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
