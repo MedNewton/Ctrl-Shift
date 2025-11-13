@@ -234,7 +234,7 @@ const About = () => {
       </Stack>
 
       {/* Right column blocks (each fades out near top) */}
-      <Stack ref={rightColRef} width="100%" alignItems="end" gap={30} pt={40}>
+      <Stack ref={rightColRef} width="100%" alignItems="end" gap={24} pt={40}>
         <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
           <Box width="30%" sx={{
             aspectRatio: 1,
@@ -255,7 +255,18 @@ const About = () => {
             <Button
               variant="outlined"
               size="small"
-              sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
+              sx={{
+                px: 4,
+                py: 1,
+                width: "fit-content",
+                textTransform: "none",
+                borderRadius: 60,
+                "&:hover": {
+                  background: "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
+                  boxShadow: "inset 0px 1.25px 1.25px rgba(255, 255, 255, 0.24)",
+                  borderColor: "transparent",
+                }
+              }}
             >
               <Stack direction={"row"} alignItems={"center"} gap={1}>
                 <Typography component={"span"} variant="subtitle1" fontWeight={600}>
@@ -287,11 +298,22 @@ const About = () => {
             <Button
               variant="outlined"
               size="small"
-              sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
+              sx={{
+                px: 4,
+                py: 1,
+                width: "fit-content",
+                textTransform: "none",
+                borderRadius: 60,
+                "&:hover": {
+                  background: "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
+                  boxShadow: "inset 0px 1.25px 1.25px rgba(255, 255, 255, 0.24)",
+                  borderColor: "transparent",
+                }
+              }}
             >
               <Stack direction={"row"} alignItems={"center"} gap={1}>
                 <Typography component={"span"} variant="subtitle1" fontWeight={600}>
-                  See Our Agenda
+                  Apply as a Sponsor
                 </Typography>
                 <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
               </Stack>
@@ -319,11 +341,22 @@ const About = () => {
             <Button
               variant="outlined"
               size="small"
-              sx={{ px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 2 }}
+              sx={{
+                px: 4,
+                py: 1,
+                width: "fit-content",
+                textTransform: "none",
+                borderRadius: 60,
+                "&:hover": {
+                  background: "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
+                  boxShadow: "inset 0px 1.25px 1.25px rgba(255, 255, 255, 0.24)",
+                  borderColor: "transparent",
+                }
+              }}
             >
               <Stack direction={"row"} alignItems={"center"} gap={1}>
                 <Typography component={"span"} variant="subtitle1" fontWeight={600}>
-                  See Our Agenda
+                  Apply as a Speaker
                 </Typography>
                 <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
               </Stack>
