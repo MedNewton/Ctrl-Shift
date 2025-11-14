@@ -100,18 +100,18 @@ const GlassAnimatedHero = () => {
                 zIndex: 5,
                 pointerEvents: "none",
                 overflow: "hidden",
-                opacity: 0.35,
+                opacity: 0.45,
                 willChange: "opacity",
                 animation: "circuit-animation 10s linear infinite",
                 "@keyframes circuit-animation": {
                     "0%": {
-                        opacity: 0.35,
+                        opacity: 0.45,
                     },
                     "50%": {
-                        opacity: 0.3,
+                        opacity: 0.35,
                     },
                     "100%": {
-                        opacity: 0.35,
+                        opacity: 0.45,
                     },
                 }
             }}>
