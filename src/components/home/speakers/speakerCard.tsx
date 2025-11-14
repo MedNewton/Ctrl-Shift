@@ -1,7 +1,6 @@
 "use client";
 
-import { Stack } from "@mui/material";
-import theme from "@/theme/theme";
+import { Box, Stack } from "@mui/material";
 import Image, { type StaticImageData } from "next/image";
 import { useRef } from "react";
 
@@ -11,15 +10,21 @@ export interface SpeakerCardHoverPayload {
   title: string;
 }
 
-interface SpeakerCardProps {
+export interface SpeakerCardProps {
   name: string;
   title: string;
   image: StaticImageData;
-  onHover?: (p: SpeakerCardHoverPayload) => void;
+  onHover?: (payload: SpeakerCardHoverPayload) => void;
   onLeave?: () => void;
 }
 
-const SpeakerCard = ({ name, title, image, onHover, onLeave }: SpeakerCardProps) => {
+const SpeakerCard = ({
+  name,
+  title,
+  image,
+  onHover,
+  onLeave,
+}: SpeakerCardProps) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -28,37 +33,53 @@ const SpeakerCard = ({ name, title, image, onHover, onLeave }: SpeakerCardProps)
       className="speaker-card"
       direction="column"
       alignItems="center"
-      justifyContent="end"
+      justifyContent="flex-end"
       gap={2}
-      p={1}
+      p={0.5}
       onMouseEnter={() => {
-        if (cardRef.current) onHover?.({ el: cardRef.current, name, title });
+        if (cardRef.current) {
+          onHover?.({ el: cardRef.current, name, title });
+        }
       }}
       onMouseLeave={() => onLeave?.()}
       sx={{
         width: "100%",
-        aspectRatio: 1 / 1.2,
         position: "relative",
         overflow: "hidden",
-        backgroundColor: theme.palette.brand.napulETHYellow1.main,
-        borderRadius: 4,
-        "& .speaker-image": {
-          transform: "scale(1.06)",
-          transition: "transform 0.3s ease-in-out",
-          willChange: "transform",
-        },
-        "&:hover .speaker-image": {
-          transform: "scale(1.1)",
-        },
       }}
     >
-      <Image
-        src={image}
-        alt={name}
-        className="speaker-image"
-        fill
-        style={{ objectFit: "cover" , position: "absolute", inset: 0, zIndex: 1}}
-      />
+      {/* Fixed-height container so height stays constant */}
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          // height is fixed, width is flexible
+          height: { xs: 260, md: 400 },
+          overflow: "hidden",
+          borderRadius: 1,
+        }}
+      >
+        {/* This is the element GSAP scales from left → right */}
+        <Box
+          className="speaker-card-inner"
+          sx={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            overflow: "hidden",
+            filter: "grayscale(100%)",
+            transition: "filter 0.3s ease-in-out",
+            willChange: "filter",
+            backgroundImage: `url(${image.src})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            "&:hover": {
+                filter: "grayscale(0%)",
+            },
+          }}
+        >
+        </Box>
+      </Box>
     </Stack>
   );
 };

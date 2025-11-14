@@ -402,7 +402,6 @@ const About = () => {
 
         <Stack
           width="100%"
-          height="100vh"
           gap={3}
           sx={{
             willChange: "opacity",

@@ -142,7 +142,7 @@ export default function Topics() {
           color={theme.palette.primary.main}
           fontWeight={600}
           sx={{
-            px: { xs: 3, md: 8 },
+            px: { xs: 3, md: 16 },
             pt: { xs: 4, md: 8 },
             zIndex: 2,
             opacity: 0, // prevent flash before GSAP kicks in
@@ -158,7 +158,8 @@ export default function Topics() {
           color={theme.palette.primary.main}
           fontWeight={500}
           sx={{
-            px: { xs: 3, md: 8 },
+            pr: { xs: 3, md: 16 },
+            pl: { xs: 3, md: 8 },
             pt: { xs: 4, md: 8 },
             zIndex: 2,
             textAlign: "right",
