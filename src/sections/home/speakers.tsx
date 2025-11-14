@@ -44,140 +44,63 @@ const Speakers = () => {
     if (!containerRef.current) return;
     const crect = containerRef.current.getBoundingClientRect();
     const r = el.getBoundingClientRect();
-
     const x = r.left - crect.left + PAD;
     const w = r.width - PAD * 2;
     const y = r.bottom - crect.top - OVERLAY_HEIGHT - PAD;
-
     setOverlay({ visible: true, x, y, w, name, title });
   };
 
-  const handleCardLeave = () => {
-    setOverlay((o) => ({ ...o, visible: false }));
-  };
+  const handleCardLeave = () => setOverlay((o) => ({ ...o, visible: false }));
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       const section = sectionRef.current!;
+      const title = titleRef.current!;
       const cards = Array.from(
         section.querySelectorAll<HTMLElement>(".speaker-card")
       );
 
-      gsap.set(section, {
-        backgroundColor: theme.palette.background.default,
-        willChange: "background-color",
-      });
+      // Initial states
+      gsap.set(title, { opacity: 0, y: 32, willChange: "transform,opacity" });
       gsap.set(cards, { opacity: 0, y: 24, willChange: "transform,opacity" });
 
-      // Title: strong fade-in from below on enter (reversible)
-      if (titleRef.current) {
-        gsap.fromTo(
-          titleRef.current,
-          { opacity: 0, y: 32, willChange: "transform,opacity" },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.75,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 88%",
-              end: "top 70%",
-              // play when entering from below; reverse only when leaving back upward
-              toggleActions: "play none none reverse",
-              invalidateOnRefresh: true,
-            },
-          }
+      // One scrubbed timeline: title first, then ALL cards together
+      const tl = gsap
+        .timeline({ paused: true })
+        .to(
+          title,
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false },
+          0
+        )
+        .to(
+          cards,
+          { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", immediateRender: false },
+          0.1
         );
-      }
 
-      // Section bg + cards reveal (row-by-row)
-      const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
-      tl.to(
-        section,
-        {
-          backgroundColor: theme.palette.brand.napulETHRed.main,
-          duration: 1.0,
-          ease: "power2.out",
-        },
-        0
-      ).to(
-        cards,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          stagger: { grid: "auto", amount: 0.8, from: "start" },
-        },
-        0.12
-      );
+      // Smooth reversible scroll window
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 82%",
+        end: "top 62%",
+        scrub: 0.5,
+        animation: tl,
+        fastScrollEnd: true,
+        invalidateOnRefresh: true,
+        onRefresh: () => tl.progress(0),
+      });
 
-      let isOn = false;
-      let tween: gsap.core.Tween | null = null;
+      const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+      ro.observe(section);
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      setTimeout(() => ScrollTrigger.refresh(), 200);
 
-      const goOn = () => {
-        if (isOn) return;
-        isOn = true;
-        tween?.kill();
-        tween = tl.tweenTo(tl.duration(), { ease: "power2.out" });
+      return () => {
+        ro.disconnect();
       };
-      const goOff = () => {
-        if (!isOn) return;
-        isOn = false;
-        tween?.kill();
-        tween = tl.tweenTo(0, { ease: "power2.in" });
-      };
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top 80%",
-        end: "top 80%",
-        onEnter: goOn,
-        onLeaveBack: goOff,
-        invalidateOnRefresh: true,
-      });
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "bottom 99%",
-        end: "bottom 99%",
-        onEnterBack: goOn,
-        invalidateOnRefresh: true,
-      });
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "bottom 6%",
-        end: "bottom 6%",
-        onEnter: goOff,
-        invalidateOnRefresh: true,
-      });
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top 22%",
-        end: "top 22%",
-        onLeaveBack: goOff,
-        invalidateOnRefresh: true,
-      });
-
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const within = rect.top <= vh * 0.82 && rect.bottom >= vh * 0.04;
-      if (within) {
-        isOn = true;
-        tl.progress(1);
-      } else {
-        isOn = false;
-        tl.progress(0);
-      }
     }, sectionRef);
-
-    requestAnimationFrame(() => ScrollTrigger.refresh());
-    setTimeout(() => ScrollTrigger.refresh(), 200);
 
     return () => ctx.revert();
   }, []);
@@ -208,6 +131,7 @@ const Speakers = () => {
         </Typography>
 
         <Box ref={containerRef} sx={{ position: "relative" }}>
+          {/* Floating info panel that slides across cards on hover */}
           <Box
             aria-hidden
             sx={{
