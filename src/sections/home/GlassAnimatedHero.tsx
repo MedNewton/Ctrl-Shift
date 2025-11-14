@@ -169,7 +169,7 @@ const GlassAnimatedHero = () => {
                     right: 0,
                     bottom: 0,
                     zIndex: 60,
-                    gap: 4,
+                    gap: 2,
                     marginY: "auto",
                     transform: { xs: "translateY(-10%)", md: "translateY(-15%)" },
                 }}
@@ -203,7 +203,7 @@ const GlassAnimatedHero = () => {
 
                 <motion.div
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
-                    animate={{ opacity: 1, marginTop: 0 }}
+                    animate={{ opacity: 1, marginTop: 6 }}
                     transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
                     className="relative z-120"
                 >
