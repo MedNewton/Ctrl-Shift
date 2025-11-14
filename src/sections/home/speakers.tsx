@@ -111,7 +111,7 @@ const Speakers = () => {
       sx={{
         position: "relative",
         px: 8,
-        pb: 4,
+        py: 4,
         backgroundColor: theme.palette.background.default,
         overflow: "hidden",
       }}

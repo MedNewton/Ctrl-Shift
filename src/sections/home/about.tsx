@@ -8,6 +8,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Speakers from "@/sections/home/speakers";
+import Topics from "@/sections/home/topics";
+import ParallaxBoxes from "@/sections/home/ParallaxBoxes";
 
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import aboutAsset1 from "@/assets/images/about/aboutAsset1.svg?url";
@@ -419,10 +421,13 @@ const About = () => {
             willChange: "opacity",
             position: "relative",
             zIndex: 10,
-            backgroundColor: theme.palette.brand.napulETHYellow1.main,
-            px: 8,
+            backgroundColor: theme.palette.background.default,
           }}
         >
+          <Topics />
+        </Stack>
+        <Stack sx={{ position: "relative", zIndex: 10, backgroundColor: theme.palette.background.default }}>
+          
         </Stack>
       </Stack>
     </Stack>
