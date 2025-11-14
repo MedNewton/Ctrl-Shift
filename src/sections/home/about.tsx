@@ -1,3 +1,4 @@
+// components/Sections/About.tsx
 "use client";
 
 import { Stack, Typography, Box, Button } from "@mui/material";
@@ -6,6 +7,7 @@ import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import Speakers from "@/sections/home/speakers";
 
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import aboutAsset1 from "@/assets/images/about/aboutAsset1.svg?url";
@@ -14,24 +16,33 @@ import aboutAsset3 from "@/assets/images/about/aboutAsset3.svg?url";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const COPY =
+  "Ctrl/Shift 2026 offers a curated mix of talks, experiments, and showcases, spanning quantum computing, AI, blockchain, and Web3. Institutions, companies, and protocols converge to explore real-world use cases and emerging trends through panels, workshops, and live demos.";
+
 const About = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const lineRefs = useRef<HTMLDivElement[]>([]);
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const linesWrapRef = useRef<HTMLDivElement | null>(null);
   const rightColRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null); // <-- container for word spans
 
   const linePercents = useMemo(() => [0, 100 / 3, (2 * 100) / 3, 100], []);
+  const words = useMemo(
+    () => COPY.split(" ").map((w, i) => ({ w, k: `w-${i}` })),
+    []
+  );
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      // Lines grow once
       gsap.fromTo(
         lineRefs.current,
         { height: 0 },
         {
-          height: "100vh",
+          height: "100%",
           duration: 1.1,
           ease: "power3.out",
           stagger: 0.05,
@@ -44,6 +55,7 @@ const About = () => {
         }
       );
 
+      // Right boxes fade out upward
       const rightBoxes = Array.from(
         sectionRef.current!.querySelectorAll<HTMLElement>("[data-rightfade]")
       );
@@ -66,8 +78,11 @@ const About = () => {
         );
       });
 
+      // Left small title fade as before (only the title keeps data-fade)
       const leftFades = stickyRef.current
-        ? Array.from(stickyRef.current.querySelectorAll<HTMLElement>("[data-fade]"))
+        ? Array.from(
+          stickyRef.current.querySelectorAll<HTMLElement>("[data-fade]")
+        )
         : [];
       if (leftFades.length) {
         gsap.fromTo(
@@ -88,6 +103,7 @@ const About = () => {
         );
       }
 
+      // Fade out left title & lines when the last right block nears top
       const lastRight = rightBoxes[rightBoxes.length - 1];
       if (lastRight) {
         if (leftFades.length) {
@@ -108,7 +124,6 @@ const About = () => {
             }
           );
         }
-
         if (linesWrapRef.current) {
           gsap.fromTo(
             linesWrapRef.current,
@@ -128,6 +143,30 @@ const About = () => {
           );
         }
       }
+
+      // === WORD-BY-WORD REVEAL ===
+      if (textRef.current) {
+        const wordEls = Array.from(
+          textRef.current.querySelectorAll<HTMLElement>("[data-word]")
+        );
+        // start all words at 0.2 (gray-ish)
+        gsap.set(wordEls, { opacity: 0.2 });
+
+        gsap.to(wordEls, {
+          opacity: 1,
+          // play with each to control speed of the sweep
+          stagger: { each: 0.06, from: 0 },
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current!, // drive by the whole section
+            start: "top 50%",          // begin as soon as section enters
+            end: "top top",               // finish near the top (while sticky)
+            scrub: true,                  // reversible & tied to scroll
+            immediateRender: false,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -139,8 +178,9 @@ const About = () => {
       width="100%"
       minHeight="100dvh"
       position="relative"
-      sx={{ zIndex: 0, px: 8, py: 4, }}
+      sx={{ zIndex: 0, px: 0, py: 4 }}
     >
+      {/* Lines */}
       <Box
         ref={linesWrapRef}
         aria-hidden
@@ -150,7 +190,7 @@ const About = () => {
           pointerEvents: "none",
           display: "flex",
           justifyContent: "center",
-
+          px: 8,
         }}
       >
         <Box
@@ -174,9 +214,7 @@ const About = () => {
                 transform: "translateX(-1px)",
               }}
             >
-              <Box
-                sx={{ position: "sticky", top: 0, height: "100vh" }}
-              >
+              <Box sx={{ position: "sticky", top: 0, height: "100%" }}>
                 <Box
                   ref={(el) => {
                     if (el) lineRefs.current[i] = el as HTMLDivElement;
@@ -193,11 +231,11 @@ const About = () => {
                 />
               </Box>
             </Box>
-
           ))}
         </Box>
       </Box>
 
+      {/* Left sticky column */}
       <Stack
         ref={stickyRef}
         width="100%"
@@ -209,6 +247,7 @@ const About = () => {
           left: 0,
           zIndex: 1,
           pt: 4,
+          px: 8,
         }}
       >
         <Typography
@@ -220,27 +259,39 @@ const About = () => {
         >
           Ctrl/Shift 2026
         </Typography>
+
+        {/* WORD-BY-WORD REVEAL PARAGRAPH */}
         <Typography
-          data-fade
+          ref={textRef}
           variant="h5"
           fontWeight={500}
           lineHeight={1.6}
-          sx={{ opacity: 0, width: "50%", willChange: "opacity" }}
+          sx={{
+            width: "50%",
+            color: theme.palette.text.primary,
+            // ensure wrapping/spacing looks natural
+            wordBreak: "normal",
+            whiteSpace: "pre-wrap",
+          }}
         >
-          Ctrl/Shift 2026 offers a curated mix of talks, experiments, and showcases, spanning quantum
-          computing, AI, blockchain, and Web3. Institutions, companies, and protocols converge to
-          explore real-world use cases and emerging trends through panels, workshops, and live demos.
+          {words.map(({ w, k }, idx) => (
+            <Box
+              key={k}
+              component="span"
+              data-word
+              sx={{ opacity: 0.2, willChange: "opacity" }}
+            >
+              {w}
+              {idx < words.length - 1 ? " " : ""}
+            </Box>
+          ))}
         </Typography>
       </Stack>
 
       {/* Right column blocks (each fades out near top) */}
-      <Stack ref={rightColRef} width="100%" alignItems="end" gap={24} pt={20}>
-        <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
-          <Box width="30%" sx={{
-            aspectRatio: 1,
-            position: "relative",
-            overflow: "hidden",
-          }}>
+      <Stack ref={rightColRef} width="100%" alignItems="end" gap={0} pt={20}>
+        <Stack data-rightfade width="40%" gap={3} pl={16} mb={24} sx={{ willChange: "opacity" }}>
+          <Box width="30%" sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}>
             <Image src={aboutAsset1} alt="aboutAsset1" fill />
           </Box>
           <Stack gap={2}>
@@ -256,35 +307,28 @@ const About = () => {
               variant="outlined"
               size="small"
               sx={{
-                px: 4,
-                py: 1,
-                width: "fit-content",
-                textTransform: "none",
-                borderRadius: 60,
+                px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 60,
                 "&:hover": {
-                  background: "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
+                  background:
+                    "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
                   boxShadow: "inset 0px 1.25px 1.25px rgba(255, 255, 255, 0.24)",
                   borderColor: "transparent",
-                }
+                },
               }}
             >
-              <Stack direction={"row"} alignItems={"center"} gap={1}>
-                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography component="span" variant="subtitle1" fontWeight={600}>
                   See Our Agenda
                 </Typography>
-                <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+                <CallMadeIcon sx={{ fontSize: 16, mt: 0.1 }} />
               </Stack>
             </Button>
           </Stack>
         </Stack>
 
-        <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
-          <Box width="30%" sx={{
-            aspectRatio: 1,
-            position: "relative",
-            overflow: "hidden",
-          }}>
-            <Image src={aboutAsset2} alt="aboutAsset1" fill />
+        <Stack data-rightfade width="40%" gap={3} pl={16} mb={24} sx={{ willChange: "opacity" }}>
+          <Box width="30%" sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}>
+            <Image src={aboutAsset2} alt="aboutAsset2" fill />
           </Box>
           <Stack gap={2}>
             <Stack gap={1}>
@@ -299,35 +343,28 @@ const About = () => {
               variant="outlined"
               size="small"
               sx={{
-                px: 4,
-                py: 1,
-                width: "fit-content",
-                textTransform: "none",
-                borderRadius: 60,
+                px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 60,
                 "&:hover": {
-                  background: "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
+                  background:
+                    "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
                   boxShadow: "inset 0px 1.25px 1.25px rgba(255, 255, 255, 0.24)",
                   borderColor: "transparent",
-                }
+                },
               }}
             >
-              <Stack direction={"row"} alignItems={"center"} gap={1}>
-                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography component="span" variant="subtitle1" fontWeight={600}>
                   Apply as a Sponsor
                 </Typography>
-                <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+                <CallMadeIcon sx={{ fontSize: 16, mt: 0.1 }} />
               </Stack>
             </Button>
           </Stack>
         </Stack>
 
-        <Stack data-rightfade width="40%" gap={3} pl={16} sx={{ willChange: "opacity" }}>
-          <Box width="30%" sx={{
-            aspectRatio: 1,
-            position: "relative",
-            overflow: "hidden",
-          }}>
-            <Image src={aboutAsset3} alt="aboutAsset1" fill />
+        <Stack data-rightfade width="40%" gap={3} pl={16} mb={24} sx={{ willChange: "opacity" }}>
+          <Box width="30%" sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}>
+            <Image src={aboutAsset3} alt="aboutAsset3" fill />
           </Box>
           <Stack gap={2}>
             <Stack gap={1}>
@@ -342,26 +379,50 @@ const About = () => {
               variant="outlined"
               size="small"
               sx={{
-                px: 4,
-                py: 1,
-                width: "fit-content",
-                textTransform: "none",
-                borderRadius: 60,
+                px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 60,
                 "&:hover": {
-                  background: "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
+                  background:
+                    "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
                   boxShadow: "inset 0px 1.25px 1.25px rgba(255, 255, 255, 0.24)",
                   borderColor: "transparent",
-                }
+                },
               }}
             >
-              <Stack direction={"row"} alignItems={"center"} gap={1}>
-                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography component="span" variant="subtitle1" fontWeight={600}>
                   Apply as a Speaker
                 </Typography>
-                <CallMadeIcon sx={{ fontSize: 16, marginTop: 0.1 }} />
+                <CallMadeIcon sx={{ fontSize: 16, mt: 0.1 }} />
               </Stack>
             </Button>
           </Stack>
+        </Stack>
+
+        <Stack
+          width="100%"
+          height="100vh"
+          gap={3}
+          sx={{
+            willChange: "opacity",
+            position: "relative",
+            zIndex: 10,
+            backgroundColor: theme.palette.background.default,
+            px: 8,
+          }}
+        >
+          <Speakers />
+        </Stack>
+        <Stack
+          width="100%"
+          height="100vh"
+          sx={{
+            willChange: "opacity",
+            position: "relative",
+            zIndex: 10,
+            backgroundColor: theme.palette.brand.napulETHYellow1.main,
+            px: 8,
+          }}
+        >
         </Stack>
       </Stack>
     </Stack>

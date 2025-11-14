@@ -107,30 +107,26 @@ const Speakers = () => {
 
   return (
     <Stack
-      ref={sectionRef}
       width="100%"
-      minHeight="100vh"
       sx={{
         position: "relative",
         px: 8,
-        py: 4,
+        pb: 4,
         backgroundColor: theme.palette.background.default,
         overflow: "hidden",
       }}
     >
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <Typography
-          ref={titleRef}
           variant="h1"
           color={theme.palette.primary.main}
           fontWeight={600}
           mb={6}
-          sx={{ opacity: 0 }}
         >
           Speakers
         </Typography>
 
-        <Box ref={containerRef} sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative" }}>
           {/* Floating info panel that slides across cards on hover */}
           <Box
             aria-hidden

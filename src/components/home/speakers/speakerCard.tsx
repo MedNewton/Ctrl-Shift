@@ -48,7 +48,7 @@ const SpeakerCard = ({ name, title, image, onHover, onLeave }: SpeakerCardProps)
           willChange: "transform",
         },
         "&:hover .speaker-image": {
-          transform: "scale(1)",
+          transform: "scale(1.1)",
         },
       }}
     >
@@ -57,7 +57,7 @@ const SpeakerCard = ({ name, title, image, onHover, onLeave }: SpeakerCardProps)
         alt={name}
         className="speaker-image"
         fill
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "cover" , position: "absolute", inset: 0, zIndex: 1}}
       />
     </Stack>
   );

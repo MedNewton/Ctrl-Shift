@@ -97,7 +97,7 @@ const GlassAnimatedHero = () => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                zIndex: 11,
+                zIndex: 5,
                 pointerEvents: "none",
                 overflow: "hidden",
                 opacity: 0.35,
@@ -168,7 +168,7 @@ const GlassAnimatedHero = () => {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    zIndex: 60,
+                    zIndex: 5,
                     gap: 2,
                     marginY: "auto",
                     transform: { xs: "translateY(-10%)", md: "translateY(-15%)" },
@@ -178,7 +178,7 @@ const GlassAnimatedHero = () => {
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                     animate={{ opacity: 1, marginTop: 0 }}
                     transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-                    className="relative z-120"
+                    className="relative"
                 >
                     <StylishPill />
                 </motion.div>
@@ -187,7 +187,7 @@ const GlassAnimatedHero = () => {
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                     animate={{ opacity: 1, marginTop: 0 }}
                     transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-                    className="relative w-full z-120"
+                    className="relative w-full"
                 >
                     <Stack width={{ xs: "85%", md: "35%" }} alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
                         <Typography variant="h3" component="h3" fontWeight={600} textAlign={"center"}>
@@ -205,7 +205,7 @@ const GlassAnimatedHero = () => {
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                     animate={{ opacity: 1, marginTop: 6 }}
                     transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-                    className="relative z-120"
+                    className="relative"
                 >
                     <Stack direction={"row"} gap={2}>
                         <GlowButton sx={{

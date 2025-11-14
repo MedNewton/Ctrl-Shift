@@ -3,7 +3,6 @@
 import { Stack } from "@mui/material";
 import GlassAnimatedHero from "@/sections/home/GlassAnimatedHero";
 import About from "@/sections/home/about";
-import Speakers from "@/sections/home/speakers";
 
 export default function Home() {
 
@@ -13,7 +12,7 @@ export default function Home() {
     }}>
       <GlassAnimatedHero />
       <About />
-      <Speakers />
+      
       <Stack width={"100%"} minHeight={"100dvh"} sx={{
         position: "relative",
         zIndex: 10,
