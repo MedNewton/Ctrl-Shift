@@ -97,6 +97,14 @@ const Sponsors = () => {
         backgroundColor: theme.palette.background.default,
         overflow: "hidden",
         isolation: "isolate",
+        "& .sponsor-card-wrapper": {
+          cursor: "pointer",
+          filter: "brightness(0) invert(1)",
+          transition: "filter 0.2s ease-in-out",
+          "&:hover": {
+            filter: "brightness(1) invert(0)"
+          }
+        }
       }}
     >
       <Box sx={{ position: "relative", zIndex: 1 }}>
