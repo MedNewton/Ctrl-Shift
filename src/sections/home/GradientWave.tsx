@@ -1,3 +1,4 @@
+// components/home/hero/GradientWave.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -70,18 +71,22 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
       const width = canvas.width / (Math.min(window.devicePixelRatio || 1, 2));
       const height = canvas.height / (Math.min(window.devicePixelRatio || 1, 2));
 
+      // Clear with dark background
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, width, height);
 
+      // Variable speed calculation
       const speedModulation = 0.5 + Math.sin(speedPhase) * 0.4;
       const currentSpeed = 0.6 * speedModulation;
 
+      // Wave parameters
       const centerY = height * 0.5;
       const waveThickness = height * 0.7;
       const waveAmplitude = height * 0.14;
       const waveFrequency = 0.0018;
       const waveSpeed = currentSpeed;
 
+      // Calculate wave points with 3D motion
       const topWavePoints: WavePoint[] = [];
       const bottomWavePoints: WavePoint[] = [];
       const centerWavePoints: WavePoint[] = [];
@@ -109,6 +114,7 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
         centerWavePoints.push({ x, y: midY, z: depthBrightness });
       }
 
+      // Draw main wave body
       ctx.save();
       ctx.beginPath();
       
@@ -131,6 +137,7 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
       
       ctx.closePath();
 
+      // 3D gradient
       const waveGradient = ctx.createLinearGradient(0, centerY - waveThickness / 2, 0, centerY + waveThickness / 2);
       waveGradient.addColorStop(0, `rgba(${baseColor.r * 0.2}, ${baseColor.g * 0.2}, ${baseColor.b * 0.2}, 0.98)`);
       waveGradient.addColorStop(0.15, `rgba(${baseColor.r * 0.4}, ${baseColor.g * 0.4}, ${baseColor.b * 0.4}, 1)`);
@@ -144,6 +151,7 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
       ctx.fill();
       ctx.restore();
 
+      // 3D highlights
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
       
@@ -184,6 +192,7 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
       }
       ctx.restore();
 
+      // Atmospheric glow
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
       const ambientGradient = ctx.createRadialGradient(
@@ -206,10 +215,12 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
         }
       }
 
+      // Set ready after a few frames to ensure wave is visible
       frameCount++;
       if (frameCount === 2 && !isReady) {
         setIsReady(true);
-        setTimeout(() => setShowGlass(true), 50);
+        // Show glass overlay slightly after wave is visible
+        setTimeout(() => setShowGlass(true), 25);
       }
 
       animationFrameRef.current = requestAnimationFrame(animate);
@@ -240,6 +251,7 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
         overflow: 'hidden',
       }}
     >
+      {/* Wave Canvas */}
       <canvas
         ref={canvasRef}
         style={{
@@ -251,6 +263,7 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
         }}
       />
 
+      {/* Fractal Glass Overlay - shows after wave is ready */}
       {showGlass && (
         <Box
           aria-hidden
