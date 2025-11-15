@@ -3,7 +3,7 @@
 import { Stack } from "@mui/material";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import Newsletter from "@/sections/home/newsletter";
+import Newsletter from "@/sections/home/old/newsletter";
 import HeroLiquidReveal from "@/components/test/HeroLiquidReveal";
 
 export default function Home() {

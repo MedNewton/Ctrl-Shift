@@ -1,15 +1,11 @@
-// components/Sections/About.tsx
 "use client";
 
 import { Stack, Typography, Box, Button } from "@mui/material";
 import theme from "@/theme/theme";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import Speakers from "@/sections/home/speakers";
-import Topics from "@/sections/home/topics";
-import ParallaxBoxes from "@/sections/home/ParallaxBoxes";
 
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import aboutAsset1 from "@/assets/images/about/aboutAsset1.svg?url";
@@ -27,7 +23,8 @@ const About = () => {
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const linesWrapRef = useRef<HTMLDivElement | null>(null);
   const rightColRef = useRef<HTMLDivElement | null>(null);
-  const textRef = useRef<HTMLDivElement | null>(null); // <-- container for word spans
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   const linePercents = useMemo(() => [0, 100 / 3, (2 * 100) / 3, 100], []);
   const words = useMemo(
@@ -39,86 +36,64 @@ const About = () => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Lines grow once
-      gsap.fromTo(
-        lineRefs.current,
-        { height: 0 },
-        {
-          height: "100%",
-          duration: 1.1,
-          ease: "power3.out",
-          stagger: 0.05,
-          scrollTrigger: {
-            trigger: sectionRef.current!,
-            start: "top 85%",
-            once: true,
-            invalidateOnRefresh: true,
-          },
-        }
-      );
+      const mm = gsap.matchMedia();
 
-      // Right boxes fade out upward
-      const rightBoxes = Array.from(
-        sectionRef.current!.querySelectorAll<HTMLElement>("[data-rightfade]")
-      );
-      rightBoxes.forEach((el) => {
+      mm.add("(min-width: 900px)", () => {
         gsap.fromTo(
-          el,
-          { opacity: 1 },
+          lineRefs.current,
+          { height: 0 },
           {
-            opacity: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 40%",
-              end: "top -15%",
-              scrub: true,
-              immediateRender: false,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-      });
-
-      // Left small title fade as before (only the title keeps data-fade)
-      const leftFades = stickyRef.current
-        ? Array.from(
-          stickyRef.current.querySelectorAll<HTMLElement>("[data-fade]")
-        )
-        : [];
-      if (leftFades.length) {
-        gsap.fromTo(
-          leftFades,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            ease: "none",
+            height: "100%",
+            duration: 1.1,
+            ease: "power3.out",
+            stagger: 0.05,
             scrollTrigger: {
               trigger: sectionRef.current!,
-              start: "top 75%",
-              end: "top 15%",
-              scrub: true,
-              immediateRender: false,
+              start: "top 85%",
+              once: true,
               invalidateOnRefresh: true,
             },
           }
         );
-      }
 
-      // Fade out left title & lines when the last right block nears top
-      const lastRight = rightBoxes[rightBoxes.length - 1];
-      if (lastRight) {
+        const rightBoxes = Array.from(
+          sectionRef.current!.querySelectorAll<HTMLElement>("[data-rightfade]")
+        );
+        rightBoxes.forEach((el) => {
+          gsap.fromTo(
+            el,
+            { opacity: 1 },
+            {
+              opacity: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 40%",
+                end: "top -15%",
+                scrub: true,
+                immediateRender: false,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        });
+
+        const leftFades = stickyRef.current
+          ? Array.from(
+              stickyRef.current.querySelectorAll<HTMLElement>("[data-fade]")
+            )
+          : [];
         if (leftFades.length) {
           gsap.fromTo(
             leftFades,
-            { opacity: 1 },
+            { opacity: 0 },
             {
-              opacity: 0,
+              opacity: 1,
               ease: "none",
               scrollTrigger: {
-                trigger: lastRight,
-                start: "top 30%",
-                end: "top 10%",
+                trigger: sectionRef.current!,
+                start: "top 75%",
+                end: "top 15%",
                 scrub: true,
                 immediateRender: false,
                 invalidateOnRefresh: true,
@@ -126,49 +101,138 @@ const About = () => {
             }
           );
         }
-        if (linesWrapRef.current) {
-          gsap.fromTo(
-            linesWrapRef.current,
-            { opacity: 1 },
-            {
-              opacity: 0,
-              ease: "none",
-              scrollTrigger: {
-                trigger: lastRight,
-                start: "top 30%",
-                end: "top 10%",
-                scrub: true,
-                immediateRender: false,
-                invalidateOnRefresh: true,
-              },
-            }
-          );
-        }
-      }
 
-      // === WORD-BY-WORD REVEAL ===
-      if (textRef.current) {
-        const wordEls = Array.from(
-          textRef.current.querySelectorAll<HTMLElement>("[data-word]")
+        const lastRight = rightBoxes[rightBoxes.length - 1];
+        if (lastRight) {
+          if (leftFades.length) {
+            gsap.fromTo(
+              leftFades,
+              { opacity: 1 },
+              {
+                opacity: 0,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: lastRight,
+                  start: "top 30%",
+                  end: "top 10%",
+                  scrub: true,
+                  immediateRender: false,
+                  invalidateOnRefresh: true,
+                },
+              }
+            );
+          }
+          if (linesWrapRef.current) {
+            gsap.fromTo(
+              linesWrapRef.current,
+              { opacity: 1 },
+              {
+                opacity: 0,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: lastRight,
+                  start: "top 30%",
+                  end: "top 10%",
+                  scrub: true,
+                  immediateRender: false,
+                  invalidateOnRefresh: true,
+                },
+              }
+            );
+          }
+        }
+
+        if (textRef.current) {
+          const wordEls = Array.from(
+            textRef.current.querySelectorAll<HTMLElement>("[data-word]")
+          );
+          gsap.set(wordEls, { opacity: 0.2 });
+
+          gsap.to(wordEls, {
+            opacity: 1,
+            stagger: { each: 0.06, from: 0 },
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current!,
+              start: "top 60%",
+              end: "top 20%",
+              scrub: true,
+              immediateRender: false,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+
+        const imageBoxes = Array.from(
+          sectionRef.current!.querySelectorAll<HTMLElement>(
+            '[data-rightfade] > div:first-child'
+          )
         );
-        // start all words at 0.2 (gray-ish)
-        gsap.set(wordEls, { opacity: 0.2 });
-
-        gsap.to(wordEls, {
-          opacity: 1,
-          // play with each to control speed of the sweep
-          stagger: { each: 0.06, from: 0 },
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current!, // drive by the whole section
-            start: "top 50%",          // begin as soon as section enters
-            end: "top top",               // finish near the top (while sticky)
-            scrub: true,                  // reversible & tied to scroll
-            immediateRender: false,
-            invalidateOnRefresh: true,
-          },
+        imageBoxes.forEach((el) => {
+          gsap.fromTo(
+            el,
+            { y: 0 },
+            {
+              y: -50,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
         });
-      }
+      });
+
+      mm.add("(max-width: 899px)", () => {
+        const rightBoxes = Array.from(
+          sectionRef.current!.querySelectorAll<HTMLElement>("[data-rightfade]")
+        );
+
+        rightBoxes.forEach((el) => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              scrollTrigger: {
+                trigger: el,
+                start: "top 80%",
+                end: "top 50%",
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        });
+
+        if (textRef.current) {
+          const wordEls = Array.from(
+            textRef.current.querySelectorAll<HTMLElement>("[data-word]")
+          );
+          gsap.set(wordEls, { opacity: 0.2 });
+
+          gsap.to(wordEls, {
+            opacity: 1,
+            stagger: { each: 0.04, from: 0 },
+            ease: "none",
+            scrollTrigger: {
+              trigger: textRef.current,
+              start: "top 80%",
+              end: "top 40%",
+              scrub: true,
+              immediateRender: false,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+      });
+
+      setIsReady(true);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -180,9 +244,13 @@ const About = () => {
       width="100%"
       minHeight="100dvh"
       position="relative"
-      sx={{ zIndex: 0, px: 0, py: 4 }}
+      sx={{ 
+        zIndex: 0, 
+        px: 0, 
+        py: 4,
+        isolation: 'isolate',
+      }}
     >
-      {/* Lines */}
       <Box
         ref={linesWrapRef}
         aria-hidden
@@ -190,7 +258,7 @@ const About = () => {
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
-          display: "flex",
+          display: { xs: 'none', md: 'flex' },
           justifyContent: "center",
           px: 8,
         }}
@@ -237,41 +305,42 @@ const About = () => {
         </Box>
       </Box>
 
-      {/* Left sticky column */}
       <Stack
         ref={stickyRef}
         width="100%"
         height="fit-content"
         gap={2}
         sx={{
-          position: "sticky !important",
+          position: { xs: 'relative', md: 'sticky !important' },
           top: 0,
           left: 0,
           zIndex: 1,
           pt: 4,
-          px: 8,
+          px: { xs: 4, md: 8 },
         }}
       >
         <Typography
           data-fade
           variant="h6"
+          component="h2"
           fontWeight={600}
           color={theme.palette.brand.napulETHRed.main}
-          sx={{ opacity: 0, willChange: "opacity" }}
+          sx={{ 
+            opacity: isReady ? 0 : 0, 
+            willChange: "opacity" 
+          }}
         >
           Ctrl/Shift 2026
         </Typography>
 
-        {/* WORD-BY-WORD REVEAL PARAGRAPH */}
         <Typography
           ref={textRef}
           variant="h5"
           fontWeight={500}
           lineHeight={1.6}
           sx={{
-            width: "50%",
+            width: { xs: '100%', md: '50%' },
             color: theme.palette.text.primary,
-            // ensure wrapping/spacing looks natural
             wordBreak: "normal",
             whiteSpace: "pre-wrap",
           }}
@@ -281,7 +350,7 @@ const About = () => {
               key={k}
               component="span"
               data-word
-              sx={{ opacity: 0.2, willChange: "opacity" }}
+              sx={{ opacity: isReady ? 0.2 : 0.2, willChange: "opacity" }}
             >
               {w}
               {idx < words.length - 1 ? " " : ""}
@@ -290,26 +359,51 @@ const About = () => {
         </Typography>
       </Stack>
 
-      {/* Right column blocks (each fades out near top) */}
-      <Stack ref={rightColRef} width="100%" alignItems="end" gap={0} pt={20}>
-        <Stack data-rightfade width="40%" gap={3} pl={16} mb={24} sx={{ willChange: "opacity" }}>
-          <Box width="30%" sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}>
-            <Image src={aboutAsset1} alt="aboutAsset1" fill />
+      <Stack 
+        ref={rightColRef} 
+        width="100%" 
+        alignItems="end" 
+        gap={0} 
+        pt={{ xs: 8, md: 20 }}
+      >
+        <Stack 
+          data-rightfade 
+          width={{ xs: '100%', md: '40%' }} 
+          gap={3} 
+          pl={{ xs: 4, md: 16 }} 
+          pr={{ xs: 4, md: 0 }}
+          mb={{ xs: 16, md: 24 }} 
+          sx={{ willChange: "opacity" }}
+        >
+          <Box 
+            width={{ xs: '40%', md: '30%' }} 
+            sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}
+          >
+            <Image src={aboutAsset1} alt="Event agenda illustration" fill />
           </Box>
           <Stack gap={2}>
             <Stack gap={1}>
               <Typography variant="h5" fontWeight={600}>
                 Explore Our <span style={{ color: theme.palette.brand.napulETHRed.main }}>Agenda</span>
               </Typography>
-              <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
+              <Typography 
+                variant="body1" 
+                lineHeight={1.6} 
+                sx={{ opacity: 0.6, width: { xs: '100%', md: '65%' } }}
+              >
                 Explore the event agenda and find the best talks, panels, workshops & more.
               </Typography>
             </Stack>
             <Button
               variant="outlined"
               size="small"
+              aria-label="View event agenda"
               sx={{
-                px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 60,
+                px: 4, 
+                py: 1, 
+                width: "fit-content", 
+                textTransform: "none", 
+                borderRadius: 60,
                 "&:hover": {
                   background:
                     "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
@@ -328,24 +422,44 @@ const About = () => {
           </Stack>
         </Stack>
 
-        <Stack data-rightfade width="40%" gap={3} pl={16} mb={24} sx={{ willChange: "opacity" }}>
-          <Box width="30%" sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}>
-            <Image src={aboutAsset2} alt="aboutAsset2" fill />
+        <Stack 
+          data-rightfade 
+          width={{ xs: '100%', md: '40%' }} 
+          gap={3} 
+          pl={{ xs: 4, md: 16 }} 
+          pr={{ xs: 4, md: 0 }}
+          mb={{ xs: 16, md: 24 }} 
+          sx={{ willChange: "opacity" }}
+        >
+          <Box 
+            width={{ xs: '40%', md: '30%' }} 
+            sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}
+          >
+            <Image src={aboutAsset2} alt="Sponsorship illustration" fill />
           </Box>
           <Stack gap={2}>
             <Stack gap={1}>
               <Typography variant="h5" fontWeight={600}>
                 Become A <span style={{ color: theme.palette.brand.napulETHRed.main }}>Sponsor</span>
               </Typography>
-              <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
+              <Typography 
+                variant="body1" 
+                lineHeight={1.6} 
+                sx={{ opacity: 0.6, width: { xs: '100%', md: '65%' } }}
+              >
                 Become a sponsor and get the opportunity to showcase your brand to a global audience.
               </Typography>
             </Stack>
             <Button
               variant="outlined"
               size="small"
+              aria-label="Apply as event sponsor"
               sx={{
-                px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 60,
+                px: 4, 
+                py: 1, 
+                width: "fit-content", 
+                textTransform: "none", 
+                borderRadius: 60,
                 "&:hover": {
                   background:
                     "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
@@ -364,24 +478,44 @@ const About = () => {
           </Stack>
         </Stack>
 
-        <Stack data-rightfade width="40%" gap={3} pl={16} mb={24} sx={{ willChange: "opacity" }}>
-          <Box width="30%" sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}>
-            <Image src={aboutAsset3} alt="aboutAsset3" fill />
+        <Stack 
+          data-rightfade 
+          width={{ xs: '100%', md: '40%' }} 
+          gap={3} 
+          pl={{ xs: 4, md: 16 }} 
+          pr={{ xs: 4, md: 0 }}
+          mb={{ xs: 16, md: 24 }} 
+          sx={{ willChange: "opacity" }}
+        >
+          <Box 
+            width={{ xs: '40%', md: '30%' }} 
+            sx={{ aspectRatio: 1, position: "relative", overflow: "hidden" }}
+          >
+            <Image src={aboutAsset3} alt="Speaker illustration" fill />
           </Box>
           <Stack gap={2}>
             <Stack gap={1}>
               <Typography variant="h5" fontWeight={600}>
                 Become A <span style={{ color: theme.palette.brand.napulETHRed.main }}>Speaker</span>
               </Typography>
-              <Typography variant="body1" lineHeight={1.6} sx={{ opacity: 0.6, width: "65%" }}>
+              <Typography 
+                variant="body1" 
+                lineHeight={1.6} 
+                sx={{ opacity: 0.6, width: { xs: '100%', md: '65%' } }}
+              >
                 Become a speaker and share your expertise with a global audience.
               </Typography>
             </Stack>
             <Button
               variant="outlined"
               size="small"
+              aria-label="Apply as event speaker"
               sx={{
-                px: 4, py: 1, width: "fit-content", textTransform: "none", borderRadius: 60,
+                px: 4, 
+                py: 1, 
+                width: "fit-content", 
+                textTransform: "none", 
+                borderRadius: 60,
                 "&:hover": {
                   background:
                     "linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), #942629",
@@ -398,24 +532,6 @@ const About = () => {
               </Stack>
             </Button>
           </Stack>
-        </Stack>
-
-        <Stack
-          width="100%"
-          gap={3}
-          sx={{
-            willChange: "opacity",
-            position: "relative",
-            zIndex: 10,
-            backgroundColor: theme.palette.background.default,
-            px: 8,
-          }}
-        >
-          <Speakers />
-        </Stack>
-        
-        <Stack sx={{ position: "relative", zIndex: 10, backgroundColor: theme.palette.background.default }}>
-          
         </Stack>
       </Stack>
     </Stack>
