@@ -1,21 +1,15 @@
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import theme from "@/theme/theme";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import FractalGlassOverlay from "@/components/home/hero/FractalGlassOverlay";
 import Header from "@/components/layout/header";
 import MobileHeader from "@/components/layout/mobileHeader";
 import GlowButton from "@/components/ui/glowButton";
 import BlackButton from "@/components/ui/blackButton";
 import StylishPill from "@/components/home/hero/stylishPill";
+import GradientWave from "@/sections/home/GradientWave";
 
-import bars from "@/assets/svg/bars.svg?url";
 import HeroCircuit from "@/assets/images/hero/circuit.png";
-
-
-
-const LOOP_SECONDS = 44;
-const PULSE_SECONDS = 6.5;
 
 const GlassAnimatedHero = () => {
     const prefersReduced = useReducedMotion();
@@ -29,66 +23,8 @@ const GlassAnimatedHero = () => {
             overflow="hidden"
             sx={{ backgroundColor: theme.palette.background.default }}
         >
-            <Box
-                component={motion.div}
-                aria-hidden
-                sx={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    width: { xs: "200%", md: "200%" },
-                    height: "100%",
-                    zIndex: 0,
-                    opacity: { xs: 0.75, md: 1 },
-                }}
-                animate={prefersReduced ? undefined : { x: ["0%", "-50%", "0%", "-40%", "0%"] }}
-                transition={
-                    prefersReduced
-                        ? undefined
-                        : { duration: LOOP_SECONDS, ease: "linear", repeat: Infinity }
-                }
-            >
-                <Box
-                    component={motion.div}
-                    sx={{ position: "relative", width: "50%", height: "100%" }}
-                    style={{ transformOrigin: "bottom" }}
-                    initial={{ scaleY: 0.7 }}
-                >
-                    <Image
-                        src={bars}
-                        alt="bars"
-                        fill
-                        priority
-                        style={{
-                            objectFit: "cover",
-                            objectPosition: "center",
-                        }}
-                    />
-                </Box>
-
-                <Box
-                    component={motion.div}
-                    sx={{ position: "relative", width: "50%", height: "100%", opacity: { xs: 0.85, md: 1 } }}
-                    style={{ transformOrigin: "bottom" }}
-                    initial={{ scaleY: 0.7 }}
-                    animate={prefersReduced ? undefined : { scaleY: [0.55, 0.8, 0.55] }}
-                    transition={
-                        prefersReduced
-                            ? undefined
-                            : { duration: PULSE_SECONDS, ease: "easeInOut", repeat: Infinity }
-                    }
-                >
-                    <Image
-                        src={bars}
-                        alt="bars"
-                        fill
-                        priority
-                        style={{ objectFit: "cover", objectPosition: "center" }}
-                    />
-                </Box>
-            </Box>
-
-            <FractalGlassOverlay />
+            {/* Gradient Wave Background */}
+            <GradientWave color="#942629" />
 
             <Stack position="absolute" sx={{
                 width: "100%",
@@ -122,7 +58,6 @@ const GlassAnimatedHero = () => {
                 >
                     <Image src={HeroCircuit} alt="Hero Circuit" fill priority style={{ objectFit: "cover" }}></Image>
                 </motion.div>
-
             </Stack>
 
             <Stack
@@ -196,7 +131,7 @@ const GlassAnimatedHero = () => {
                         <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"} sx={{
                             width: { xs: "85%", md: "100%" },
                         }}>
-                            17-19 September, Villa Doria D’Angri, Naples, Italy
+                            17-19 September, Villa Doria D&apos;Angri, Naples, Italy
                         </Typography>
                     </Stack>
                 </motion.div>
@@ -226,8 +161,6 @@ const GlassAnimatedHero = () => {
                         </BlackButton>
                     </Stack>
                 </motion.div>
-
-
             </Stack>
 
             <Stack width={"100%"} height={"25vh"} sx={{
@@ -238,7 +171,6 @@ const GlassAnimatedHero = () => {
                 right: 0,
                 zIndex: 12,
             }}>
-
             </Stack>
         </Stack>
     );
