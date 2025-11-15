@@ -15,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Speakers = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const cardsContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -24,80 +25,71 @@ const Speakers = () => {
 
     const ctx = gsap.context(() => {
       const titleElement = titleRef.current;
-      const cardInners = Array.from(
-        sectionElement.querySelectorAll<HTMLDivElement>(".speaker-card-inner")
+      const cardWrappers = Array.from(
+        sectionElement.querySelectorAll<HTMLDivElement>(".speaker-card-wrapper")
       );
 
-      if (!titleElement || cardInners.length === 0) {
+      if (!titleElement || cardWrappers.length === 0) {
         return;
       }
 
-      // Make sure scaling is anchored on the left
-      gsap.set(cardInners, {
-        transformOrigin: "left center",
+      // Set initial states
+      gsap.set(titleElement, { opacity: 0, y: 30 });
+      gsap.set(cardWrappers, { 
+        opacity: 0, 
+        y: 40,
+        scale: 0.95,
       });
 
-      // Timeline that plays with easing (not scrubbed)
-      const tl = gsap
-        .timeline({
-          defaults: { ease: "power2.inOut" },
-        })
-        .fromTo(
-          titleElement,
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.5, delay: 0.1 }
-        )
-        .fromTo(
-          cardInners,
-          {
-            opacity: 0,
-            scaleX: 0,
-          },
-          {
-            opacity: 1,
-            scaleX: 1,
-            duration: 0.4,
-            // small delay so it feels more “visible”
-            delay: 0.6,
-          },
-          // start slightly overlapping with the end of the title animation
-          "-=0.1"
-        );
-
-      ScrollTrigger.create({
-        trigger: sectionElement,
-        // Start the animation earlier as you scroll in
-        start: "top 80%", // adjust up/down to taste
-        end: "top 30%",
-        animation: tl,
-        // replay the animation every time you enter the section
-        toggleActions: "restart none restart none",
-        invalidateOnRefresh: true,
+      // Create timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionElement,
+          start: "top 75%",
+          end: "bottom 25%", // Changed from "top 25%" to "bottom 25%"
+          toggleActions: "play reverse play reverse", // Changed to reverse both ways
+          invalidateOnRefresh: true,
+        },
       });
+
+      // Animate title
+      tl.to(titleElement, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+
+      // Animate cards with stagger
+      tl.to(
+        cardWrappers,
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: {
+            amount: 0.4,
+            from: "start",
+          },
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
     }, sectionRef);
 
+    // Refresh ScrollTrigger on resize
     const resizeObserver = new ResizeObserver(() => {
       ScrollTrigger.refresh();
     });
-
     resizeObserver.observe(sectionElement);
-
-    requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-    });
-
-    const timeoutId = window.setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
 
     return () => {
       ctx.revert();
       resizeObserver.disconnect();
-      window.clearTimeout(timeoutId);
     };
   }, []);
 
-  // Helper factory so types stay correct
   const makeHoverHandler =
     (index: number) =>
     (_payload: SpeakerCardHoverPayload): void => {
@@ -116,10 +108,11 @@ const Speakers = () => {
       width="100%"
       sx={{
         position: "relative",
-        px: 8,
-        py: 4,
+        px: { xs: 4, md: 8 },
+        py: { xs: 6, md: 8 },
         backgroundColor: theme.palette.background.default,
         overflow: "hidden",
+        isolation: "isolate",
       }}
     >
       <Box sx={{ position: "relative", zIndex: 1 }}>
@@ -128,38 +121,43 @@ const Speakers = () => {
           variant="h1"
           color={theme.palette.primary.main}
           fontWeight={600}
-          mb={6}
+          mb={{ xs: 4, md: 6 }}
+          sx={{
+            fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4rem' },
+          }}
         >
           Speakers
         </Typography>
 
-        {/* Flex row instead of Grid, so we can smoothly resize columns */}
         <Stack
+          ref={cardsContainerRef}
           direction={{ xs: "column", md: "row" }}
           flexWrap="wrap"
-          gap={1}
+          gap={{ xs: 2, md: 1 }}
           sx={{ mt: 2 }}
         >
           {speakers.map((_, index) => {
-            // Flex ratios:
-            // - no hover: all 1
-            // - hover: hovered = 2, others = 0.75
-            const flexValue =
-              hoveredIndex === null
-                ? 1
-                : hoveredIndex === index
-                ? 2
-                : 0.75;
+            // Calculate flex values with smoother transitions
+            const isHovered = hoveredIndex === index;
+            const isSomeoneHovered = hoveredIndex !== null;
+            
+            let flexValue = 1;
+            if (isSomeoneHovered) {
+              flexValue = isHovered ? 2.2 : 0.7;
+            }
 
             return (
               <Box
                 key={index}
+                className="speaker-card-wrapper"
                 sx={{
                   flex: flexValue,
-                  minWidth: 0,
-                  transition:
-                    "flex 260ms cubic-bezier(.2,.7,.2,1)",
-                  // height is defined by the card's aspectRatio, so stays intact
+                  minWidth: { xs: '100%', md: 0 },
+                  transition: "flex 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+                  // Add subtle transform on hover for depth
+                  transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
+                  transitionProperty: 'flex, transform',
+                  willChange: 'flex, transform',
                 }}
               >
                 <SpeakerCard
@@ -173,7 +171,6 @@ const Speakers = () => {
             );
           })}
         </Stack>
-        
       </Box>
     </Stack>
   );

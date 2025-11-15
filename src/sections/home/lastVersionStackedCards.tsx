@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useLayoutEffect } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, IconButton } from '@mui/material';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import theme from '@/theme/theme';
+import NorthEastIcon from '@mui/icons-material/NorthEast';
 
 import image1 from '@/assets/images/2025/1.webp';
 import image2 from '@/assets/images/2025/2.webp';
@@ -31,6 +32,8 @@ export default function LastVersionStackedCardsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const titleArrowRef = useRef<SVGSVGElement>(null);
+  const arrowAnimationRef = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
     const allCards = cardsRef.current.filter((el): el is HTMLDivElement => el !== null);
@@ -87,12 +90,60 @@ export default function LastVersionStackedCardsSection() {
             ease: 'none',
           }, 0);
       }
+
+      if (titleArrowRef.current) {
+        arrowAnimationRef.current = gsap.fromTo(
+          titleArrowRef.current,
+          {
+            x: -40,
+            y: 40,
+            opacity: 0,
+          },
+          {
+            x: 40,
+            y: -40,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'none',
+            paused: true,
+            repeat: -1,
+            repeatDelay: 0.2,
+            keyframes: {
+              '0%': { x: -40, y: 40, opacity: 0 },
+              '25%': { x: 0, y: 0, opacity: 1 },
+              '75%': { x: 0, y: 0, opacity: 1 },
+              '100%': { x: 40, y: -40, opacity: 0 },
+            },
+          }
+        );
+      }
     }, containerRef);
 
     return () => {
+      if (arrowAnimationRef.current) {
+        arrowAnimationRef.current.kill();
+      }
       ctx.revert();
     };
   }, []);
+
+  const handleMouseEnter = () => {
+    if (arrowAnimationRef.current) {
+      arrowAnimationRef.current.play();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (arrowAnimationRef.current) {
+      arrowAnimationRef.current.pause();
+      gsap.to(titleArrowRef.current, {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        duration: 0.3,
+      });
+    }
+  };
 
   return (
     <Box
@@ -120,26 +171,71 @@ export default function LastVersionStackedCardsSection() {
           gap: 10,
         }}
       >
-        <Stack>
-        <Typography
-          variant="h6"
+        <Stack
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           sx={{
-            textAlign: 'center',
-            fontWeight: 500,
-            color: theme.palette.text.secondary,
+            '&:hover .subtitle-text': {
+              color: theme.palette.text.primary,
+            },
+            '&:hover .title-text': {
+              color: theme.palette.text.secondary,
+            },
           }}
         >
-          Our last version
-        </Typography>
-        <Typography
-          variant="h2"
-          sx={{
-            textAlign: 'center',
-            fontWeight: 600,
-          }}
-        >
-          NapulETH 2025
-        </Typography>
+          <Typography
+            className="subtitle-text"
+            variant="h6"
+            sx={{
+              textAlign: 'center',
+              fontWeight: 500,
+              color: theme.palette.text.secondary,
+              transition: 'color 0.3s ease',
+            }}
+          >
+            Our last version
+          </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            gap={2}
+            sx={{
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+          >
+            <Typography
+              className="title-text"
+              variant="h2"
+              sx={{
+                textAlign: 'center',
+                fontWeight: 600,
+                transition: 'color 0.3s ease',
+              }}
+            >
+              NapulETH 2025
+            </Typography>
+            <Box
+              sx={{
+                position: 'relative',
+                width: { xs: 32, md: 40 },
+                height: { xs: 32, md: 40 },
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <NorthEastIcon
+                ref={titleArrowRef}
+                sx={{
+                  fontSize: { xs: 32, md: 40 },
+                  position: 'absolute',
+                }}
+              />
+            </Box>
+          </Stack>
         </Stack>
 
         <Box
@@ -181,15 +277,22 @@ export default function LastVersionStackedCardsSection() {
                   objectFit: 'cover',
                 }}
               />
+
               <Box
                 sx={{
                   position: 'absolute',
                   top: 16,
                   left: 16,
                   padding: '8px 16px',
-                  backgroundColor: '#000',
+                  backgroundColor: theme.palette.background.default,
                   borderRadius: '4px',
                   zIndex: 10,
+                  color: theme.palette.text.primary,
+                  '&:hover': {
+                    backgroundColor: theme.palette.brand.napulETHRed.main,
+                    color: theme.palette.background.default,
+                  },
+                  transition: 'all 0.3s ease',
                 }}
               >
                 <Typography
@@ -204,6 +307,27 @@ export default function LastVersionStackedCardsSection() {
                   {card.tag}
                 </Typography>
               </Box>
+
+              <IconButton
+                sx={{
+                  position: 'absolute',
+                  top: 16,
+                  right: 16,
+                  zIndex: 10,
+                  width: { xs: 48, md: 56 },
+                  height: { xs: 48, md: 56 },
+                  backgroundColor: theme.palette.background.default,
+                  color: theme.palette.text.primary,
+                  '&:hover': {
+                    backgroundColor: theme.palette.brand.napulETHRed.main,
+                    color: theme.palette.background.default,
+                    transform: 'scale(1.1)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <NorthEastIcon sx={{ fontSize: { xs: 24, md: 28 } }} />
+              </IconButton>
             </Box>
           ))}
         </Box>
