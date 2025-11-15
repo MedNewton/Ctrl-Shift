@@ -143,10 +143,11 @@ const GlassAnimatedHero = () => {
                     className="relative"
                 >
                     <Stack direction={"row"} gap={2}>
-                        <GlowButton sx={{
-                            paddingX: 3,
-                            paddingY: 1,
-                        }}>
+                        <GlowButton
+                            sx={{
+                                paddingX: 3,
+                                paddingY: 1,
+                            }}>
                             <Typography component={"span"} variant="subtitle1" fontWeight={600}>
                                 Get Your Tickets
                             </Typography>
