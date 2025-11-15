@@ -8,6 +8,7 @@ import LastVersionStatsSection from "@/sections/home/lastVersionStatsSection";
 import Speakers from "@/sections/home/speakers";
 import Sponsors from "@/sections/home/sponsors";
 import Partners from "@/sections/home/partners";
+import Footer from "@/components/layout/footer";
 
 export default function Home() {
 
@@ -23,12 +24,7 @@ export default function Home() {
       <Speakers />
       <Sponsors />
       <Partners />
-      <Stack width={"100%"} minHeight={"100dvh"} sx={{
-        position: "relative",
-        zIndex: 10,
-      }}>
-
-      </Stack>
+      <Footer />
     </Stack>
   );
 }
