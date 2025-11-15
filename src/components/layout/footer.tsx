@@ -1,7 +1,7 @@
 "use client";
 
 import theme from "@/theme/theme";
-import { Box, Stack, Typography, Link as MuiLink, IconButton } from "@mui/material";
+import { Box, Stack, Typography, Link as MuiLink, IconButton, Link } from "@mui/material";
 import { motion, useInView, type Variants } from "framer-motion";
 import { useRef } from "react";
 
@@ -236,16 +236,21 @@ const Footer = () => {
                                 </motion.div>
 
                                 <Stack spacing={1.2}>
-                                    {["Speakers", "Team", "Map", "Faq", "Archive"].map((item) => (
-                                        <motion.div key={item} variants={itemVariants}>
-                                            <Typography
-                                                sx={{
-                                                    fontSize: { xs: 26, md: 24 },
-                                                    fontWeight: 500,
-                                                }}
-                                            >
-                                                {item}
-                                            </Typography>
+                                    {[{ label: "Speakers", href: "/speakers" }, { label: "Team", href: "/team" }, { label: "Map", href: "/map" }, { label: "Faq", href: "/faq" }, { label: "Archive", href: "/archive" }].map((item) => (
+                                        <motion.div key={item.label} variants={itemVariants}>
+                                            <Link href={item.href} key={item.href} underline="none">
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: { xs: 26, md: 24 },
+                                                        fontWeight: 500,
+                                                        "&:hover": {
+                                                            color: theme.palette.text.secondary,
+                                                        },
+                                                    }}
+                                                >
+                                                    {item.label}
+                                                </Typography>
+                                            </Link>
                                         </motion.div>
                                     ))}
                                 </Stack>
