@@ -14,7 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Sponsors = () => {
+const Partners = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
@@ -110,7 +110,7 @@ const Sponsors = () => {
             fontSize: { xs: "2.5rem", md: "3.5rem", lg: "4rem" },
           }}
         >
-          Sponsors
+          Partners
         </Typography>
 
         {/* Row 1 */}
@@ -175,4 +175,4 @@ const Sponsors = () => {
   );
 };
 
-export default Sponsors;
+export default Partners;
