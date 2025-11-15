@@ -22,6 +22,7 @@ const stats: Stat[] = [
 
 export default function LastVersionStatsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -31,50 +32,58 @@ export default function LastVersionStatsSection() {
       const lines = gsap.utils.toArray<HTMLElement>('[data-stat-line]');
       const numbers = gsap.utils.toArray<HTMLElement>('[data-stat-number]');
 
+      // Set initial states
       gsap.set(labels, { opacity: 0, y: 20 });
       gsap.set(lines, { scaleY: 0, transformOrigin: 'top' });
       gsap.set(numbers, { opacity: 0, y: -20 });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          end: 'bottom 30%',
-          toggleActions: 'play reverse play reverse',
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 70%',
+        onEnter: () => {
+          // Only animate if we haven't animated before
+          if (!hasAnimatedRef.current) {
+            hasAnimatedRef.current = true;
+
+            const tl = gsap.timeline();
+
+            tl.to(labels, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'power3.out',
+              stagger: 0.1,
+            })
+              .to(
+                lines,
+                {
+                  scaleY: 1,
+                  duration: 0.8,
+                  ease: 'power2.out',
+                  stagger: 0.1,
+                },
+                '-=0.3'
+              )
+              .to(
+                numbers,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.6,
+                  ease: 'power3.out',
+                  stagger: 0.1,
+                },
+                '-=0.5'
+              );
+          }
         },
       });
-
-      tl.to(labels, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power3.out',
-        stagger: 0.1,
-      })
-        .to(
-          lines,
-          {
-            scaleY: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-            stagger: 0.1,
-          },
-          '-=0.3'
-        )
-        .to(
-          numbers,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power3.out',
-            stagger: 0.1,
-          },
-          '-=0.5'
-        );
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      hasAnimatedRef.current = false; // Reset on unmount
+    };
   }, []);
 
   return (
