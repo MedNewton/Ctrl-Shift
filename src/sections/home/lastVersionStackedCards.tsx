@@ -73,6 +73,8 @@ export default function LastVersionStackedCardsSection() {
             start: () => `top+=${i * window.innerHeight} top`,
             end: () => `top+=${(i + 1) * window.innerHeight} top`,
             scrub: 0.5,
+            invalidateOnRefresh: true, // ADDED: Recalculate on refresh
+            anticipatePin: 1, // ADDED: Better pinning anticipation
           },
         });
 
@@ -117,12 +119,23 @@ export default function LastVersionStackedCardsSection() {
           }
         );
       }
+
+      // ADDED: Refresh ScrollTrigger after animations are set
+      ScrollTrigger.refresh();
     }, containerRef);
+
+    // ADDED: Handle window resize
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
       if (arrowAnimationRef.current) {
         arrowAnimationRef.current.kill();
       }
+      window.removeEventListener('resize', handleResize);
       ctx.revert();
     };
   }, []);
@@ -261,6 +274,7 @@ export default function LastVersionStackedCardsSection() {
                 height: '100%',
                 borderRadius: '16px',
                 overflow: 'hidden',
+                willChange: 'transform', // ADDED: Performance optimization
               }}
             >
               <Box
@@ -275,6 +289,7 @@ export default function LastVersionStackedCardsSection() {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
+                  willChange: 'transform', // ADDED: Performance optimization
                 }}
               />
 
