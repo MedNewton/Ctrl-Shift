@@ -413,18 +413,7 @@ const About = () => {
         >
           <Speakers />
         </Stack>
-        <Stack
-          width="100%"
-          height="100vh"
-          sx={{
-            willChange: "opacity",
-            position: "relative",
-            zIndex: 10,
-            backgroundColor: theme.palette.background.default,
-          }}
-        >
-          <Topics />
-        </Stack>
+        
         <Stack sx={{ position: "relative", zIndex: 10, backgroundColor: theme.palette.background.default }}>
           
         </Stack>
