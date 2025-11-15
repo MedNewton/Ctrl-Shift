@@ -36,18 +36,18 @@ const GlassAnimatedHero = () => {
                 zIndex: 5,
                 pointerEvents: "none",
                 overflow: "hidden",
-                opacity: 0.4,
+                opacity: 0.45,
                 willChange: "opacity",
                 animation: "circuit-animation 10s linear infinite",
                 "@keyframes circuit-animation": {
                     "0%": {
-                        opacity: 0.8,
+                        opacity: 0.85,
                     },
                     "50%": {
-                        opacity: 0.4,
+                        opacity: 0.45,
                     },
                     "100%": {
-                        opacity: 0.8,
+                        opacity: 0.85,
                     },
                 }
             }}>
@@ -112,7 +112,7 @@ const GlassAnimatedHero = () => {
                 <motion.div
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                     animate={{ opacity: 1, marginTop: 0 }}
-                    transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+                    transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
                     className="relative"
                 >
                     <StylishPill />
@@ -121,7 +121,7 @@ const GlassAnimatedHero = () => {
                 <motion.div
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                     animate={{ opacity: 1, marginTop: 0 }}
-                    transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                    transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
                     className="relative w-full"
                 >
                     <Stack width={{ xs: "85%", md: "35%" }} alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
@@ -139,7 +139,7 @@ const GlassAnimatedHero = () => {
                 <motion.div
                     initial={prefersReduced ? { opacity: 0 } : { opacity: 0, marginTop: 14 }}
                     animate={{ opacity: 1, marginTop: 6 }}
-                    transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+                    transition={{ duration: prefersReduced ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
                     className="relative"
                 >
                     <Stack direction={"row"} gap={2}>
