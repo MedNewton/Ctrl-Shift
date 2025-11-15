@@ -65,9 +65,11 @@ export default function Header() {
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="nav-pill">
-                                        <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary}>
-                                            Home
-                                        </Typography>
+                                        <Link href="/" className="inline-flex items-center gap-3">
+                                            <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary}>
+                                                Home
+                                            </Typography>
+                                        </Link>
                                     </NavigationMenuTrigger>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
@@ -110,7 +112,12 @@ export default function Header() {
                                                         setHoveredAboutItem(2);
                                                     }} onMouseLeave={() => {
                                                         setHoveredAboutItem(0);
-                                                    }}>
+                                                    }}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            window.location.href = "/team";
+                                                        }}
+                                                    >
                                                         <Stack gap={0.5}>
                                                             <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Team</Typography>
                                                             <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Meet the team behind the event.</Typography>
