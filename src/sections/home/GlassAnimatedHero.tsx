@@ -38,16 +38,19 @@ const GlassAnimatedHero = () => {
                 overflow: "hidden",
                 opacity: 0.45,
                 willChange: "opacity",
-                animation: "circuit-animation 10s linear infinite",
+                animation: "circuit-animation 20s linear infinite",
                 "@keyframes circuit-animation": {
                     "0%": {
                         opacity: 0.85,
+                        transform: "translateY(-3%)",
                     },
                     "50%": {
                         opacity: 0.45,
+                        transform: "translateY(0%)",
                     },
                     "100%": {
                         opacity: 0.85,
+                        transform: "translateY(-3%)",
                     },
                 }
             }}>
