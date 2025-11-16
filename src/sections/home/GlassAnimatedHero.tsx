@@ -157,7 +157,7 @@ const GlassAnimatedHero = () => {
                             paddingY: 1,
                         }}>
                             <Typography component={"span"} variant="subtitle1" fontWeight={600}>
-                                See Our Agenda
+                                Become a Sponsor
                             </Typography>
                         </BlackButton>
                     </Stack>
