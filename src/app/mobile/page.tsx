@@ -12,9 +12,6 @@ import MobileVisions from "@/sections/home/mobile/mobileVisions";
 import MobileHackathonBanner from "@/sections/home/mobile/mobileHackathonBanner";
 import MobileFooter from "@/components/layout/mobile/mobileFooter";
 
-
-
-
 export default function Home() {
 
     return (

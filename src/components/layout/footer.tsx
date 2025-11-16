@@ -236,7 +236,7 @@ const Footer = () => {
                                 </motion.div>
 
                                 <Stack spacing={1.2}>
-                                    {[{ label: "Speakers", href: "/speakers" }, { label: "Team", href: "/team" }, { label: "Map", href: "/map" }, { label: "Faq", href: "/faq" }, { label: "Archive", href: "/archive" }].map((item) => (
+                                    {[{ label: "Speakers", href: "/" }, { label: "Team", href: "/team" }, { label: "Map", href: "/" }, { label: "Faq", href: "/" }, { label: "Archive", href: "https://www.napuleth.org/archive/2025" }].map((item) => (
                                         <motion.div key={item.label} variants={itemVariants}>
                                             <Link href={item.href} key={item.href} underline="none">
                                                 <Typography

@@ -235,11 +235,11 @@ const MobileFooter: FC = () => {
 
                                     <Stack spacing={0.8}>
                                         {[
-                                            { label: "Speakers", href: "/speakers" },
+                                            { label: "Speakers", href: "/" },
                                             { label: "Team", href: "/team" },
-                                            { label: "Map", href: "/map" },
-                                            { label: "Faq", href: "/faq" },
-                                            { label: "Archive", href: "/archive" },
+                                            { label: "Map", href: "/" },
+                                            { label: "Faq", href: "/" },
+                                            { label: "Archive", href: "https://www.napuleth.org/archive/2025" },
                                         ].map((item) => (
                                             <motion.div key={item.label} variants={itemVariants}>
                                                 <Link href={item.href} underline="none">
