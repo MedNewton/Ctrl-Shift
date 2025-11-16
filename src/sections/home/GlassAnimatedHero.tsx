@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack, Typography } from "@mui/material";
 import theme from "@/theme/theme";
 import Image from "next/image";
@@ -7,7 +9,9 @@ import MobileHeader from "@/components/layout/mobileHeader";
 import GlowButton from "@/components/ui/glowButton";
 import BlackButton from "@/components/ui/blackButton";
 import StylishPill from "@/components/home/hero/stylishPill";
-import GradientWave from "@/sections/home/GradientWave";
+import dynamic from "next/dynamic";
+
+const GradientWave = dynamic(() => import("@/sections/home/GradientWave"), { ssr: false });
 
 import HeroCircuit from "@/assets/images/hero/circuit.png";
 
