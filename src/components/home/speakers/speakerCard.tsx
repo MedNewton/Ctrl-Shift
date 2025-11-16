@@ -70,9 +70,11 @@ const SpeakerCard = ({
             filter: "grayscale(100%)",
             transition: "filter 0.3s ease-in-out",
             willChange: "filter",
+            backgroundColor: "#E7CFA2",
             backgroundImage: `url(${image.src})`,
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             "&:hover": {
                 filter: "grayscale(0%)",
             },

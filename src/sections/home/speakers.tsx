@@ -5,7 +5,7 @@ import theme from "@/theme/theme";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ExampleSpeaker from "@/assets/images/speakers/exammple1.webp";
+import ExampleSpeaker from "@/assets/images/speakers/speakerPoster.webp";
 import SpeakerCard, {
   type SpeakerCardHoverPayload,
 } from "@/components/home/speakers/speakerCard";
@@ -100,7 +100,7 @@ const Speakers = () => {
     setHoveredIndex(null);
   };
 
-  const speakers = Array.from({ length: 7 });
+  const speakers = Array.from({ length: 5 });
 
   return (
     <Stack
@@ -143,7 +143,7 @@ const Speakers = () => {
             
             let flexValue = 1;
             if (isSomeoneHovered) {
-              flexValue = isHovered ? 2.2 : 0.7;
+              flexValue = isHovered ? 1.4 : 0.7;
             }
 
             return (
