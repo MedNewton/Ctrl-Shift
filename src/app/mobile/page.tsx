@@ -8,7 +8,7 @@ import MobileLastVersionStatsSection from "@/sections/home/mobile/mobileLastVers
 import MobileSpeakers from "@/sections/home/mobile/mobileSpeakers";
 import MobileSponsors from "@/sections/home/mobile/mobileSponsors";
 import MobilePartners from "@/sections/home/mobile/mobilePartners";
-import HackathonBanner from "@/sections/home/hackathonBanner";
+import MobileHackathonBanner from "@/sections/home/mobile/mobileHackathonBanner";
 import MobileFooter from "@/components/layout/mobile/mobileFooter";
 
 
@@ -27,6 +27,7 @@ export default function Home() {
       <MobileSpeakers />
       <MobileSponsors />
       <MobilePartners />
+      <MobileHackathonBanner />
       <MobileFooter />
     </Stack>
   );
