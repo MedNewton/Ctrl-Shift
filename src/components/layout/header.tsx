@@ -72,13 +72,6 @@ export default function Header() {
                                         </Link>
                                     </NavigationMenuTrigger>
                                 </NavigationMenuItem>
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="nav-pill">
-                                        <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary}>
-                                            Agenda
-                                        </Typography>
-                                    </NavigationMenuTrigger>
-                                </NavigationMenuItem>
 
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="nav-pill">
@@ -206,68 +199,6 @@ export default function Header() {
                                                 </Stack>
                                             </NavigationMenuContentItem>
 
-                                        </Stack>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
-
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="nav-pill">
-                                        <Typography component={"span"} variant="subtitle1" fontWeight={600} color={theme.palette.text.primary} sx={{
-                                            whiteSpace: "nowrap"
-                                        }}>
-                                            Events
-                                        </Typography>
-                                    </NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <Stack direction={"row"} alignItems={"stretch"} gap={0.75}>
-                                            <NavigationMenuContentItem href="/services/smart-contracts" className="flex flex-1 p-0"  >
-                                                <Stack minWidth={340} className="h-full" height={"100%"} gap={1.5} sx={{
-                                                    borderRadius: 2,
-                                                    paddingX: 1,
-                                                    paddingY: 1.5,
-                                                    display: "flex",
-                                                    flex: 1,
-                                                    flexGrow: 1,
-                                                    gap: 2,
-                                                }}>
-                                                    <Stack direction={"row"} alignItems={"center"} gap={1.5}>
-                                                        <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Meetups</Typography>
-                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Vibrant gatherings, held monthly.</Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                    <Stack direction={"row"} alignItems={"center"} gap={1.5}>
-                                                        <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Side Events</Typography>
-                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>To explore the Ethereum community.</Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                    <Stack direction={"row"} alignItems={"center"} gap={1.5}>
-                                                        <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Hackathon</Typography>
-                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Build and compete for prizes.</Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                    <Stack direction={"row"} alignItems={"center"} gap={1.5}>
-                                                        <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Pitch Battle</Typography>
-                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Present your ideas and get rewarded.</Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                </Stack>
-                                            </NavigationMenuContentItem>
-                                            <NavigationMenuContentItem href="/services/smart-contracts" className="flex flex-1"  >
-                                                <Stack minWidth={200} className="h-full" height={"100%"} gap={1.5} sx={{
-                                                    backgroundColor: theme.palette.brand.napulETHYellow1.main,
-                                                    borderRadius: 2,
-                                                    padding: 1,
-                                                    display: "flex",
-                                                    flex: 1,
-                                                    flexGrow: 1,
-                                                }}>
-                                                    <Image src={pillar1} alt="pillar1" fill style={{ objectFit: "cover" }} />
-                                                </Stack>
-                                            </NavigationMenuContentItem>
                                         </Stack>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
