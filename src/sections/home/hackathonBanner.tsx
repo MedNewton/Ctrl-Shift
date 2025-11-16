@@ -439,7 +439,7 @@ export default function HackathonBanner({
           >
             <Stack direction="row" alignItems="center" justifyContent="center" gap={0.5} width="fit-content">
               <Typography variant="h3" fontWeight={600} color={theme.palette.text.primary} textAlign="center">
-              Participate in the 48H<br />hackathon of Ctrl/Shift 2026
+                Participate in the 48H<br />hackathon of Ctrl/Shift 2026
               </Typography>
             </Stack>
           </motion.div>
@@ -452,7 +452,7 @@ export default function HackathonBanner({
           >
             <Stack direction="row" alignItems="center" justifyContent="center" gap={0.5} width="fit-content">
               <Typography variant="h6" fontWeight={500} color={theme.palette.text.primary} textAlign="center" sx={{ width: "100%" }}>
-              with an attractive prize pool and numerous bounties!
+                with an attractive prize pool and numerous bounties!
               </Typography>
             </Stack>
           </motion.div>
@@ -465,11 +465,15 @@ export default function HackathonBanner({
           transition={{ delay: tCta, duration: isReduced ? 0.25 : 0.5, ease: "easeOut" }}
           style={{ position: "relative", zIndex: 2 }}
         >
-          <BlackButton sx={{
-            paddingX: 3,
-            paddingY: 1,
-          }}>
-            <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+          <BlackButton
+            hoverText={
+              <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
+                Coming Soon...
+            </Typography>
+            }
+            sx={{ paddingX: 3, paddingY: 1 }}
+          >
+            <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
               Apply to our hackathon
             </Typography>
           </BlackButton>

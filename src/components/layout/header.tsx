@@ -276,11 +276,15 @@ export default function Header() {
                     </Stack>
 
                     <Stack direction={"row"} alignItems={"center"} gap={1}>
-                        <GlowButton sx={{
-                            paddingX: 3,
-                            paddingY: 1,
-                        }}>
-                            <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+                        <GlowButton
+                            hoverText={
+                                <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
+                                    Coming Soon...
+                                </Typography>
+                            }
+                            sx={{ paddingX: 3, paddingY: 1 }}
+                        >
+                            <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
                                 Get Your Tickets
                             </Typography>
                         </GlowButton>
