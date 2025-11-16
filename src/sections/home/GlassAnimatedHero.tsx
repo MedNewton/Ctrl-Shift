@@ -5,7 +5,6 @@ import theme from "@/theme/theme";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import Header from "@/components/layout/header";
-import MobileHeader from "@/components/layout/mobileHeader";
 import GlowButton from "@/components/ui/glowButton";
 import BlackButton from "@/components/ui/blackButton";
 import StylishPill from "@/components/home/hero/stylishPill";

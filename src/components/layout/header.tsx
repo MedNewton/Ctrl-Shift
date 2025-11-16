@@ -211,7 +211,12 @@ export default function Header() {
 
                     <Stack direction={"row"} alignItems={"center"} gap={1}>
                         <Stack
+                            component="div"
+                            onClick={() => {
+                                window.open('https://x.com/napuleth', '_blank');
+                            }}
                             sx={{
+                                cursor: "pointer",
                                 padding: 1.2,
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -254,7 +259,12 @@ export default function Header() {
                             <XIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
                         </Stack>
                         <Stack
+                            component="div"
+                            onClick={() => {
+                                window.open('https://www.instagram.com/napuleth', '_blank');
+                            }}
                             sx={{
+                                cursor: "pointer",
                                 padding: 1.2,
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -297,7 +307,12 @@ export default function Header() {
                             <InstagramIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
                         </Stack>
                         <Stack
+                            component="div"
+                            onClick={() => {
+                                window.open('https://www.linkedin.com/company/napul-eth/?originalSubdomain=it', '_blank');
+                            }}
                             sx={{
+                                cursor: "pointer",
                                 padding: 1.2,
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -340,7 +355,12 @@ export default function Header() {
                             <LinkedInIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
                         </Stack>
                         <Stack
+                            component="div"
+                            onClick={() => {
+                                window.open('https://t.me/napuleth', '_blank');
+                            }}
                             sx={{
+                                cursor: "pointer",
                                 padding: 1.2,
                                 alignItems: "center",
                                 justifyContent: "center",
