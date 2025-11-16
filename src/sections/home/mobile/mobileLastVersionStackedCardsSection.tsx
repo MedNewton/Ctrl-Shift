@@ -34,6 +34,10 @@ const cardVariants: Variants = {
 };
 
 const MobileLastVersionStackedCardsSection: FC = () => {
+  const handleClick = () => {
+    window.open('https://www.napuleth.org/archive/2025', '_blank');
+  };
+
   return (
     <Box
       component="section"
@@ -46,6 +50,8 @@ const MobileLastVersionStackedCardsSection: FC = () => {
     >
       {/* Title */}
       <Stack
+        component="div"
+        onClick={handleClick}
         alignItems="center"
         justifyContent="center"
         spacing={1.5}
