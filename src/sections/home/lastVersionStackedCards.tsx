@@ -160,7 +160,7 @@ export default function LastVersionStackedCardsSection() {
           position: 'sticky',
           top: 0,
           width: '100vw',
-          height: '100vh',
+          height: {xs: '100dvh', md: '100vh'},
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -242,7 +242,7 @@ export default function LastVersionStackedCardsSection() {
           sx={{
             position: 'relative',
             width: { xs: '95%', md: '50%' },
-            height: { xs: '70%', md: '60%' },
+            height: { xs: '40%', md: '60%' },
             borderRadius: '16px',
             overflow: 'hidden',
           }}

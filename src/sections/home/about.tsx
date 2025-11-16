@@ -249,6 +249,7 @@ const About = () => {
         px: 0, 
         py: 4,
         isolation: 'isolate',
+        display: { xs: 'none', md: 'flex' },
       }}
     >
       <Box
@@ -271,6 +272,7 @@ const About = () => {
             width: "96%",
             left: "50%",
             transform: "translateX(-50%)",
+            display: { xs: 'none', md: 'flex' },
           }}
         >
           {linePercents.map((pct, i) => (
@@ -362,7 +364,7 @@ const About = () => {
       <Stack 
         ref={rightColRef} 
         width="100%" 
-        alignItems="end" 
+        alignItems={{ xs: 'center', md: 'end' }} 
         gap={0} 
         pt={{ xs: 8, md: 20 }}
       >

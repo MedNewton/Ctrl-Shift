@@ -11,6 +11,8 @@ import Sponsors from "@/sections/home/sponsors";
 import Partners from "@/sections/home/partners";
 import Footer from "@/components/layout/footer";
 
+import MobileAbout from "@/sections/home/mobile/about";
+
 
 export default function Home() {
 
@@ -21,7 +23,7 @@ export default function Home() {
     }}>
       <GlassAnimatedHero />
       <About />
-      
+      <MobileAbout />
       <LastVersionStackedCardsSection />
       <LastVersionStatsSection />
       <Speakers />
