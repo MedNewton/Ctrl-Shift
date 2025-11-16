@@ -39,21 +39,21 @@ const MobileGlassAnimatedHero = () => {
                 zIndex: 5,
                 pointerEvents: "none",
                 overflow: "hidden",
-                opacity: 0.45,
+                opacity: 1,
                 willChange: "opacity",
                 animation: "circuit-animation 36s linear infinite",
                 "@keyframes circuit-animation": {
                     "0%": {
-                        opacity: 0.85,
-                        transform: "translateY(-3%)",
+                        opacity: 1,
+                        transform: "translateY(-5%)",
                     },
                     "50%": {
-                        opacity: 0.45,
+                        opacity: 1,
                         transform: "translateY(0%)",
                     },
                     "100%": {
-                        opacity: 0.85,
-                        transform: "translateY(-3%)",
+                        opacity: 1,
+                        transform: "translateY(-5%)",
                     },
                 }
             }}>
@@ -94,7 +94,7 @@ const MobileGlassAnimatedHero = () => {
                     zIndex: 5,
                     gap: 2,
                     marginY: "auto",
-                    transform: { xs: "translateY(-10%)", md: "translateY(-15%)" },
+                    transform: { xs: "translateY(-20%)", md: "translateY(-15%)" },
                 }}
             >
                 <motion.div

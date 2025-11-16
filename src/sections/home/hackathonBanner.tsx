@@ -34,7 +34,7 @@ type Spot = { x: number; y: number; vx: number; vy: number };
 
 export default function HackathonBanner({
   ornamentSrc = "/ornament-hero.png",
-  bg = "#952527",
+  bg = "#952500",
   brushRadius = 140,
   fade = 0.06,
   strength = 0.6,
@@ -336,7 +336,14 @@ export default function HackathonBanner({
       // red background behind whatever remains
       ctx.save();
       ctx.globalCompositeOperation = "destination-over";
-      ctx.fillStyle = bg;
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+
+      // Add color stops (0 = start, 1 = end)
+      gradient.addColorStop(0, '#8B2326');    // 0% - top color
+      gradient.addColorStop(1, '#9F282A');    // 100% - bottom color
+
+      // Use the gradient as fillStyle
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, w, h);
       ctx.restore();
 
@@ -374,7 +381,7 @@ export default function HackathonBanner({
     <Stack
       ref={sectionRef}
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: "linear-gradient(180deg, #942629 0%, #2E0C0D 100%)",
         position: "relative",
         width: "92%",
         height: "100%",
@@ -469,7 +476,7 @@ export default function HackathonBanner({
             hoverText={
               <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
                 Coming Soon...
-            </Typography>
+              </Typography>
             }
             sx={{ paddingX: 3, paddingY: 1 }}
           >

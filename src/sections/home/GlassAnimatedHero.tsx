@@ -40,21 +40,18 @@ const GlassAnimatedHero = () => {
                 zIndex: 5,
                 pointerEvents: "none",
                 overflow: "hidden",
-                opacity: 0.45,
+                opacity: 1,
                 willChange: "opacity",
                 animation: "circuit-animation 36s linear infinite",
                 "@keyframes circuit-animation": {
                     "0%": {
-                        opacity: 0.85,
-                        transform: "translateY(-3%)",
+                        transform: "translateY(-5%)",
                     },
                     "50%": {
-                        opacity: 0.45,
                         transform: "translateY(0%)",
                     },
                     "100%": {
-                        opacity: 0.85,
-                        transform: "translateY(-3%)",
+                        transform: "translateY(-5%)",
                     },
                 }
             }}>
@@ -81,22 +78,6 @@ const GlassAnimatedHero = () => {
                 }}
             >
                 <Header />
-            </Stack>
-
-            <Stack
-                width="100%"
-                height="fit-content"
-                sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 6,
-                    display: { xs: "flex", md: "none" },
-                }}
-            >
-                <MobileHeader />
             </Stack>
 
             <Stack

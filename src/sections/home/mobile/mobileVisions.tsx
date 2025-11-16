@@ -1,0 +1,194 @@
+'use client';
+
+import { Stack, Typography } from "@mui/material";
+import theme from "@/theme/theme";
+import Image from "next/image";
+
+import visionsAssets from "@/assets/images/visions/asset.webp";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { motion } from "framer-motion";
+
+export default function MobileVisions() {
+
+    const containerRef = useRef<HTMLDivElement>(null);
+    const titleArrowRef = useRef<SVGSVGElement>(null);
+    const arrowAnimationRef = useRef<gsap.core.Tween | null>(null);
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const ctx = gsap.context(() => {
+            if (titleArrowRef.current) {
+                arrowAnimationRef.current = gsap.fromTo(
+                    titleArrowRef.current,
+                    {
+                        x: -40,
+                        y: 40,
+                        opacity: 0,
+                    },
+                    {
+                        x: 40,
+                        y: -40,
+                        opacity: 0,
+                        duration: 1.2,
+                        ease: 'none',
+                        paused: true,
+                        repeat: -1,
+                        repeatDelay: 0.2,
+                        keyframes: {
+                            '0%': { x: -40, y: 40, opacity: 0 },
+                            '25%': { x: 0, y: 0, opacity: 1 },
+                            '75%': { x: 0, y: 0, opacity: 1 },
+                            '100%': { x: 40, y: -40, opacity: 0 },
+                        },
+                    }
+                );
+            }
+        }, containerRef);
+
+        return () => {
+            if (arrowAnimationRef.current) {
+                arrowAnimationRef.current.kill();
+            }
+            ctx.revert();
+        };
+    }, []);
+
+    const handleMouseEnter = () => {
+        if (arrowAnimationRef.current) {
+            arrowAnimationRef.current.play();
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (arrowAnimationRef.current) {
+            arrowAnimationRef.current.pause();
+            gsap.to(titleArrowRef.current, {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                duration: 0.3,
+            });
+        }
+    };
+
+    return (
+        <Stack 
+            ref={containerRef} 
+            component={motion.div}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            width="100%" 
+            height="100%" 
+            position="relative"
+            sx={{
+                mb: 4
+            }}
+        >
+            {/* Image - animates first */}
+            <Stack 
+                component={motion.div}
+                variants={{
+                    hidden: { opacity: 0, y: 50 },
+                    visible: { 
+                        opacity: 1, 
+                        y: 0,
+                        transition: { duration: 0.8, ease: "easeOut" }
+                    }
+                }}
+                width="100%" 
+                alignItems="center" 
+                position="relative" 
+                sx={{ zIndex: 1, transform: 'translateY(-15%)' }}
+            >
+                <Image src={visionsAssets} alt="Visions" width={500} height={500} />
+            </Stack>
+
+            {/* Title - animates second */}
+            <Stack
+                component={motion.div}
+                variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { 
+                        opacity: 1, 
+                        y: 0,
+                        transition: { duration: 0.8, delay: 0.3, ease: "easeOut" }
+                    }
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                sx={{
+                    position: 'relative',
+                    zIndex: 2,
+                    '&:hover .subtitle-text': {
+                        color: theme.palette.text.primary,
+                    },
+                    '&:hover .title-text': {
+                        color: theme.palette.text.secondary,
+                    },
+                }}
+            >
+                <Typography
+                    className="subtitle-text"
+                    variant="h6"
+                    sx={{
+                        textAlign: 'center',
+                        fontWeight: 500,
+                        color: theme.palette.text.secondary,
+                        transition: 'color 0.3s ease',
+                    }}
+                >
+                    Art Exhibition
+                </Typography>
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                    gap={2}
+                    sx={{
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                    }}
+                >
+                    <Typography
+                        className="title-text"
+                        variant="h2"
+                        sx={{
+                            textAlign: 'center',
+                            fontWeight: 600,
+                            transition: 'color 0.3s ease',
+                        }}
+                    >
+                        Visions 2026
+                    </Typography>
+                </Stack>
+            </Stack>
+
+            {/* Text - animates last */}
+            <Typography 
+                component={motion.p}
+                variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { 
+                        opacity: 1, 
+                        y: 0,
+                        transition: { duration: 0.8, delay: 0.6, ease: "easeOut" }
+                    }
+                }}
+                variant="h6" 
+                fontWeight={500} 
+                color={theme.palette.text.primary} 
+                textAlign="center" 
+                sx={{
+                    width: { xs: '90%', md: '50%' }, 
+                    mx: 'auto', 
+                    mt: 2
+                }}
+            >
+                The exhibition Napuleth visions, through key concepts such as hybridization, concrescence and crystallization, explores how the process of &quot;dematerialization&quot; of value relates to the production of meaning in art, showing how the aesthetic and economic dimensions are constantly evolving, shaped by a network of interconnected actors.
+            </Typography>
+        </Stack>
+    )
+}

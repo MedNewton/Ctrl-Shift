@@ -6,9 +6,12 @@ import Link from "next/link";
 import { Stack, Typography } from "@mui/material";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import theme from "@/theme/theme";
-import GlowButton from "@/components/ui/glowButton";
 
 import logo from "@/assets/images/logo/Asset 190.svg?url";
+import XIcon from '@mui/icons-material/X';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 import {
     NavigationMenu,
@@ -207,18 +210,178 @@ export default function Header() {
                     </Stack>
 
                     <Stack direction={"row"} alignItems={"center"} gap={1}>
-                        <GlowButton
-                            hoverText={
-                                <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
-                                    Coming Soon...
-                                </Typography>
-                            }
-                            sx={{ paddingX: 3, paddingY: 1 }}
+                        <Stack
+                            sx={{
+                                padding: 1.2,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: "50%",
+                                position: "relative",
+                                backgroundColor: "rgba(255, 255, 255, 0.025)",
+                                backdropFilter: "blur(4px)",
+                                WebkitBackdropFilter: "blur(4px)",
+                                boxShadow: `
+      inset 0 1px 0px rgba(255, 255, 255, 0.35),
+      0 0 9px rgba(0, 0, 0, 0.2),
+      0 3px 0px rgba(0, 0, 0, 0.15)
+    `,
+                                transition: "all 0.3s ease",
+                                "&:hover": {
+                                    backgroundColor: "rgba(149, 37, 39, 0.26)",
+                                    backdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                    WebkitBackdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                },
+                                "&::before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6), transparent, transparent)",
+                                    opacity: 0.7,
+                                    pointerEvents: "none",
+                                },
+                                "&::after": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(315deg, rgba(255, 255, 255, 0.3), transparent, transparent)",
+                                    opacity: 0.5,
+                                    pointerEvents: "none",
+                                },
+                            }}
                         >
-                            <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
-                                Get Your Tickets
-                            </Typography>
-                        </GlowButton>
+                            <XIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
+                        </Stack>
+                        <Stack
+                            sx={{
+                                padding: 1.2,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: "50%",
+                                position: "relative",
+                                backgroundColor: "rgba(255, 255, 255, 0.025)",
+                                backdropFilter: "blur(4px)",
+                                WebkitBackdropFilter: "blur(4px)",
+                                boxShadow: `
+      inset 0 1px 0px rgba(255, 255, 255, 0.35),
+      0 0 9px rgba(0, 0, 0, 0.2),
+      0 3px 0px rgba(0, 0, 0, 0.15)
+    `,
+                                transition: "all 0.3s ease",
+                                "&:hover": {
+                                    backgroundColor: "rgba(149, 37, 39, 0.26)",
+                                    backdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                    WebkitBackdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                },
+                                "&::before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6), transparent, transparent)",
+                                    opacity: 0.7,
+                                    pointerEvents: "none",
+                                },
+                                "&::after": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(315deg, rgba(255, 255, 255, 0.3), transparent, transparent)",
+                                    opacity: 0.5,
+                                    pointerEvents: "none",
+                                },
+                            }}
+                        >
+                            <InstagramIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
+                        </Stack>
+                        <Stack
+                            sx={{
+                                padding: 1.2,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: "50%",
+                                position: "relative",
+                                backgroundColor: "rgba(255, 255, 255, 0.025)",
+                                backdropFilter: "blur(4px)",
+                                WebkitBackdropFilter: "blur(4px)",
+                                boxShadow: `
+      inset 0 1px 0px rgba(255, 255, 255, 0.35),
+      0 0 9px rgba(0, 0, 0, 0.2),
+      0 3px 0px rgba(0, 0, 0, 0.15)
+    `,
+                                transition: "all 0.3s ease",
+                                "&:hover": {
+                                    backgroundColor: "rgba(149, 37, 39, 0.26)",
+                                    backdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                    WebkitBackdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                },
+                                "&::before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6), transparent, transparent)",
+                                    opacity: 0.7,
+                                    pointerEvents: "none",
+                                },
+                                "&::after": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(315deg, rgba(255, 255, 255, 0.3), transparent, transparent)",
+                                    opacity: 0.5,
+                                    pointerEvents: "none",
+                                },
+                            }}
+                        >
+                            <LinkedInIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
+                        </Stack>
+                        <Stack
+                            sx={{
+                                padding: 1.2,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: "50%",
+                                position: "relative",
+                                backgroundColor: "rgba(255, 255, 255, 0.025)",
+                                backdropFilter: "blur(4px)",
+                                WebkitBackdropFilter: "blur(4px)",
+                                boxShadow: `
+      inset 0 1px 0px rgba(255, 255, 255, 0.35),
+      0 0 9px rgba(0, 0, 0, 0.2),
+      0 3px 0px rgba(0, 0, 0, 0.15)
+    `,
+                                transition: "all 0.3s ease",
+                                "&:hover": {
+                                    backgroundColor: "rgba(149, 37, 39, 0.26)",
+                                    backdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                    WebkitBackdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                },
+                                "&::before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6), transparent, transparent)",
+                                    opacity: 0.7,
+                                    pointerEvents: "none",
+                                },
+                                "&::after": {
+                                    content: '""',
+                                    position: "absolute",
+                                    inset: 0,
+                                    borderRadius: "50%",
+                                    background: "linear-gradient(315deg, rgba(255, 255, 255, 0.3), transparent, transparent)",
+                                    opacity: 0.5,
+                                    pointerEvents: "none",
+                                },
+                            }}
+                        >
+                            <TelegramIcon sx={{ fontSize: 20, color: theme.palette.text.primary }} />
+                        </Stack>
 
                     </Stack>
                 </Stack>
