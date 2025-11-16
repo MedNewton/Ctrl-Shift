@@ -145,6 +145,10 @@ export default function LastVersionStackedCardsSection() {
     }
   };
 
+  const handleClick = () => {
+    window.open('https://www.napuleth.org/archive/2025', '_blank');
+  };
+
   return (
     <Box
       sx={{
@@ -174,6 +178,7 @@ export default function LastVersionStackedCardsSection() {
         <Stack
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
           sx={{
             '&:hover .subtitle-text': {
               color: theme.palette.text.primary,
