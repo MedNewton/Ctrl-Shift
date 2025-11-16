@@ -36,13 +36,26 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
-  const prefersReducedMotion = useReducedMotion();
   const isInView = useInView(containerRef as RefObject<Element>, {
     amount: 0.3,
   });
+  const isInViewRef = useRef<boolean>(false);
 
+  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedRef = useRef<boolean>(prefersReducedMotion);
+
+  const animateRef = useRef<(() => void) | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [showGlass, setShowGlass] = useState(false);
+
+  // keep latest flags in refs for the animation loop
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
+
+  useEffect(() => {
+    prefersReducedRef.current = prefersReducedMotion;
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -52,23 +65,24 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
     if (!context) return;
     const ctx = context;
 
-    const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-    const isMobileWidth = window.innerWidth <= 768;
+    const baseColor = hexToRgb(color);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     let width = 0;
     let height = 0;
     let xPositions: number[] = [];
 
+    const isMobileWidth = window.innerWidth <= 768;
+
     const resizeAndRecalculate = (): void => {
       const rect = canvas.getBoundingClientRect();
 
-      // Reset transform before scaling to avoid compounding
+      // reset transform, then scale once per resize
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      canvas.width = rect.width * devicePixelRatio;
-      canvas.height = rect.height * devicePixelRatio;
-
-      ctx.scale(devicePixelRatio, devicePixelRatio);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
 
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
@@ -90,23 +104,19 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
     let speedFrequency = 0.3 + Math.random() * 0.4;
     let tiltPhase = Math.random() * Math.PI * 2;
     let frameCount = 0;
-    let hasMarkedReady = false;
+    let markedReady = false;
 
     let surgePosition = Math.random();
     let surgeIntensity = 0;
     let targetSurgeIntensity = 0;
     let surgeCooldown = 0;
 
-    const baseColor = hexToRgb(color);
-
     const fps = isMobileWidth ? 20 : 30;
     const frameIntervalMs = 1000 / fps;
     let lastFrameTime = performance.now();
 
-    let isCancelled = false;
-
     const renderFrame = (): void => {
-      if (!canvas || width === 0 || height === 0) return;
+      if (width === 0 || height === 0) return;
 
       const ctxWidth = width;
       const ctxHeight = height;
@@ -162,8 +172,10 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
 
         const offsetY =
           Math.sin(x * waveFrequency + time * waveSpeed) * waveAmplitude +
-          Math.sin(x * waveFrequency * 0.6 - time * waveSpeed * 0.7) * (waveAmplitude * 0.4) +
-          Math.cos(x * waveFrequency * 0.3 + time * waveSpeed * 0.5) * (waveAmplitude * 0.25);
+          Math.sin(x * waveFrequency * 0.6 - time * waveSpeed * 0.7) *
+            (waveAmplitude * 0.4) +
+          Math.cos(x * waveFrequency * 0.3 + time * waveSpeed * 0.5) *
+            (waveAmplitude * 0.25);
 
         const depthZ =
           Math.sin(x * waveFrequency * 0.5 + time * waveSpeed * 0.8) * 0.5 +
@@ -415,14 +427,14 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
       ctx.restore();
 
       frameCount += 1;
-
-      if (!hasMarkedReady && frameCount >= 1) {
-        hasMarkedReady = true;
+      if (!markedReady && frameCount >= 1) {
+        markedReady = true;
         setIsReady(true);
         setTimeout(() => setShowGlass(true), 25);
       }
 
-      if (!prefersReducedMotion) {
+      // advance simulation (only if not reduced motion)
+      if (!prefersReducedRef.current) {
         time += 0.025;
         speedPhase += speedFrequency * 0.012;
         tiltPhase += 0.005;
@@ -434,16 +446,21 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
     };
 
     const animate = (): void => {
-      if (isCancelled) return;
-
       const now = performance.now();
       const delta = now - lastFrameTime;
 
-      // if user prefers reduced motion OR hero not in view -> just draw once
-      if (prefersReducedMotion || !isInView) {
-        if (!hasMarkedReady) {
+      // If user prefers reduced motion: draw one static frame and stop
+      if (prefersReducedRef.current) {
+        if (!markedReady) {
           renderFrame();
         }
+        animationFrameRef.current = null;
+        return;
+      }
+
+      // If not in view: keep last frame, stop loop (will be restarted by another effect)
+      if (!isInViewRef.current) {
+        animationFrameRef.current = null;
         return;
       }
 
@@ -455,11 +472,14 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    if (prefersReducedMotion || !isInView) {
-      // Draw a single static frame
-      renderFrame();
-    } else {
+    animateRef.current = animate;
+
+    // initial start
+    if (!prefersReducedRef.current) {
       animationFrameRef.current = requestAnimationFrame(animate);
+    } else {
+      // static frame for reduced motion users
+      renderFrame();
     }
 
     const handleResize = (): void => {
@@ -469,13 +489,26 @@ const GradientWave = ({ color = '#942629' }: GradientWaveProps) => {
     window.addEventListener('resize', handleResize);
 
     return () => {
-      isCancelled = true;
       window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      animationFrameRef.current = null;
     };
-  }, [color, prefersReducedMotion, isInView]);
+  }, [color]); // 👈 no dependency on isInView, so no teardown on scroll
+
+  // When section comes back into view, restart the loop without resetting canvas
+  useEffect(() => {
+    if (!animateRef.current) return;
+    if (prefersReducedMotion) return;
+
+    const shouldRestart =
+      isInView && animationFrameRef.current === null;
+
+    if (shouldRestart) {
+      animationFrameRef.current = requestAnimationFrame(animateRef.current);
+    }
+  }, [isInView, prefersReducedMotion]);
 
   return (
     <Box
