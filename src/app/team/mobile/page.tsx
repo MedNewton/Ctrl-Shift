@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import { Stack, Grid, Typography, Divider } from "@mui/material";
 import { motion, useInView } from "framer-motion";
-import Footer from "@/components/layout/footer";
 import theme from "@/theme/theme";
 import { TeamMembersList, type TeamMember } from "@/data/team";
 import Image from "next/image";
 import Header from "@/components/layout/header";
 import MobileHeader from "@/components/layout/mobileHeader";
+import MobileFooter from "@/components/layout/mobile/mobileFooter";
 
 const TeamCard = ({
     member,
@@ -79,22 +79,6 @@ export default function Home() {
                     right: 0,
                     bottom: 0,
                     zIndex: 6,
-                    display: { xs: "none", md: "flex" },
-                }}
-            >
-                <Header />
-            </Stack>
-
-            <Stack
-                width="100%"
-                height="fit-content"
-                sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 6,
                     display: { xs: "flex", md: "none" },
                 }}
             >
@@ -103,11 +87,10 @@ export default function Home() {
             <Stack
                 ref={headerRef}
                 width={"100%"}
-                direction={"row"}
+                direction={"column"}
                 gap={2}
-                px={20}
-                pt={20}
-                justifyContent={"space-between"}
+                px={2}
+                pt={14}
             >
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
@@ -116,13 +99,12 @@ export default function Home() {
                         duration: 0.8,
                         ease: [0.43, 0.13, 0.23, 0.96]
                     }}
-                    style={{ width: "50%" }}
                 >
                     <Typography
                         variant="h1"
                         color={theme.palette.primary.main}
                         fontWeight={600}
-                        mb={{ xs: 4, md: 6 }}
+                        mb={{ xs: 2, md: 6 }}
                         sx={{
                             fontSize: { xs: "2.5rem", md: "3.5rem", lg: "4rem" },
                         }}
@@ -139,9 +121,8 @@ export default function Home() {
                         delay: 0.2,
                         ease: [0.43, 0.13, 0.23, 0.96]
                     }}
-                    style={{ width: "50%" }}
                 >
-                    <Stack width={"100%"} gap={2} pt={2}>
+                    <Stack width={"100%"} gap={2}>
                         <Typography variant="body1" fontWeight={300} fontSize={16}>
                             The Ethereum ecosystem constantly talks about onboarding the masses, yet conferences are filled with the same familiar faces—marketing officers, lead developers, and ambassadors. While their insights are valuable, these events risk becoming echo chambers.
                         </Typography>
@@ -154,11 +135,11 @@ export default function Home() {
 
             <Grid
                 container
-                spacing={2}
+                spacing={6}
                 sx={{
                     width: "100%",
-                    px: 20,
-                    pt: 20,
+                    px: 2,
+                    pt: 10,
                     pb: 6,
                 }}
             >
@@ -170,7 +151,7 @@ export default function Home() {
                     />
                 ))}
             </Grid>
-            <Footer />
+            <MobileFooter />
         </Stack>
     );
 }
