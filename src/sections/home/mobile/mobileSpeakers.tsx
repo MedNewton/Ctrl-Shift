@@ -51,6 +51,7 @@ const cardVariants: Variants = {
   },
 };
 
+
 const MobileSpeakers: FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 

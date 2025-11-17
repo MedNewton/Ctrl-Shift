@@ -64,6 +64,7 @@ const logoVariants: Variants = {
   },
 };
 
+
 const MobileSponsors: FC = () => {
   return (
     <Stack
@@ -79,11 +80,6 @@ const MobileSponsors: FC = () => {
         display: { xs: "flex", md: "none" }, // mobile-only
         "& .sponsor-card-wrapper": {
           cursor: "pointer",
-          filter: "brightness(0) invert(1)",
-          transition: "filter 0.2s ease-in-out",
-          "&:hover": {
-            filter: "brightness(1) invert(0)",
-          },
         },
       }}
     >
@@ -119,6 +115,7 @@ const MobileSponsors: FC = () => {
               columnSpacing={2.5}     // comfortable horizontal spacing
               justifyContent="center"
               alignItems="center"
+              px={2}
             >
               {sponsors.map((sponsor, index) => (
                 <Grid size={6} key={`${sponsor.alt}-${index}`}>
@@ -132,13 +129,17 @@ const MobileSponsors: FC = () => {
                         width: "100%",
                       }}
                     >
-                      <Image
-                        src={sponsor.src}
-                        alt={sponsor.alt}
-                        width={130}
-                        height={130}
-                        style={{ maxWidth: "100%", height: "auto" }}
-                      />
+                      <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+                        backgroundColor: "#252525",
+                        paddingY: 2.5,
+                        paddingX: 4,
+                        borderRadius: 2,
+                        boxShadow: theme.shadows[1],
+                      }}>
+                        <Typography variant="body1" color={theme.palette.text.primary}>
+                          Your Logo Here
+                        </Typography>
+                      </Stack>
                     </Box>
                   </motion.div>
                 </Grid>
