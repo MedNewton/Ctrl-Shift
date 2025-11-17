@@ -21,7 +21,7 @@ const TeamCard = ({
     const isInView = useInView(cardRef, { once: true, amount: 0.2 });
 
     return (
-        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={member.name}>
+        <Grid size={{ xs: 6, sm: 6, md: 4 }} key={member.name}>
             <motion.div
                 ref={cardRef}
                 initial={{ opacity: 0, y: 60 }}
@@ -36,12 +36,9 @@ const TeamCard = ({
                     <Divider sx={{
                         borderBottom: `2px solid ${theme.palette.text.primary}`,
                     }} />
-                    <Stack direction={"row"} gap={0.5} alignItems={"center"}>
+                    <Stack gap={0}>
                         <Typography variant="subtitle1" fontWeight={500}>
                             {member.name}
-                        </Typography>
-                        <Typography variant="caption" fontWeight={500}>
-                            &nbsp;&#9679;&nbsp;
                         </Typography>
                         <Typography variant="subtitle1" fontWeight={300}>
                             {member.position}
@@ -124,10 +121,10 @@ export default function Home() {
                 >
                     <Stack width={"100%"} gap={2}>
                         <Typography variant="body1" fontWeight={300} fontSize={16}>
-                            The Ethereum ecosystem constantly talks about onboarding the masses, yet conferences are filled with the same familiar faces—marketing officers, lead developers, and ambassadors. While their insights are valuable, these events risk becoming echo chambers.
-                        </Typography>
-                        <Typography variant="body1" fontWeight={300} fontSize={16}>
-                            To truly break this loop, we need to offer real incentives for those unfamiliar with web3 to join in. Our goal is to bring genuinely new faces into the Ethereum community by creating accessible, high-profile events. If you share this vision, NapulETH Open Village is for you.
+                            At ctrl/shift, we’re builders pushing the frontier.
+                            <br />Our team brings together experts in AI, Web3, and Quantum Computing, shaped by research, design, engineering, and community leadership.
+                            <br />Different backgrounds, one mission:
+                            <br />expand access to emerging technologies and grow a global ecosystem rooted in Naples.
                         </Typography>
                     </Stack>
                 </motion.div>
@@ -135,7 +132,7 @@ export default function Home() {
 
             <Grid
                 container
-                spacing={6}
+                spacing={2}
                 sx={{
                     width: "100%",
                     px: 2,
