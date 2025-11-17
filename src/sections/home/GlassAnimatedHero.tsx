@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Link } from "@mui/material";
 import theme from "@/theme/theme";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
@@ -144,14 +144,22 @@ const GlassAnimatedHero = () => {
                                 Get Your Tickets
                             </Typography>
                         </GlowButton>
-                        <BlackButton sx={{
-                            paddingX: 3,
-                            paddingY: 1,
+                        <Link href="https://docsend.com/v/sbjcj/ctrlshift2026" target="_blank" rel="noopener noreferrer" underline="none" sx={{
+                            width: "fit-content",
+                            height: "fit-content",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
                         }}>
-                            <Typography component={"span"} variant="subtitle1" fontWeight={600}>
-                                Become a Sponsor
-                            </Typography>
-                        </BlackButton>
+                            <BlackButton sx={{
+                                paddingX: 3,
+                                paddingY: 1.2,
+                            }}>
+                                <Typography component={"span"} variant="subtitle1" fontWeight={600}>
+                                    Become a Sponsor
+                                </Typography>
+                            </BlackButton>
+                        </Link>
                     </Stack>
                 </motion.div>
             </Stack>
