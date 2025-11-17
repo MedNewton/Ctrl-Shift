@@ -113,12 +113,14 @@ const GlassAnimatedHero = () => {
                 >
                     <Stack width={{ xs: "85%", md: "35%" }} alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
                         <Typography variant="h3" component="h3" fontWeight={600} textAlign={"center"}>
-                            The biggest Web3 event in southern Italy
+                            Southern Italy’s Gateway to the Future
                         </Typography>
                         <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"} sx={{
                             width: { xs: "85%", md: "100%" },
                         }}>
-                            17-19 September, Villa Doria D&apos;Angri, Naples, Italy
+                            8–14 June 2026 · Naples, Italy
+                            <br />
+                            A world-class summit uniting the pioneers of AI, Quantum Computing, and Web3.
                         </Typography>
                     </Stack>
                 </motion.div>

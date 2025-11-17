@@ -59,11 +59,17 @@ export default function Header() {
                     paddingX={6}
                     className="h-20 max-w-7xl"
                 >
-                    <Link href="/" className="inline-flex items-center gap-3">
-                        <Image src={logo} alt="mood global services mgs logo" width={120} height={27} priority />
-                    </Link>
+                    <Stack sx={{
+                        width: "25%",
+                    }}>
+                        <Link href="/" className="inline-flex items-center gap-3" style={{
+                            width: "fit-content"
+                        }}>
+                            <Image src={logo} alt="mood global services mgs logo" width={120} height={27} priority />
+                        </Link>
+                    </Stack>
 
-                    <Stack direction={"row"} alignItems={"center"} justifyContent={"center"} gap={1}>
+                    <Stack direction={"row"} alignItems={"center"} justifyContent={"center"} gap={1} width={"50%"}>
                         <NavigationMenu>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
@@ -100,8 +106,20 @@ export default function Header() {
                                                         setHoveredAboutItem(0);
                                                     }}>
                                                         <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Speakers</Typography>
-                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the speakers of ctrl/shift 2026.</Typography>
+                                                            <Typography component="p" variant="subtitle1" fontWeight={600} lineHeight={1.2} >
+                                                                Speakers
+                                                                <span style={{
+                                                                    color: theme.palette.grey[900],
+                                                                    backgroundColor: theme.palette.grey[700],
+                                                                    padding: "2px 4px",
+                                                                    borderRadius: 20,
+                                                                    fontSize: 12,
+                                                                    marginLeft: 3,
+                                                                    fontWeight: 500,
+                                                                }}>Coming Soon
+                                                                </span>
+                                                            </Typography>
+                                                            <Typography component="p" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the speakers of ctrl/shift 2026.</Typography>
                                                         </Stack>
                                                     </Stack>
                                                     <Stack direction={"row"} alignItems={"center"} gap={1.5} component={"div"} onMouseEnter={() => {
@@ -125,7 +143,19 @@ export default function Header() {
                                                         setHoveredAboutItem(0);
                                                     }}>
                                                         <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >FAQ</Typography>
+                                                            <Typography component="p" variant="subtitle1" fontWeight={600} lineHeight={1.2} >
+                                                                FAQ
+                                                                <span style={{
+                                                                    color: theme.palette.grey[900],
+                                                                    backgroundColor: theme.palette.grey[700],
+                                                                    padding: "2px 4px",
+                                                                    borderRadius: 20,
+                                                                    fontSize: 12,
+                                                                    marginLeft: 3,
+                                                                    fontWeight: 500,
+                                                                }}>Coming Soon
+                                                                </span>
+                                                            </Typography>
                                                             <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Answers to common questions.</Typography>
                                                         </Stack>
                                                     </Stack>
@@ -135,7 +165,19 @@ export default function Header() {
                                                         setHoveredAboutItem(0);
                                                     }}>
                                                         <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Map</Typography>
+                                                        <Typography component="p" variant="subtitle1" fontWeight={600} lineHeight={1.2} >
+                                                                Map
+                                                                <span style={{
+                                                                    color: theme.palette.grey[900],
+                                                                    backgroundColor: theme.palette.grey[700],
+                                                                    padding: "2px 4px",
+                                                                    borderRadius: 20,
+                                                                    fontSize: 12,
+                                                                    marginLeft: 3,
+                                                                    fontWeight: 500,
+                                                                }}>Coming Soon
+                                                                </span>
+                                                            </Typography>                                                            
                                                             <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the location of the event.</Typography>
                                                         </Stack>
                                                     </Stack>
@@ -143,9 +185,29 @@ export default function Header() {
                                                         setHoveredAboutItem(5);
                                                     }} onMouseLeave={() => {
                                                         setHoveredAboutItem(0);
-                                                    }}>
+                                                    }}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        window.location.href = "/archive/2025";
+                                                    }}
+                                                    >
                                                         <Stack gap={0.5}>
-                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Archive</Typography>
+                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Archive 2025</Typography>
+                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Previous editions of NapulETH.</Typography>
+                                                        </Stack>
+                                                    </Stack>
+                                                    <Stack direction={"row"} alignItems={"center"} gap={1.5} onMouseEnter={() => {
+                                                        setHoveredAboutItem(5);
+                                                    }} onMouseLeave={() => {
+                                                        setHoveredAboutItem(0);
+                                                    }}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        window.location.href = "https://www.napuleth.org/archive/2024";
+                                                    }}
+                                                    >
+                                                        <Stack gap={0.5}>
+                                                            <Typography component="span" variant="subtitle1" fontWeight={600} lineHeight={1.2} >Archive 2024</Typography>
                                                             <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Previous editions of NapulETH.</Typography>
                                                         </Stack>
                                                     </Stack>
@@ -209,7 +271,9 @@ export default function Header() {
                         </NavigationMenu>
                     </Stack>
 
-                    <Stack direction={"row"} alignItems={"center"} gap={1}>
+                    <Stack direction={"row"} alignItems={"center"} justifyContent={"end"} gap={1} sx={{
+                        width: "25%",
+                    }}>
                         <Stack
                             component="div"
                             onClick={() => {
