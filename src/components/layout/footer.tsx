@@ -316,9 +316,23 @@ const Footer = () => {
                                                 sx={{
                                                     fontSize: { xs: 26, md: 24 },
                                                     fontWeight: 500,
+                                                    display: "flex",
+                                                    flexDirection: "row",
+                                                    alignItems: "center",
                                                 }}
                                             >
                                                 {item}
+                                                <span style={{
+                                                    backgroundColor: theme.palette.grey[700],
+                                                    color: theme.palette.background.default,
+                                                    padding: "2px 8px",
+                                                    borderRadius: 20,
+                                                    fontSize: 12,
+                                                    marginLeft: 6,
+                                                    fontWeight: 500,
+                                                }}>
+                                                    Coming Soon
+                                                </span>
                                             </Typography>
                                         </motion.div>
                                     ))}
