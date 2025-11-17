@@ -10,6 +10,7 @@ import MobileSponsors from "@/sections/home/mobile/mobileSponsors";
 import MobilePartners from "@/sections/home/mobile/mobilePartners";
 import MobileVisions from "@/sections/home/mobile/mobileVisions";
 import MobileHackathonBanner from "@/sections/home/mobile/mobileHackathonBanner";
+import MobileEthFamily from "@/sections/home/mobile/mobileEthFamily";
 import MobileFooter from "@/components/layout/mobile/mobileFooter";
 
 export default function Home() {
@@ -21,16 +22,16 @@ export default function Home() {
         }}>
             <MobileGlassAnimatedHero />
             <MobileAbout />
+            <Stack px={2} width={"100%"} alignItems={"center"} justifyContent={"center"}>
+                <MobileHackathonBanner />
+                <MobileVisions />
+            </Stack>
             <MobileLastVersionStackedCardsSection />
             <MobileLastVersionStatsSection />
             <MobileSpeakers />
             <MobileSponsors />
             <MobilePartners />
-            <Stack px={4} width={"100%"} alignItems={"center"} justifyContent={"center"}>
-                <MobileVisions />
-                <MobileHackathonBanner />
-            </Stack>
-            
+            <MobileEthFamily />
             <MobileFooter />
         </Stack>
     );

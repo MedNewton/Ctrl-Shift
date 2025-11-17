@@ -385,7 +385,7 @@ export default function MobileHackathonBanner({
         position: "relative",
         width: "100%",
         height: "100%",
-        minHeight: { xs: "50vh", md: "60vh" },
+        minHeight: { xs: "40vh", md: "60vh" },
         overflow: "hidden",
         borderRadius: 4,
         display: "flex",
@@ -404,31 +404,6 @@ export default function MobileHackathonBanner({
       <div className="relative z-10 h-full" />
 
       <Stack width="fit-content" gap={4} alignItems="center" sx={{ position: "relative", zIndex: 2 }}>
-        {/* news pill */}
-        <motion.div
-          initial={isReduced ? { opacity: 0 } : { y: 18, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: tNews, duration: isReduced ? 0.25 : 0.5, ease: "easeOut" }}
-          style={{ position: "relative", zIndex: 2 }}
-        >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            gap={0.5}
-            width="fit-content"
-            sx={{
-              backgroundColor: theme.palette.brand.napulETHYellow2.main,
-              borderRadius: "10rem",
-              px: 1.5,
-              py: 1,
-            }}
-          >
-            <Typography variant="body2" fontWeight={600} color={theme.palette.info.main}>
-              Subscription to our hackathon will be open soon
-            </Typography>
-          </Stack>
-        </motion.div>
 
         {/* titles */}
         <Stack alignItems="center" gap={1}>
@@ -440,7 +415,7 @@ export default function MobileHackathonBanner({
           >
             <Stack direction="row" alignItems="center" justifyContent="center" gap={0.5} width="fit-content">
               <Typography variant="h4" fontWeight={600} color={theme.palette.text.primary} textAlign="center">
-                Participate in the 48H<br />hackathon of Ctrl/Shift 2026
+                Participate in the 48H<br />Ctrl/Shift Hackathon
               </Typography>
             </Stack>
           </motion.div>
@@ -452,8 +427,8 @@ export default function MobileHackathonBanner({
             style={{ position: "relative", zIndex: 2 }}
           >
             <Stack direction="row" alignItems="center" justifyContent="center" gap={0.5} width="fit-content">
-              <Typography variant="subtitle1" fontWeight={500} color={theme.palette.text.primary} textAlign="center" sx={{ width: "70%" }}>
-                with an attractive prize pool and numerous bounties!
+              <Typography variant="subtitle1" fontWeight={500} color={theme.palette.text.primary} textAlign="center" sx={{ width: "80%" }}>
+                Prototype bold ideas, solve real challenges, and compete for prizes, grants, and ecosystem opportunities.
               </Typography>
             </Stack>
           </motion.div>
@@ -470,7 +445,7 @@ export default function MobileHackathonBanner({
             hoverText={
               <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
                 Coming Soon...
-            </Typography>
+              </Typography>
             }
             sx={{ paddingX: 3, paddingY: 1 }}
           >
