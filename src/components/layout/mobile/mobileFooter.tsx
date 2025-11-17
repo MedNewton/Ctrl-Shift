@@ -114,7 +114,7 @@ const MobileFooter: FC = () => {
             component="footer"
             sx={{
                 width: "100%",
-                minHeight: "100vh",
+                minHeight: "90dvh",
                 bgcolor: theme.palette.background.default,
                 color: theme.palette.text.primary,
                 px: 3,
@@ -275,100 +275,6 @@ const MobileFooter: FC = () => {
                                                     color: theme.palette.text.secondary,
                                                 }}
                                             >
-                                                Event
-                                            </Typography>
-                                        </Stack>
-                                    </motion.div>
-
-                                    <Stack spacing={0.8}>
-                                        {[
-                                            "Agenda",
-                                            "Workshops",
-                                            "Hackathon",
-                                            "Mettups",
-                                            "Side Events",
-                                        ].map((item) => (
-                                            <motion.div key={item} variants={itemVariants}>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 20,
-                                                        fontWeight: 500,
-                                                    }}
-                                                >
-                                                    {item}
-                                                </Typography>
-                                            </motion.div>
-                                        ))}
-                                    </Stack>
-                                </Stack>
-                            </motion.div>
-                        </Stack>
-
-                        <Stack direction="row" spacing={3} sx={{ width: "100%" }}>
-                            <motion.div variants={columnVariants} style={{ flex: 1 }}>
-                                <Stack spacing={2}>
-                                    <motion.div variants={itemVariants}>
-                                        <Stack direction="row" spacing={1} alignItems="center">
-                                            <Box
-                                                sx={{
-                                                    width: 8,
-                                                    height: 8,
-                                                    borderRadius: "50%",
-                                                    bgcolor: theme.palette.brand.napulETHRed.main,
-                                                }}
-                                            />
-                                            <Typography
-                                                variant="caption"
-                                                sx={{
-                                                    textTransform: "uppercase",
-                                                    letterSpacing: "0.12em",
-                                                    color: theme.palette.text.secondary,
-                                                }}
-                                            >
-                                                Visions
-                                            </Typography>
-                                        </Stack>
-                                    </motion.div>
-
-                                    <Stack spacing={0.8}>
-                                        {["Exhibition", "Manifesto", "Artworks", "Artists", "Archive"].map(
-                                            (item) => (
-                                                <motion.div key={item} variants={itemVariants}>
-                                                    <Typography
-                                                        sx={{
-                                                            fontSize: 20,
-                                                            fontWeight: 500,
-                                                        }}
-                                                    >
-                                                        {item}
-                                                    </Typography>
-                                                </motion.div>
-                                            )
-                                        )}
-                                    </Stack>
-                                </Stack>
-                            </motion.div>
-
-                            <motion.div variants={columnVariants} style={{ flex: 1 }}>
-                                <Stack spacing={2}>
-                                    <motion.div variants={itemVariants}>
-                                        <Stack direction="row" spacing={1} alignItems="center">
-                                            <Box
-                                                sx={{
-                                                    width: 8,
-                                                    height: 8,
-                                                    borderRadius: "50%",
-                                                    bgcolor: theme.palette.brand.napulETHRed.main,
-                                                }}
-                                            />
-                                            <Typography
-                                                variant="caption"
-                                                sx={{
-                                                    textTransform: "uppercase",
-                                                    letterSpacing: "0.12em",
-                                                    color: theme.palette.text.secondary,
-                                                }}
-                                            >
                                                 Join Us
                                             </Typography>
                                         </Stack>
@@ -418,7 +324,7 @@ const MobileFooter: FC = () => {
                                                 color: theme.palette.text.secondary,
                                             }}
                                         >
-                                            Contact us
+                                            Date
                                         </Typography>
                                     </Stack>
                                 </motion.div>
@@ -426,15 +332,8 @@ const MobileFooter: FC = () => {
                                 <motion.div variants={itemVariants}>
                                     <Stack spacing={0.7}>
                                         <Typography sx={{ fontSize: 15 }}>
-                                            +1 980 971-24-19
+                                            8 - 14 June 2026
                                         </Typography>
-                                        <MuiLink
-                                            href="#"
-                                            underline="none"
-                                            sx={{ color: "inherit", fontSize: 15 }}
-                                        >
-                                            contact@ctrlshift.com
-                                        </MuiLink>
                                     </Stack>
                                 </motion.div>
                             </Stack>
@@ -487,23 +386,10 @@ const MobileFooter: FC = () => {
                 animate={isInView ? "visible" : "hidden"}
                 style={{ width: "100%" }}
             >
-                <Stack direction="column" alignItems="center" spacing={2} sx={{ width: "100%", py: 2 }}>
-                    <Stack direction="row" spacing={1} flexWrap="wrap">
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
-                            Privacy Policy
-                        </Typography>
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
-                            Terms & Conditions
-                        </Typography>
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
-                            Cookie Policy
-                        </Typography>
-                    </Stack>
+                <Stack direction="column" alignItems="center" spacing={2} sx={{ width: "100%", pb: 2 }}>
                     <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
                         © All rights reserved - Ctrl/Shift 2026
                     </Typography>
-
-
                 </Stack>
             </motion.div>
         </Box>
