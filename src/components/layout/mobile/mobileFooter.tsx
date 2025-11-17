@@ -249,11 +249,10 @@ const MobileFooter: FC = () => {
 
                                     <Stack spacing={0.8}>
                                         {[
-                                            { label: "Speakers", href: "/" },
                                             { label: "Team", href: "/team" },
-                                            { label: "Map", href: "/" },
-                                            { label: "Faq", href: "/" },
-                                            { label: "Archive", href: "https://www.napuleth.org/archive/2025" },
+                                            { label: "Location", href: "/" },
+                                            { label: "Archive 2025", href: "https://www.napuleth.org/archive/2025" },
+                                            { label: "Archive 2024", href: "https://www.napuleth.org/archive/2024" },
                                         ].map((item) => (
                                             <motion.div key={item.label} variants={itemVariants}>
                                                 <Link href={item.href} underline="none">
@@ -302,21 +301,22 @@ const MobileFooter: FC = () => {
 
                                     <Stack spacing={0.8}>
                                         {[
-                                            "Tickets",
-                                            "Join as a speaker",
-                                            "Sponsor us",
-                                            "Partner with us",
-                                            "Volunteers",
+                                            { label: "Sponsors us", href: "https://docsend.com/view/zaw8ij7k9avkcg6z" },
+                                            { label: "Join as a speaker", href: "https://speak.ctrlshift.events/" },
+                                            { label: "Text us", href: "https://t.me/napulETH" },
+                                            { label: "Volunteers", href: "https://t.me/napulETH" },
                                         ].map((item) => (
-                                            <motion.div key={item} variants={itemVariants}>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 20,
-                                                        fontWeight: 500,
-                                                    }}
-                                                >
-                                                    {item}
-                                                </Typography>
+                                            <motion.div key={item.label} variants={itemVariants}>
+                                                <Link href={item.href} underline="none">
+                                                    <Typography
+                                                        sx={{
+                                                            fontSize: 20,
+                                                            fontWeight: 500,
+                                                        }}
+                                                    >
+                                                        {item.label}
+                                                    </Typography>
+                                                </Link>
                                             </motion.div>
                                         ))}
                                     </Stack>
