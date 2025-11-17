@@ -6,11 +6,14 @@ import NorthEastIcon from '@mui/icons-material/NorthEast';
 import { motion, type Variants } from 'framer-motion';
 import theme from '@/theme/theme';
 
+import quantum from '@/assets/images/2025/new/quantum.jpeg';
+import web3 from '@/assets/images/2025/new/web3.jpg';
 import image1 from '@/assets/images/2025/1.webp';
 import image2 from '@/assets/images/2025/2.webp';
 import image3 from '@/assets/images/2025/3.webp';
 import image4 from '@/assets/images/2025/4.webp';
 import image5 from '@/assets/images/2025/5.webp';
+import image6 from '@/assets/images/2025/new/opportunities.jpeg';
 
 interface Card {
   tag: string;
@@ -18,17 +21,19 @@ interface Card {
 }
 
 const cards: Card[] = [
-  { tag: 'Blockchain', image: image1.src },
-  { tag: 'Quantum Computing', image: image2.src },
+  { tag: 'Quantum Computing', image: quantum.src },
   { tag: 'AI', image: image3.src },
-  { tag: 'NFTs', image: image4.src },
-  { tag: 'DeFi', image: image5.src },
+  { tag: 'Web3', image: web3.src },
+  { tag: 'Law', image: image4.src },
+  { tag: 'Art', image: image5.src },
+  { tag: 'Unique Venue', image: image2.src },
+  { tag: 'Networking Opportunities', image: image6.src },
 ];
 
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
-    opacity: 1,
+    opacity: 1, 
     y: 0,
   },
 };
