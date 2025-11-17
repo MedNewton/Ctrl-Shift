@@ -181,6 +181,7 @@ const MobileAbout: FC = () => {
             width="100%"
             gap={3}
             pr={4}
+            mb={16}
           >
             <Box
               width="40%"
@@ -250,7 +251,7 @@ const MobileAbout: FC = () => {
             width="100%"
             gap={3}
             pr={4}
-            mb={16}
+            mb={4}
           >
             <Box
               width="40%"
