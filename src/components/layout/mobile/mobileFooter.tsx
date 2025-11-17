@@ -302,7 +302,7 @@ const MobileFooter: FC = () => {
                                     <Stack spacing={0.8}>
                                         {[
                                             { label: "Sponsors us", href: "https://docsend.com/view/zaw8ij7k9avkcg6z" },
-                                            { label: "Join as a speaker", href: "https://speak.ctrlshift.events/" },
+                                            { label: "Join as a speaker", href: "https://docsend.com/view/zaw8ij7k9avkcg6z" },
                                             { label: "Text us", href: "https://t.me/napulETH" },
                                             { label: "Volunteers", href: "https://t.me/napulETH" },
                                         ].map((item) => (
