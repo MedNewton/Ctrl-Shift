@@ -10,9 +10,11 @@ import Sponsors from "@/sections/home/sponsors";
 import Partners from "@/sections/home/partners";
 import Visions from "@/sections/home/visions";
 import HackathonBanner from "@/sections/home/hackathonBanner";
+import EthFamily from "@/sections/home/ethFamily";
 import Footer from "@/components/layout/footer";
 
 import MobileAbout from "@/sections/home/mobile/about";
+import Topics from "@/sections/home/topics";
 
 
 
@@ -26,23 +28,24 @@ export default function Home() {
       <GlassAnimatedHero />
       <About />
       <MobileAbout />
+      <Stack
+        minHeight={{ xs: "70vh", md: "50vh" }}
+        direction={"row"}
+        alignItems={"stretch"}
+        justifyContent={"center"}
+        gap={3}
+        width={"100%"}
+        px={8}
+      >
+        <Topics />
+        <HackathonBanner />
+      </Stack>
       <LastVersionStackedCardsSection />
       <LastVersionStatsSection />
       <Speakers />
       <Sponsors />
       <Partners />
-      <Stack 
-      minHeight={{ xs: "70vh", md: "50vh" }} 
-      direction={"row"} 
-      alignItems={"stretch"} 
-      justifyContent={"center"} 
-      gap={3} 
-      width={"100%"} 
-      px={8}
-      >
-        <Visions />
-        <HackathonBanner />
-      </Stack>
+      <EthFamily />
       <Footer />
     </Stack>
   );

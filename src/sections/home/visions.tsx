@@ -183,25 +183,6 @@ export default function Visions() {
                     >
                         Visions 2026
                     </Typography>
-                    <Box
-                        sx={{
-                            position: 'relative',
-                            width: { xs: 32, md: 40 },
-                            height: { xs: 32, md: 40 },
-                            overflow: 'hidden',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <NorthEastIcon
-                            ref={titleArrowRef}
-                            sx={{
-                                fontSize: { xs: 32, md: 40 },
-                                position: 'absolute',
-                            }}
-                        />
-                    </Box>
                 </Stack>
             </Stack>
 
@@ -227,7 +208,9 @@ export default function Visions() {
                     zIndex: 2,
                 }}
             >
-                The exhibition Napuleth visions, through key concepts such as hybridization, concrescence and crystallization, explores how the process of &quot;dematerialization&quot; of value relates to the production of meaning in art, showing how the aesthetic and economic dimensions are constantly evolving, shaped by a network of interconnected actors.
+                Visions 2026 explores the evolving dialogue between value, meaning, and creation.
+                <br />Through themes of hybridization, concrescence, and crystallization, the exhibition reveals how the “dematerialization” of value reshapes artistic expression.
+                <br />Aesthetic, economic, and symbolic dimensions merge and transform, guided by a network of interconnected actors.
             </Typography>
         </Stack>
     )

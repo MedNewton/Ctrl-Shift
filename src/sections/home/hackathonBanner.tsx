@@ -403,38 +403,8 @@ export default function HackathonBanner({
       {/* content (clickable text/CTA stays above) */}
       <div className="relative z-10 h-full" />
 
-      <Stack width="fit-content" gap={4} alignItems="center" sx={{ position: "relative", zIndex: 2 }}>
-        {/* news pill */}
-        <motion.div
-          initial={isReduced ? { opacity: 0 } : { y: 18, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: tNews, duration: isReduced ? 0.25 : 0.5, ease: "easeOut" }}
-          style={{ position: "relative", zIndex: 2 }}
-        >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            gap={0.5}
-            width="fit-content"
-            sx={{
-              backgroundColor: theme.palette.brand.napulETHYellow2.main,
-              borderRadius: "10rem",
-              px: 1.5,
-            }}
-          >
-            <Typography variant="caption" fontWeight={600} color={theme.palette.info.main}>
-              Subscription to our hackathon will be open soon
-            </Typography>
-            <Typography variant="h6" color={theme.palette.info.main}>
-              &bull;
-            </Typography>
-            <Typography variant="caption" fontWeight={400} color={theme.palette.info.main}>
-              We&apos;ll let you know
-            </Typography>
-            <LiaLongArrowAltRightSolid size={16} color={theme.palette.background.default} />
-          </Stack>
-        </motion.div>
+      <Stack width="fit-content" gap={2} alignItems="center" sx={{ position: "relative", zIndex: 2 }}>
+
 
         {/* titles */}
         <Stack alignItems="center" gap={1}>
@@ -446,7 +416,7 @@ export default function HackathonBanner({
           >
             <Stack direction="row" alignItems="center" justifyContent="center" gap={0.5} width="fit-content">
               <Typography variant="h3" fontWeight={600} color={theme.palette.text.primary} textAlign="center">
-                Participate in the 48H<br />hackathon of Ctrl/Shift 2026
+                Participate in the 48H<br />Ctrl/Shift Hackathon
               </Typography>
             </Stack>
           </motion.div>
@@ -458,8 +428,8 @@ export default function HackathonBanner({
             style={{ position: "relative", zIndex: 2 }}
           >
             <Stack direction="row" alignItems="center" justifyContent="center" gap={0.5} width="fit-content">
-              <Typography variant="h6" fontWeight={500} color={theme.palette.text.primary} textAlign="center" sx={{ width: "100%" }}>
-                with an attractive prize pool and numerous bounties!
+              <Typography variant="h6" fontWeight={500} color={theme.palette.text.primary} textAlign="center" sx={{ width: "75%" }}>
+                Prototype bold ideas, solve real challenges, and compete for prizes, grants, and ecosystem opportunities.
               </Typography>
             </Stack>
           </motion.div>

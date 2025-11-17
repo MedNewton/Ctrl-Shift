@@ -1,290 +1,488 @@
-// components/Sections/Topics.tsx
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import Marquee from "react-fast-marquee";
-import { Box, Stack, Typography } from "@mui/material";
+import { useEffect, useRef } from "react";
+import { Stack, Typography } from "@mui/material";
+import { motion, useReducedMotion } from "motion/react";
 import theme from "@/theme/theme";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import NextImage from "next/image";
 
-gsap.registerPlugin(ScrollTrigger);
+import visionsAssets from "@/assets/images/visions/asset.webp";
 
-type RowSpec = {
-  topics: string[];
-  speed: number;
-  direction: "left" | "right";
+type Props = {
+  ornamentSrc?: string;        // e.g. "/ornament-hero.png"
+  bg?: string;                 // overlay/red background color
+  /** Base follow brush radius (device px) */
+  brushRadius?: number;
+  /** Mask fade-out speed per frame (0..1) */
+  fade?: number;
+  /** Brush opacity strength (0..1) inside blob */
+  strength?: number;
+  /** Ornament opacity when revealed (0..1) */
+  revealOpacity?: number;
+
+  // Behaviour
+  idleSpeedPxPerSec?: number;  // faster idle wander
+  followLerp?: number;         // 0..1, chase stiffness
+  minSeparationPx?: number;    // keep idle spots far apart
+
+  // Sizes
+  brushRadiusFollow?: number;  // default = brushRadius
+  brushRadiusIdle?: number;    // default = brushRadius * 1.25
 };
 
-const TAGS = [
-  "AI", "Art", "Blockchain", "Business", "Crypto", "DeFi", "Design", "Economy",
-  "Education", "EVM", "Finance", "Game Theory", "Gaming", "IoT", "IT", "Legal",
-  "Marketing", "Media", "Music", "Network", "NFT", "Privacy", "Quantum", "RWA",
-  "Security", "Tokenomics", "Trading", "UX", "Web3", "ZK Proofs",
-];
+type Spot = { x: number; y: number; vx: number; vy: number };
 
-// split evenly into N rows in reading order
-function splitIntoRows<T>(items: T[], rows: number): T[][] {
-  const out: T[][] = Array.from({ length: rows }, () => []);
-  items.forEach((item, i) => out[i % rows].push(item));
-  return out;
-}
-
-const rowsFromTags = splitIntoRows(TAGS, 3);
-
-const ROWS: RowSpec[] = [
-  { topics: rowsFromTags[0], speed: 34, direction: "left" },
-  { topics: rowsFromTags[1], speed: 44, direction: "left" },
-  { topics: rowsFromTags[2], speed: 30, direction: "left" },
-];
-
-// ---- Copy for the word-by-word reveal ----
-const TRACKS_COPY =
-  "Ctrl/Shift 2026 spotlights tracks spanning Builders & Protocols, DeFi/Tokenomics, Privacy & ZK, AI × Web3, Security, Gaming & Metaverse, Culture/Media & NFTs, and Legal/Governance. Expect crisp talks, hands-on workshops, and live demos that turn research into production—so you leave with code, partners, and a clear roadmap to ship what’s next.";
-
-export default function Topics() {
-  const [play, setPlay] = useState(true);
-
+export default function Topics({
+  ornamentSrc = "/ornament-hero.png",
+  bg = "#952500",
+  brushRadius = 140,
+  fade = 0.06,
+  strength = 0.6,
+  revealOpacity = 0.55,
+  idleSpeedPxPerSec = 140,
+  followLerp = 0.25,
+  minSeparationPx = 260,
+  brushRadiusFollow,
+  brushRadiusIdle,
+}: Props) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
-  const textRef = useRef<HTMLParagraphElement | null>(null);
+  const isReduced = useReducedMotion();
 
-  // split text into words once
-  const words = useMemo(() => {
-    return TRACKS_COPY.split(" ").map((w, i) => ({ w, k: `w-${i}` }));
-  }, []);
+  const tImage = 0.10, tNews = tImage + 0.15, tTitles = tImage + 0.3, tCta = tTitles + 0.45;
 
   useEffect(() => {
-    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    const update = () => setPlay(!mq.matches);
-    update();
-    mq.addEventListener?.("change", update);
-    return () => mq.removeEventListener?.("change", update);
-  }, []);
+    const canvas = canvasRef.current!;
+    const section = sectionRef.current!;
+    const ctx = canvas.getContext("2d", { alpha: true })!;
+    const mask = document.createElement("canvas");
+    const mctx = mask.getContext("2d", { alpha: true })!;
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
+    let w = 0, h = 0, raf = 0;
+    let lastTime = performance.now();
 
-    const ctx = gsap.context(() => {
-      const section = sectionRef.current!;
-      const title = titleRef.current ?? undefined;
-      const text = textRef.current ?? undefined;
+    // pointer state
+    let mouseX = -9999, mouseY = -9999, pointerInside = false, following = false;
 
-      // Title: fade in from below on enter; reverse on scroll back up
-      if (title) {
-        gsap.set(title, { opacity: 0, y: 28, willChange: "transform,opacity" });
-        gsap.to(title, {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 86%",
-            end: "top 70%",
-            toggleActions: "play none none reverse",
-            invalidateOnRefresh: true,
-          },
-        });
+    // two spots
+    const spots: Spot[] = [
+      { x: 0, y: 0, vx: 0, vy: 0 },
+      { x: 0, y: 0, vx: 0, vy: 0 },
+    ];
+
+    // leader when following (single spot)
+    let leadX = 0, leadY = 0;
+
+    // radii
+    const rFollow = Math.max(1, (brushRadiusFollow ?? brushRadius));
+    const rIdle = Math.max(1, (brushRadiusIdle ?? Math.round(brushRadius * 1.25)));
+    let currRadius = rFollow; // eased for smooth transitions
+
+    // watercolor brushes (offscreen)
+    let brushIdle = createBlobBrush(rIdle, strength);
+    let brushFollow = createBlobBrush(rFollow, strength);
+
+    // ornament
+    let ornament: HTMLImageElement | null = null;
+    let ornamentReady = false;
+
+    // --- watercolor blob brush factory ---
+    function createBlobBrush(radius: number, softness = 0.9) {
+      const size = Math.ceil(radius * 2.4);
+      const half = size / 2;
+      const c = document.createElement("canvas");
+      c.width = size; c.height = size;
+      const g = c.getContext("2d", { alpha: true })!;
+
+      g.clearRect(0, 0, size, size);
+
+      // 1) many soft “splats” with jitter
+      const splats = Math.round(28 + radius * 0.08);
+      for (let i = 0; i < splats; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const dist = (Math.random() ** 0.7) * radius * 0.75;
+        const cx = half + Math.cos(ang) * dist;
+        const cy = half + Math.sin(ang) * dist;
+
+        const r = radius * (0.25 + Math.random() * 0.45);
+        const a = 0.12 + Math.random() * 0.18;
+
+        const rad = g.createRadialGradient(cx, cy, 0, cx, cy, r);
+        rad.addColorStop(0.0, `rgba(255,255,255,${a})`);
+        rad.addColorStop(0.6, `rgba(255,255,255,${a * 0.6})`);
+        rad.addColorStop(1.0, `rgba(255,255,255,0)`);
+        g.globalCompositeOperation = "lighter";
+        g.fillStyle = rad;
+        g.beginPath();
+        g.arc(cx, cy, r, 0, Math.PI * 2);
+        g.fill();
       }
 
-      // Word-by-word reveal on scroll (0.2 -> 1.0), reversible
-      if (text) {
-        const wordEls = Array.from(
-          text.querySelectorAll<HTMLElement>("[data-word]")
-        );
-        gsap.set(wordEls, { opacity: 0.2, willChange: "opacity" });
+      // 2) envelope to unify the silhouette
+      const env = g.createRadialGradient(half, half, radius * 0.2, half, half, radius * 1.05);
+      env.addColorStop(0.0, `rgba(255,255,255,${0.55 * (typeof softness === "number" ? softness : 0.9)})`);
+      env.addColorStop(1.0, `rgba(255,255,255,0)`);
+      g.globalCompositeOperation = "lighter";
+      g.fillStyle = env;
+      g.beginPath();
+      g.arc(half, half, radius * 1.05, 0, Math.PI * 2);
+      g.fill();
 
-        gsap.to(wordEls, {
-          opacity: 1,
-          ease: "none",
-          // tweak speed of sweep via each
-          stagger: { each: 0.05, from: 0 },
-          scrollTrigger: {
-            trigger: section,
-            start: "top 78%",   // begin sweeping soon after entering
-            end: "top 38%",     // finish as the section approaches the top
-            scrub: true,        // ties to scroll; reverses cleanly
-            immediateRender: false,
-            invalidateOnRefresh: true,
-          },
-        });
+      // 3) tiny holes for watercolor edge breakup
+      g.globalCompositeOperation = "destination-out";
+      const holes = Math.round(10 + radius * 0.06);
+      for (let i = 0; i < holes; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const dist = radius * (0.65 + Math.random() * 0.5);
+        const cx = half + Math.cos(ang) * dist;
+        const cy = half + Math.sin(ang) * dist;
+        const r = radius * (0.05 + Math.random() * 0.08);
+        const hgrad = g.createRadialGradient(cx, cy, 0, cx, cy, r);
+        hgrad.addColorStop(0.0, `rgba(0,0,0,0.06)`);
+        hgrad.addColorStop(1.0, `rgba(0,0,0,0)`);
+        g.fillStyle = hgrad;
+        g.beginPath();
+        g.arc(cx, cy, r, 0, Math.PI * 2);
+        g.fill();
       }
-    }, sectionRef);
 
-    // ensure layout is measured after first paint
-    requestAnimationFrame(() => ScrollTrigger.refresh());
-    setTimeout(() => ScrollTrigger.refresh(), 200);
+      // 4) unify with a light blur
+      g.filter = "blur(6px)";
+      g.globalCompositeOperation = "source-over";
+      g.drawImage(c, 0, 0);
 
-    return () => ctx.revert();
-  }, []);
+      return { canvas: c, baseRadius: radius };
+    }
+
+    // stamp brush at (x,y) with scale = radius/baseRadius
+    function stampBlob(
+      targetCtx: CanvasRenderingContext2D,
+      brush: { canvas: HTMLCanvasElement; baseRadius: number },
+      x: number, y: number,
+      radius: number
+    ) {
+      const img = brush.canvas;
+      const br = brush.baseRadius;
+      const scale = Math.max(0.01, radius / br);
+      const wImg = img.width * scale;
+      const hImg = img.height * scale;
+      targetCtx.save();
+      targetCtx.globalCompositeOperation = "lighter";
+      targetCtx.drawImage(img, x - wImg / 2, y - hImg / 2, wImg, hImg);
+      targetCtx.restore();
+    }
+
+    // utils
+    const randVel = (speed: number) => {
+      const a = Math.random() * Math.PI * 2;
+      return { vx: Math.cos(a) * speed, vy: Math.sin(a) * speed };
+    };
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.getBoundingClientRect();
+      w = Math.max(1, Math.floor(rect.width * dpr));
+      h = Math.max(1, Math.floor(rect.height * dpr));
+      canvas.width = w; canvas.height = h;
+      mask.width = w; mask.height = h;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+      // place far apart
+      const speed = idleSpeedPxPerSec * dpr;
+      spots[0].x = w * 0.25; spots[0].y = h * 0.35; Object.assign(spots[0], randVel(speed));
+      spots[1].x = w * 0.75; spots[1].y = h * 0.65; Object.assign(spots[1], randVel(speed));
+
+      leadX = (spots[0].x + spots[1].x) * 0.5;
+      leadY = (spots[0].y + spots[1].y) * 0.5;
+
+      // rebuild watercolor brushes in case DPR/size changed
+      brushIdle = createBlobBrush(rIdle, strength);
+      brushFollow = createBlobBrush(rFollow, strength);
+    };
+
+    // window-level pointer (text overlay won't block)
+    const onMove = (e: PointerEvent) => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = section.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left && e.clientX <= rect.right &&
+        e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+      pointerInside = inside;
+      if (!inside) { following = false; return; }
+
+      mouseX = (e.clientX - rect.left) * dpr;
+      mouseY = (e.clientY - rect.top) * dpr;
+      following = true;
+    };
+    const onLeaveViewport = () => { pointerInside = false; following = false; };
+
+    const enforceSeparation = (desired: number) => {
+      const dx = spots[1].x - spots[0].x;
+      const dy = spots[1].y - spots[0].y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < desired && dist > 0.0001) {
+        const overlap = (desired - dist) * 0.5;
+        const nx = dx / dist, ny = dy / dist;
+        spots[0].x -= nx * overlap;
+        spots[0].y -= ny * overlap;
+        spots[1].x += nx * overlap;
+        spots[1].y += ny * overlap;
+      }
+    };
+
+    const updateIdle = (dt: number) => {
+      const margin = rIdle * 1.2; // idle brush is bigger
+      for (const s of spots) {
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+
+        if (s.x < margin) { s.x = margin; s.vx = Math.abs(s.vx); }
+        if (s.x > w - margin) { s.x = w - margin; s.vx = -Math.abs(s.vx); }
+        if (s.y < margin) { s.y = margin; s.vy = Math.abs(s.vy); }
+        if (s.y > h - margin) { s.y = h - margin; s.vy = -Math.abs(s.vy); }
+
+        // gentle randomness
+        if (Math.random() < 0.01) {
+          const speed = Math.hypot(s.vx, s.vy) || idleSpeedPxPerSec;
+          const tweak = (Math.random() - 0.5) * 0.8;
+          const ang = Math.atan2(s.vy, s.vx) + tweak;
+          s.vx = Math.cos(ang) * speed;
+          s.vy = Math.sin(ang) * speed;
+        }
+      }
+      enforceSeparation(minSeparationPx);
+    };
+
+    const splitFromCursor = () => {
+      // split apart when leaving follow
+      const speed = Math.hypot(spots[0].vx, spots[0].vy) || idleSpeedPxPerSec;
+      const baseAng = Math.random() * Math.PI * 2;
+      const sep = Math.max(minSeparationPx * 0.6, rIdle * 0.8);
+
+      spots[0].x = leadX - Math.cos(baseAng) * sep * 0.5;
+      spots[0].y = leadY - Math.sin(baseAng) * sep * 0.5;
+      spots[1].x = leadX + Math.cos(baseAng) * sep * 0.5;
+      spots[1].y = leadY + Math.sin(baseAng) * sep * 0.5;
+
+      spots[0].vx = Math.cos(baseAng) * speed;
+      spots[0].vy = Math.sin(baseAng) * speed;
+      spots[1].vx = -spots[0].vx;
+      spots[1].vy = -spots[0].vy;
+    };
+
+    const tick = () => {
+      const now = performance.now();
+      const dt = Math.max(0.001, (now - lastTime) / 1000);
+      lastTime = now;
+
+      // fade mask (revealed areas close back to red)
+      mctx.save();
+      mctx.globalCompositeOperation = "destination-out";
+      mctx.fillStyle = `rgba(0,0,0,${fade})`;
+      mctx.fillRect(0, 0, w, h);
+      mctx.restore();
+
+      // ease brush size between modes
+      const targetRadius = (following && pointerInside) ? rFollow : rIdle;
+      currRadius += (targetRadius - currRadius) * 0.2;
+
+      if (following && pointerInside) {
+        // single spot follows cursor
+        leadX += (mouseX - leadX) * followLerp;
+        leadY += (mouseY - leadY) * followLerp;
+
+        // stamp FOLLOW blob
+        stampBlob(mctx, brushFollow, leadX, leadY, currRadius);
+
+        // co-locate both logical spots at leader for continuity
+        spots[0].x = leadX; spots[0].y = leadY;
+        spots[1].x = leadX; spots[1].y = leadY;
+      } else {
+        if (!pointerInside && following) splitFromCursor();
+        following = false;
+
+        // wander independently; stamp IDLE blobs (bigger)
+        updateIdle(dt);
+        stampBlob(mctx, brushIdle, spots[0].x, spots[0].y, currRadius);
+        stampBlob(mctx, brushIdle, spots[1].x, spots[1].y, currRadius);
+
+        // keep leader near midpoint for smooth re-entry
+        leadX = (spots[0].x + spots[1].x) * 0.5;
+        leadY = (spots[0].y + spots[1].y) * 0.5;
+      }
+
+      // === composite: ornament masked, red behind ===
+      ctx.clearRect(0, 0, w, h);
+
+      if (ornamentReady && ornament) {
+        const ow = ornament.naturalWidth;
+        const oh = ornament.naturalHeight;
+        const scale = Math.max(w / ow, h / oh);
+        const dw = ow * scale;
+        const dh = oh * scale;
+        const dx = (w - dw) / 2;
+        const dy = (h - dh) / 2;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, Math.min(1, revealOpacity));
+        ctx.drawImage(ornament, dx, dy, dw, dh);
+
+        ctx.globalCompositeOperation = "destination-in";
+        ctx.drawImage(mask, 0, 0);
+        ctx.restore();
+      }
+
+      // red background behind whatever remains
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-over";
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+
+      // Add color stops (0 = start, 1 = end)
+      gradient.addColorStop(0, '#942629');    // 0% - top color
+      gradient.addColorStop(1, '#2E0C0D');    // 100% - bottom color
+
+      // Use the gradient as fillStyle
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, w, h);
+      ctx.restore();
+
+      ctx.globalCompositeOperation = "source-over";
+      raf = requestAnimationFrame(tick);
+    };
+
+    // init
+    const img = new Image();
+    img.src = ornamentSrc;
+    ornament = img;
+    void img.decode().then(() => (ornamentReady = true));
+
+    resize();
+    window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", onMove, { passive: true });
+    window.addEventListener("pointerleave", onLeaveViewport, { passive: true });
+
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", onMove);
+      window.removeEventListener("pointerleave", onLeaveViewport);
+    };
+  }, [
+    ornamentSrc, bg, brushRadius, fade, strength, revealOpacity,
+    idleSpeedPxPerSec, followLerp, minSeparationPx, brushRadiusFollow, brushRadiusIdle
+  ]);
 
   return (
     <Stack
       ref={sectionRef}
-      width="100%"
-      height="100vh"
       sx={{
+        backgroundColor: "linear-gradient(180deg, #942629 0%, #2E0C0D 100%)",
         position: "relative",
-        backgroundColor: theme.palette.background.default, // black
+        width: "50%",
+        flexGrow: 1,
         overflow: "hidden",
+        borderRadius: 4,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        mt: 6,
+        mx: "auto",
+        mb: 4,
+        py: 4,
       }}
     >
-      {/* Header row: title + paragraph */}
-      <Stack
-        width="100%"
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
-        <Typography
-          ref={titleRef}
-          variant="h1"
-          color={theme.palette.primary.main}
-          fontWeight={600}
+      {/* effect layer */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
+
+      {/* content (clickable text/CTA stays above) */}
+      <div className="relative z-10 h-full" />
+
+      <Stack width="fit-content" gap={2} sx={{ position: "relative", zIndex: 2, px: 4 }}>
+
+        <Stack
+          component={motion.div}
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.8, ease: "easeOut" }
+            }
+          }}
+          width="100%"
+          alignItems="center"
+          position="absolute"
           sx={{
-            px: { xs: 3, md: 16 },
-            pt: { xs: 4, md: 8 },
-            zIndex: 2,
-            opacity: 0, // prevent flash before GSAP kicks in
+            zIndex: 1,
+            top: "20%",
+            right: "-36%",
+            animation: "float 20s ease-in-out infinite",
+            '@keyframes float': {
+              '0%': { transform: 'translateY(-10%)' },
+              '50%': { transform: 'translateY(-5%)' },
+              '100%': { transform: 'translateY(-10%)' },
+            },
           }}
         >
-          Tracks
-        </Typography>
-
-        {/* Word-by-word reveal paragraph */}
-        <Typography
-          ref={textRef}
-          variant="h6"
-          color={theme.palette.primary.main}
-          fontWeight={500}
-          sx={{
-            pr: { xs: 3, md: 16 },
-            pl: { xs: 3, md: 8 },
-            pt: { xs: 4, md: 8 },
-            zIndex: 2,
-            textAlign: "right",
-            width: { xs: "100%", md: "50%" },
-            maxWidth: 900,
-            ml: "auto",
-            lineHeight: 1.6,
-            wordBreak: "normal",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {words.map(({ w, k }, idx) => (
-            <Box
-              key={k}
-              component="span"
-              data-word
-              sx={{ opacity: 0.2 }}
-            >
-              {w}
-              {idx < words.length - 1 ? " " : ""}
-            </Box>
-          ))}
-        </Typography>
-      </Stack>
-
-      {/* Bottom masked marquee zone */}
-      <Box
-        aria-hidden
-        sx={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: { xs: "44vh", md: "48vh" },
-          WebkitMaskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)",
-          maskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)",
-          zIndex: 1,
-        }}
-      >
-        <Stack justifyContent="flex-end" sx={{ height: "100%", gap: { xs: 0.75, md: 1 } }}>
-          {ROWS.map((row, i) => (
-            <LineMarquee
-              key={i}
-              topics={row.topics}
-              speed={row.speed}
-              direction={row.direction}
-              play={play}
-            />
-          ))}
+          <NextImage src={visionsAssets} alt="Visions" width={350} height={350} />
         </Stack>
-      </Box>
-    </Stack>
-  );
-}
+        {/* titles */}
+        <Stack width="100%" gap={1}>
+          <motion.div
+            initial={isReduced ? { opacity: 0 } : { y: 18, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: tTitles, duration: isReduced ? 0.25 : 0.5, ease: "easeOut" }}
+            style={{ position: "relative", zIndex: 2 }}
+          >
+            <Stack gap={0.5} width="fit-content">
+              <Typography
+                className="subtitle-text"
+                variant="h6"
+                sx={{
+                  fontWeight: 500,
+                  color: theme.palette.text.secondary,
+                  transition: 'color 0.3s ease',
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                Art Exhibition
+              </Typography>
+              <Typography
+                className="title-text"
+                variant="h3"
+                sx={{
+                  fontWeight: 600,
+                  transition: 'color 0.3s ease',
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                Visions 2026
+              </Typography>
+            </Stack>
+          </motion.div>
 
-function LineMarquee({
-  topics,
-  speed,
-  direction,
-  play,
-}: {
-  topics: string[];
-  speed: number;
-  direction: "left" | "right";
-  play: boolean;
-}) {
-  return (
-    <Marquee
-      play={play}
-      speed={speed}
-      direction={direction}
-      gradient={false}
-      autoFill
-      pauseOnHover={false}
-      style={{ lineHeight: 1.08, overflowY: "hidden" }}
-    >
-      <Box
-        sx={{
-          display: "inline-flex",
-          alignItems: "center",
-          fontSize: {
-            xs: "clamp(16px, 5.5vw, 24px)",
-            md: "clamp(22px, 3.2vw, 40px)",
-          },
-          fontWeight: 800,
-          letterSpacing: "-0.01em",
-          pr: { xs: "2vw", md: "1.5vw" },
-        }}
-      >
-        {topics.map((t, i) => (
-          <Box key={`${t}-${i}`} component="span" sx={{ display: "inline-flex", alignItems: "center" }}>
-            <Box
-              component="span"
-              sx={{
-                display: "inline-block",
-                px: { xs: "1.1vw", md: "0.75vw" }, // tight item spacing
-                color: "rgba(255,255,255,0.32)",
-                transform: "translateZ(0)",
-                transition:
-                  "opacity 160ms ease, color 160ms ease, transform 200ms cubic-bezier(.2,.7,.2,1)",
-                cursor: "default",
-                "&:hover": {
-                  color: "rgba(255,255,255,0.96)",
-                  transform: "translateY(-1px)",
-                },
-              }}
-            >
-              {t}
-            </Box>
-            <Box
-              component="span"
-              sx={{
-                px: { xs: "0.65vw", md: "0.5vw" }, // even tighter slash spacing
-                color: "rgba(255,255,255,0.18)",
-                pointerEvents: "none",
-                userSelect: "none",
-              }}
-            >
-              /
-            </Box>
-          </Box>
-        ))}
-      </Box>
-    </Marquee>
+          <motion.div
+            initial={isReduced ? { opacity: 0 } : { y: 18, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: tTitles + 0.2, duration: isReduced ? 0.25 : 0.5, ease: "easeOut" }}
+            style={{ position: "relative", zIndex: 2 }}
+          >
+            <Typography variant="subtitle1" fontWeight={500} color={theme.palette.text.primary} sx={{ width: "70%" }}>
+              Visions 2026 explores the evolving dialogue between value, meaning, and creation.
+              <br />Through themes of hybridization, concrescence, and crystallization, the exhibition reveals how the “dematerialization” of value reshapes artistic expression.
+              <br />Aesthetic, economic, and symbolic dimensions merge and transform, guided by a network of interconnected actors.
+            </Typography>
+          </motion.div>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 }
