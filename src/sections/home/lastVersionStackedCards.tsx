@@ -29,15 +29,21 @@ const cards: Card[] = [
 ];
 
 export default function LastVersionStackedCardsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
-  const titleArrowRef = useRef<SVGSVGElement>(null);
+  const titleArrowRef = useRef<SVGSVGElement | null>(null);
   const arrowAnimationRef = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
-    const allCards = cardsRef.current.filter((el): el is HTMLDivElement => el !== null);
-    const allImages = imagesRef.current.filter((el): el is HTMLImageElement => el !== null);
+    const allCards = cardsRef.current.filter(
+      (el): el is HTMLDivElement => el !== null
+    );
+    const allImages = imagesRef.current.filter(
+      (el): el is HTMLImageElement => el !== null
+    );
 
     if (allCards.length === 0) return;
 
@@ -47,17 +53,24 @@ export default function LastVersionStackedCardsSection() {
     allCards.forEach((card, index) => {
       if (index > 0) {
         gsap.set(card, { y: '100%', scale: 1, rotation: 0 });
-        gsap.set(allImages[index], { scale: 1 });
+        if (allImages[index]) {
+          gsap.set(allImages[index], { scale: 1 });
+        }
       }
     });
   }, []);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
     const ctx = gsap.context(() => {
-      const allCards = cardsRef.current.filter((el): el is HTMLDivElement => el !== null);
-      const allImages = imagesRef.current.filter((el): el is HTMLImageElement => el !== null);
+      const allCards = cardsRef.current.filter(
+        (el): el is HTMLDivElement => el !== null
+      );
+      const allImages = imagesRef.current.filter(
+        (el): el is HTMLImageElement => el !== null
+      );
       const totalCards = allCards.length;
 
       if (totalCards === 0) return;
@@ -69,26 +82,39 @@ export default function LastVersionStackedCardsSection() {
 
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: containerRef.current,
+            trigger: section,
             start: () => `top+=${i * window.innerHeight} top`,
             end: () => `top+=${(i + 1) * window.innerHeight} top`,
             scrub: 0.5,
+            invalidateOnRefresh: true,
           },
         });
 
-        tl.to(currentCard, {
-          scale: 0.5,
-          rotation: -5,
-          ease: 'none',
-        }, 0)
-          .to(currentImage, {
-            scale: 1.5,
+        tl.to(
+          currentCard,
+          {
+            scale: 0.5,
+            rotation: -5,
             ease: 'none',
-          }, 0)
-          .to(nextCard, {
-            y: '0%',
-            ease: 'none',
-          }, 0);
+          },
+          0
+        )
+          .to(
+            currentImage,
+            {
+              scale: 1.5,
+              ease: 'none',
+            },
+            0
+          )
+          .to(
+            nextCard,
+            {
+              y: '0%',
+              ease: 'none',
+            },
+            0
+          );
       }
 
       if (titleArrowRef.current) {
@@ -117,11 +143,14 @@ export default function LastVersionStackedCardsSection() {
           }
         );
       }
-    }, containerRef);
+
+      ScrollTrigger.refresh();
+    }, sectionRef);
 
     return () => {
       if (arrowAnimationRef.current) {
         arrowAnimationRef.current.kill();
+        arrowAnimationRef.current = null;
       }
       ctx.revert();
     };
@@ -136,6 +165,8 @@ export default function LastVersionStackedCardsSection() {
   const handleMouseLeave = () => {
     if (arrowAnimationRef.current) {
       arrowAnimationRef.current.pause();
+    }
+    if (titleArrowRef.current) {
       gsap.to(titleArrowRef.current, {
         x: 0,
         y: 0,
@@ -146,11 +177,12 @@ export default function LastVersionStackedCardsSection() {
   };
 
   const handleClick = () => {
-    window.open('https://www.napuleth.org/archive/2025', '_blank');
+    window.open('https://www.napuleth.org/archive/2025', '_blank', 'noopener,noreferrer');
   };
 
   return (
     <Box
+      ref={sectionRef}
       sx={{
         position: 'relative',
         width: '100vw',
@@ -164,7 +196,7 @@ export default function LastVersionStackedCardsSection() {
           position: 'sticky',
           top: 0,
           width: '100vw',
-          height: {xs: '100dvh', md: '100vh'},
+          height: { xs: '100dvh', md: '100vh' },
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -186,6 +218,7 @@ export default function LastVersionStackedCardsSection() {
             '&:hover .title-text': {
               color: theme.palette.text.secondary,
             },
+            cursor: 'pointer',
           }}
         >
           <Typography
@@ -206,7 +239,6 @@ export default function LastVersionStackedCardsSection() {
             justifyContent="center"
             gap={2}
             sx={{
-              cursor: 'pointer',
               transition: 'all 0.3s ease',
             }}
           >
@@ -254,7 +286,7 @@ export default function LastVersionStackedCardsSection() {
         >
           {cards.map((card, index) => (
             <Box
-              key={index}
+              key={card.tag}
               ref={(el) => {
                 cardsRef.current[index] = el as HTMLDivElement | null;
               }}
