@@ -27,7 +27,6 @@ export default function Home() {
     }}>
       <GlassAnimatedHero />
       <About />
-      <MobileAbout />
       <Stack
         minHeight={{ xs: "70vh", md: "50vh" }}
         direction={"row"}
