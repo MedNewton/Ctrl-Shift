@@ -105,7 +105,7 @@ const Footer = () => {
             component="footer"
             sx={{
                 width: "100%",
-                height: "100vh",
+                height: "80vh",
                 bgcolor: theme.palette.background.default,
                 color: theme.palette.text.primary,
                 px: { xs: 3, md: 10 },
