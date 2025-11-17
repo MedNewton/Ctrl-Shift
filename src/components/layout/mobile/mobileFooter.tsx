@@ -385,6 +385,19 @@ const MobileFooter: FC = () => {
                                 </motion.div>
 
                                 <motion.div variants={itemVariants}>
+                                    <Link
+                                    href="https://www.google.com/maps?rlz=1C1GCEA_enMA1157MA1157&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIHCAEQLhiABDIGCAIQRRhAMgYIAxBFGDkyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyEwgHEC4YrwEYxwEYgAQYmAUYmQXSAQgxNjYzajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=ma&sa=X&geocode=KSVSUD5UCTsTMWR_h4VL9kmF&daddr=Via+Francesco+Petrarca,+80,+80123+Napoli+NA,+%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A%D8%A7"
+                                    underline="none"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    sx={{
+                                        width: "100%",
+                                        height: "100%",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                    >
                                     <Stack spacing={0.7}>
                                         <Typography sx={{ fontSize: 15 }}>
                                             Villa Doria D&apos;Angri, Via Francesco Petrarca,
@@ -393,6 +406,7 @@ const MobileFooter: FC = () => {
                                             80, 80123 Napoli NA
                                         </Typography>
                                     </Stack>
+                                    </Link>
                                 </motion.div>
                             </Stack>
                         </motion.div>

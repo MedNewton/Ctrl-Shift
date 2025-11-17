@@ -5,8 +5,8 @@ import { Urbanist } from "next/font/google";
 import ThemeRegistry from "@/components/layout/ThemeRegistry";
 
 export const metadata: Metadata = {
-  title: "Ctrl/Shift 2026 | Biggest Web3 event in southern Italy",
-  description: "Previously known as NapulETH, Ctrl/Shift 2026 is the biggest Web3 event in southern Italy.",
+  title: "Ctrl/Shift 2026 | Southern Italy’s Gateway to the Future",
+  description: "8 - 14 June 2026 · Naples, Italy · A world-class summit uniting the pioneers ofAI, Quantum Computing, and Web3.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
