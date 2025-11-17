@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, Typography } from "@mui/material";
+import { Link, Stack, Typography } from "@mui/material";
 import theme from "@/theme/theme";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
@@ -114,12 +114,14 @@ const MobileGlassAnimatedHero = () => {
                 >
                     <Stack width={{ xs: "85%", md: "35%" }} alignItems={"center"} justifyContent={"center"} marginX={"auto"} gap={2}>
                         <Typography variant="h3" component="h3" fontWeight={600} textAlign={"center"}>
-                            The biggest Web3 event in southern Italy
+                        Southern Italy’s<br />Gateway to the Future
                         </Typography>
                         <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"} sx={{
-                            width: { xs: "85%", md: "100%" },
+                            width: { xs: "95%", md: "100%" },
                         }}>
-                            17-19 September, Villa Doria D&apos;Angri, Naples, Italy
+                            8–14 June 2026 · Naples, Italy
+                            <br />
+                            A world-class summit uniting the pioneers ofAI, Quantum Computing, and Web3.
                         </Typography>
                     </Stack>
                 </motion.div>
@@ -143,7 +145,14 @@ const MobileGlassAnimatedHero = () => {
                                 Get Your Tickets
                             </Typography>
                         </GlowButton>
-                        <BlackButton sx={{
+                        <Link href="https://docsend.com/v/sbjcj/ctrlshift2026" target="_blank" rel="noopener noreferrer" underline="none" sx={{
+                            width: "fit-content",
+                            height: "fit-content",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                            <BlackButton sx={{
                             paddingX: 3,
                             paddingY: 1,
                         }}>
@@ -151,6 +160,8 @@ const MobileGlassAnimatedHero = () => {
                                 Become a Sponsor
                             </Typography>
                         </BlackButton>
+                        </Link>
+                        
                     </Stack>
                 </motion.div>
             </Stack>
