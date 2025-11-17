@@ -168,7 +168,7 @@ const Footer = () => {
                                     sx={{
                                         cursor: "pointer",
                                         padding: 1.2,
-                                        alignItems: "center",   
+                                        alignItems: "center",
                                         justifyContent: "center",
                                         borderRadius: "50%",
                                         position: "relative",
@@ -354,20 +354,22 @@ const Footer = () => {
 
                                 <Stack spacing={1.2}>
                                     {[
-                                        "Sponsors us",
-                                        "Join as a speaker",
-                                        "Text us",
-                                        "Volunteers",
+                                        { label: "Sponsors us", href: "https://docsend.com/view/zaw8ij7k9avkcg6z" },
+                                        { label: "Join as a speaker", href: "https://docsend.com/view/zaw8ij7k9avkcg6z" },
+                                        { label: "Text us", href: "https://t.me/napulETH" },
+                                        { label: "Volunteers", href: "https://t.me/napulETH" },
                                     ].map((item) => (
-                                        <motion.div key={item} variants={itemVariants}>
-                                            <Typography
-                                                sx={{
-                                                    fontSize: { xs: 26, md: 24 },
-                                                    fontWeight: 500,
-                                                }}
-                                            >
-                                                {item}
-                                            </Typography>
+                                        <motion.div key={item.label} variants={itemVariants}>
+                                            <Link href={item.href} underline="none">
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: { xs: 26, md: 24 },
+                                                        fontWeight: 500,
+                                                    }}
+                                                >
+                                                    {item.label}
+                                                </Typography>
+                                            </Link>
                                         </motion.div>
                                     ))}
                                 </Stack>
