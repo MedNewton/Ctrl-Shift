@@ -226,7 +226,7 @@ const Footer = () => {
                         direction={{ xs: "column", md: "row" }}
                         alignItems="flex-start"
                         justifyContent={{ xs: "flex-start", md: "space-between" }}
-                        spacing={{ xs: 6, md: 0 }}
+                        spacing={{ xs: 6, md: 6 }}
                         sx={{ width: "100%" }}
                     >
                         {/* ABOUT US */}
@@ -256,7 +256,7 @@ const Footer = () => {
                                 </motion.div>
 
                                 <Stack spacing={1.2}>
-                                    {[{ label: "Speakers", href: "/" }, { label: "Team", href: "/team" }, { label: "Map", href: "/" }, { label: "Faq", href: "/" }, { label: "Archive", href: "https://www.napuleth.org/archive/2025" }].map((item) => (
+                                    {[{ label: "Team", href: "/team" }, { label: "Location", href: "/" }, { label: "Archive 2025", href: "https://www.napuleth.org/archive/2025" }, { label: "Archive 2024", href: "https://www.napuleth.org/archive/2024" }].map((item) => (
                                         <motion.div key={item.label} variants={itemVariants}>
                                             <Link href={item.href} key={item.href} underline="none">
                                                 <Typography
@@ -308,7 +308,7 @@ const Footer = () => {
                                         "Agenda",
                                         "Workshops",
                                         "Hackathon",
-                                        "Mettups",
+                                        "Meetups",
                                         "Side Events",
                                     ].map((item) => (
                                         <motion.div key={item} variants={itemVariants}>
@@ -322,51 +322,6 @@ const Footer = () => {
                                             </Typography>
                                         </motion.div>
                                     ))}
-                                </Stack>
-                            </Stack>
-                        </motion.div>
-
-                        {/* VISIONS */}
-                        <motion.div variants={columnVariants} style={{ flex: 1, minWidth: 160 }}>
-                            <Stack spacing={2}>
-                                <motion.div variants={itemVariants}>
-                                    <Stack direction="row" spacing={1} alignItems="center">
-                                        <Box
-                                            sx={{
-                                                width: 8,
-                                                height: 8,
-                                                borderRadius: "50%",
-                                                bgcolor: theme.palette.brand.napulETHRed.main,
-                                            }}
-                                        />
-                                        <Typography
-                                            variant="caption"
-                                            sx={{
-                                                textTransform: "uppercase",
-                                                letterSpacing: "0.12em",
-                                                color: theme.palette.text.secondary,
-                                            }}
-                                        >
-                                            Visons
-                                        </Typography>
-                                    </Stack>
-                                </motion.div>
-
-                                <Stack spacing={1.2}>
-                                    {["Exhibition", "Manifesto", "Artworks", "Artists", "Archive"].map(
-                                        (item) => (
-                                            <motion.div key={item} variants={itemVariants}>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: { xs: 26, md: 24 },
-                                                        fontWeight: 500,
-                                                    }}
-                                                >
-                                                    {item}
-                                                </Typography>
-                                            </motion.div>
-                                        )
-                                    )}
                                 </Stack>
                             </Stack>
                         </motion.div>
@@ -399,10 +354,9 @@ const Footer = () => {
 
                                 <Stack spacing={1.2}>
                                     {[
-                                        "Tickets",
+                                        "Sponsors us",
                                         "Join as a speaker",
-                                        "Sponsor us",
-                                        "Partner with us",
+                                        "Text us",
                                         "Volunteers",
                                     ].map((item) => (
                                         <motion.div key={item} variants={itemVariants}>
@@ -443,21 +397,14 @@ const Footer = () => {
                                                     color: theme.palette.text.secondary,
                                                 }}
                                             >
-                                                Contact us
+                                                Date
                                             </Typography>
                                         </Stack>
 
                                         <Stack spacing={0.7}>
                                             <Typography sx={{ fontSize: 15 }}>
-                                                +1 980 971-24-19
+                                                8 - 14 June 2026
                                             </Typography>
-                                            <MuiLink
-                                                href="#"
-                                                underline="none"
-                                                sx={{ color: "inherit", fontSize: 15 }}
-                                            >
-                                                contact@ctrlshift.com
-                                            </MuiLink>
                                         </Stack>
                                     </Stack>
                                 </motion.div>
