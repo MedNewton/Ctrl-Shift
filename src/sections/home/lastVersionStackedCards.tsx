@@ -7,11 +7,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import theme from '@/theme/theme';
 import NorthEastIcon from '@mui/icons-material/NorthEast';
 
+import quantum from '@/assets/images/2025/new/quantum.jpeg';
+import web3 from '@/assets/images/2025/new/web3.jpg';
 import image1 from '@/assets/images/2025/1.webp';
 import image2 from '@/assets/images/2025/2.webp';
 import image3 from '@/assets/images/2025/3.webp';
 import image4 from '@/assets/images/2025/4.webp';
 import image5 from '@/assets/images/2025/5.webp';
+import image6 from '@/assets/images/2025/new/opportunities.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,11 +24,13 @@ interface Card {
 }
 
 const cards: Card[] = [
-  { tag: 'Blockchain', image: image1.src },
-  { tag: 'Quantum Computing', image: image2.src },
+  { tag: 'Quantum Computing', image: quantum.src },
   { tag: 'AI', image: image3.src },
-  { tag: 'NFTs', image: image4.src },
-  { tag: 'DeFi', image: image5.src },
+  { tag: 'Web3', image: web3.src },
+  { tag: 'Law', image: image4.src },
+  { tag: 'Art', image: image5.src },
+  { tag: 'Unique Venue', image: image2.src },
+  { tag: 'Networking Opportunities', image: image6.src },
 ];
 
 export default function LastVersionStackedCardsSection() {
@@ -344,27 +349,6 @@ export default function LastVersionStackedCardsSection() {
                   {card.tag}
                 </Typography>
               </Box>
-
-              <IconButton
-                sx={{
-                  position: 'absolute',
-                  top: 16,
-                  right: 16,
-                  zIndex: 10,
-                  width: { xs: 48, md: 56 },
-                  height: { xs: 48, md: 56 },
-                  backgroundColor: theme.palette.background.default,
-                  color: theme.palette.text.primary,
-                  '&:hover': {
-                    backgroundColor: theme.palette.brand.napulETHRed.main,
-                    color: theme.palette.background.default,
-                    transform: 'scale(1.1)',
-                  },
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                <NorthEastIcon sx={{ fontSize: { xs: 24, md: 28 } }} />
-              </IconButton>
             </Box>
           ))}
         </Box>
