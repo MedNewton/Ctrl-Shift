@@ -258,7 +258,7 @@ const Footer = () => {
                                 <Stack spacing={1.2}>
                                     {[{ label: "Team", href: "/team" }, { label: "Location", href: "https://www.google.com/maps?rlz=1C1GCEA_enMA1157MA1157&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIHCAEQLhiABDIGCAIQRRhAMgYIAxBFGDkyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyEwgHEC4YrwEYxwEYgAQYmAUYmQXSAQgxNjYzajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=ma&sa=X&geocode=KSVSUD5UCTsTMWR_h4VL9kmF&daddr=Via+Francesco+Petrarca,+80,+80123+Napoli+NA,+%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A%D8%A7" }, { label: "Archive 2025", href: "https://www.napuleth.org/archive/2025" }, { label: "Archive 2024", href: "https://www.napuleth.org/archive/2024" }].map((item) => (
                                         <motion.div key={item.label} variants={itemVariants}>
-                                            <Link href={item.href} key={item.href} underline="none">
+                                            <Link href={item.href} key={item.href} underline="none" target="_blank" rel="noopener noreferrer">
                                                 <Typography
                                                     sx={{
                                                         fontSize: { xs: 26, md: 24 },
@@ -449,6 +449,7 @@ const Footer = () => {
                                             </Typography>
                                         </Stack>
 
+                                        <Link href="https://www.google.com/maps?rlz=1C1GCEA_enMA1157MA1157&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIHCAEQLhiABDIGCAIQRRhAMgYIAxBFGDkyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyEwgHEC4YrwEYxwEYgAQYmAUYmQXSAQgxNjYzajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=ma&sa=X&geocode=KSVSUD5UCTsTMWR_h4VL9kmF&daddr=Via+Francesco+Petrarca,+80,+80123+Napoli+NA,+%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A%D8%A7" target="_blank" rel="noopener noreferrer" underline="none">
                                         <Stack spacing={0.7}>
                                             <Typography sx={{ fontSize: 15, maxWidth: 360 }}>
                                                 Villa Doria D&apos;Angri, Via Francesco Petrarca,
@@ -457,6 +458,7 @@ const Footer = () => {
                                                 80, 80123 Napoli NA
                                             </Typography>
                                         </Stack>
+                                        </Link>
                                     </Stack>
                                 </motion.div>
                             </Stack>
