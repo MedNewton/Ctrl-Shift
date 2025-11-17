@@ -46,7 +46,6 @@ const TeamCard = ({
                     </Stack>
                     <Stack width={"100%"} position={"relative"} sx={{
                         aspectRatio: "3/4",
-                        backgroundColor: "red",
                         overflow: "hidden",
                     }}>
                         <Image src={member.image} alt={member.name} fill style={{ objectFit: "cover" }} />
