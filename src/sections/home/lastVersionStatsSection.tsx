@@ -14,8 +14,8 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { number: '30+', label: 'Sponsors' },
-  { number: '60+', label: 'Partners' },
+  { number: '35+', label: 'Sponsors' },
+  { number: '70+', label: 'Partners' },
   { number: '1200+', label: 'Attendees' },
   { number: '80+', label: 'Speakers' },
 ];
