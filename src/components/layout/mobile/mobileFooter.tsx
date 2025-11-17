@@ -18,10 +18,10 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TelegramIcon from "@mui/icons-material/Telegram";
 
 const socialIcons = [
-    { Icon: XIcon, label: "X (Twitter)", href: "https://twitter.com" },
-    { Icon: InstagramIcon, label: "Instagram", href: "https://instagram.com" },
-    { Icon: LinkedInIcon, label: "LinkedIn", href: "https://linkedin.com" },
-    { Icon: TelegramIcon, label: "Telegram", href: "https://t.me" },
+    { Icon: XIcon, label: "X (Twitter)", href: "https://x.com/napulETH" },
+    { Icon: InstagramIcon, label: "Instagram", href: "https://instagram.com/napulETH" },
+    { Icon: LinkedInIcon, label: "LinkedIn", href: "https://linkedin.com/company/napulETH" },
+    { Icon: TelegramIcon, label: "Telegram", href: "https://t.me/napulETH" },
 ];
 
 const barVariants: Variants = {
@@ -124,7 +124,6 @@ const MobileFooter: FC = () => {
                 gap: 4,
             }}
         >
-            {/* TOP BAR */}
             <Box sx={{ width: "100%" }}>
                 <Stack
                     direction="row"
@@ -132,7 +131,6 @@ const MobileFooter: FC = () => {
                     justifyContent="space-between"
                     sx={{ width: "100%" }}
                 >
-                    {/* Animated line */}
                     <Box
                         sx={{
                             flex: 1,
@@ -153,7 +151,6 @@ const MobileFooter: FC = () => {
                         />
                     </Box>
 
-                    {/* Animated social icons */}
                     <motion.div
                         variants={circlesContainerVariants}
                         initial="hidden"
@@ -196,7 +193,6 @@ const MobileFooter: FC = () => {
                 </Stack>
             </Box>
 
-            {/* MAIN CONTENT – MOBILE LAYOUT */}
             <Box sx={{ flex: 1 }}>
                 <motion.div
                     variants={columnsContainerVariants}
@@ -205,9 +201,7 @@ const MobileFooter: FC = () => {
                     style={{ width: "100%" }}
                 >
                     <Stack direction="column" spacing={4} sx={{ width: "100%" }}>
-                        {/* ROW 1: About us + Event */}
                         <Stack direction="row" spacing={3} sx={{ width: "100%" }}>
-                            {/* About us */}
                             <motion.div variants={columnVariants} style={{ flex: 1 }}>
                                 <Stack spacing={2}>
                                     <motion.div variants={itemVariants}>
@@ -261,7 +255,6 @@ const MobileFooter: FC = () => {
                                 </Stack>
                             </motion.div>
 
-                            {/* Event */}
                             <motion.div variants={columnVariants} style={{ flex: 1 }}>
                                 <Stack spacing={2}>
                                     <motion.div variants={itemVariants}>
@@ -311,9 +304,7 @@ const MobileFooter: FC = () => {
                             </motion.div>
                         </Stack>
 
-                        {/* ROW 2: Visions + Join Us */}
                         <Stack direction="row" spacing={3} sx={{ width: "100%" }}>
-                            {/* Visions */}
                             <motion.div variants={columnVariants} style={{ flex: 1 }}>
                                 <Stack spacing={2}>
                                     <motion.div variants={itemVariants}>
@@ -358,7 +349,6 @@ const MobileFooter: FC = () => {
                                 </Stack>
                             </motion.div>
 
-                            {/* Join Us */}
                             <motion.div variants={columnVariants} style={{ flex: 1 }}>
                                 <Stack spacing={2}>
                                     <motion.div variants={itemVariants}>
@@ -408,7 +398,6 @@ const MobileFooter: FC = () => {
                             </motion.div>
                         </Stack>
 
-                        {/* ROW 3: Contact us */}
                         <motion.div variants={columnVariants}>
                             <Stack spacing={2}>
                                 <motion.div variants={itemVariants}>
@@ -451,7 +440,6 @@ const MobileFooter: FC = () => {
                             </Stack>
                         </motion.div>
 
-                        {/* ROW 4: Location */}
                         <motion.div variants={columnVariants}>
                             <Stack spacing={2}>
                                 <motion.div variants={itemVariants}>
@@ -493,7 +481,6 @@ const MobileFooter: FC = () => {
                 </motion.div>
             </Box>
 
-            {/* BOTTOM ROW – MOBILE */}
             <motion.div
                 variants={bottomVariants}
                 initial="hidden"

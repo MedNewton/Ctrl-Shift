@@ -11,10 +11,10 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TelegramIcon from '@mui/icons-material/Telegram';
 
 const socialIcons = [
-    { Icon: XIcon, label: "X (Twitter)", href: "https://twitter.com" },
-    { Icon: InstagramIcon, label: "Instagram", href: "https://instagram.com" },
-    { Icon: LinkedInIcon, label: "LinkedIn", href: "https://linkedin.com" },
-    { Icon: TelegramIcon, label: "Telegram", href: "https://t.me" },
+    { Icon: XIcon, label: "X (Twitter)", href: "https://x.com/napulETH" },
+    { Icon: InstagramIcon, label: "Instagram", href: "https://instagram.com/napulETH" },
+    { Icon: LinkedInIcon, label: "LinkedIn", href: "https://linkedin.com/company/napulETH" },
+    { Icon: TelegramIcon, label: "Telegram", href: "https://t.me/napulETH" },
 ];
 
 const Footer = () => {
