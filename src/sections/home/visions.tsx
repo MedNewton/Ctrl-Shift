@@ -75,33 +75,54 @@ export default function Visions() {
     };
 
     return (
-        <Stack 
-            ref={containerRef} 
+        <Stack
+            ref={containerRef}
             component={motion.div}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.2 }}
-            width="100%" 
-            height="100%" 
+            width="50%"
+            flexGrow={1}
+            justifyContent="center"
             position="relative"
+            sx={{
+                background: "linear-gradient(180deg, #942629 0%, #2E0C0D 100%)",
+                mt: 6,
+                mx: "auto",
+                mb: 4,
+                borderRadius: 4,
+                py: 4,
+                px: 4,
+                overflow: "hidden",
+            }}
         >
             {/* Image - animates first */}
-            <Stack 
+            <Stack
                 component={motion.div}
                 variants={{
                     hidden: { opacity: 0, y: 50 },
-                    visible: { 
-                        opacity: 1, 
+                    visible: {
+                        opacity: 1,
                         y: 0,
                         transition: { duration: 0.8, ease: "easeOut" }
                     }
                 }}
-                width="100%" 
-                alignItems="center" 
-                position="relative" 
-                sx={{ zIndex: 1, transform: 'translateY(-15%)' }}
+                width="100%"
+                alignItems="center"
+                position="absolute"
+                sx={{ 
+                    zIndex: 1,
+                    top: "20%", 
+                    right: "-36%",
+                    animation: "float 20s ease-in-out infinite",
+                    '@keyframes float': {
+                        '0%': { transform: 'translateY(-10%)' },
+                        '50%': { transform: 'translateY(-5%)' },
+                        '100%': { transform: 'translateY(-10%)' },
+                    },
+                }}
             >
-                <Image src={visionsAssets} alt="Visions" width={500} height={500} />
+                <Image src={visionsAssets} alt="Visions" width={350} height={350} />
             </Stack>
 
             {/* Title - animates second */}
@@ -109,8 +130,8 @@ export default function Visions() {
                 component={motion.div}
                 variants={{
                     hidden: { opacity: 0, y: 30 },
-                    visible: { 
-                        opacity: 1, 
+                    visible: {
+                        opacity: 1,
                         y: 0,
                         transition: { duration: 0.8, delay: 0.3, ease: "easeOut" }
                     }
@@ -132,10 +153,11 @@ export default function Visions() {
                     className="subtitle-text"
                     variant="h6"
                     sx={{
-                        textAlign: 'center',
                         fontWeight: 500,
                         color: theme.palette.text.secondary,
                         transition: 'color 0.3s ease',
+                        position: "relative",
+                        zIndex: 2,
                     }}
                 >
                     Art Exhibition
@@ -143,7 +165,6 @@ export default function Visions() {
                 <Stack
                     direction="row"
                     alignItems="center"
-                    justifyContent="center"
                     gap={2}
                     sx={{
                         cursor: 'pointer',
@@ -152,11 +173,12 @@ export default function Visions() {
                 >
                     <Typography
                         className="title-text"
-                        variant="h2"
+                        variant="h3"
                         sx={{
-                            textAlign: 'center',
                             fontWeight: 600,
                             transition: 'color 0.3s ease',
+                            position: "relative",
+                            zIndex: 2,
                         }}
                     >
                         Visions 2026
@@ -184,25 +206,25 @@ export default function Visions() {
             </Stack>
 
             {/* Text - animates last */}
-            <Typography 
+            <Typography
                 component={motion.p}
                 variants={{
                     hidden: { opacity: 0, y: 20 },
-                    visible: { 
-                        opacity: 1, 
+                    visible: {
+                        opacity: 1,
                         y: 0,
                         transition: { duration: 0.8, delay: 0.6, ease: "easeOut" }
                     }
                 }}
-                variant="h6" 
-                fontWeight={500} 
-                color={theme.palette.text.primary} 
-                textAlign="center" 
+                variant="subtitle1"
+                fontWeight={500}
+                color={theme.palette.text.primary}
                 sx={{
-                    width: { xs: '90%', md: '50%' }, 
-                    mx: 'auto', 
+                    width: { xs: '90%', md: '75%' },
                     mt: { xs: 2, md: 0 },
-                    transform: 'translateY(-20%)'
+                    transform: 'translateY(-20%)',
+                    position: "relative",
+                    zIndex: 2,
                 }}
             >
                 The exhibition Napuleth visions, through key concepts such as hybridization, concrescence and crystallization, explores how the process of &quot;dematerialization&quot; of value relates to the production of meaning in art, showing how the aesthetic and economic dimensions are constantly evolving, shaped by a network of interconnected actors.

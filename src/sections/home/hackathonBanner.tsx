@@ -383,9 +383,8 @@ export default function HackathonBanner({
       sx={{
         backgroundColor: "linear-gradient(180deg, #942629 0%, #2E0C0D 100%)",
         position: "relative",
-        width: "92%",
-        height: "100%",
-        minHeight: { xs: "70vh", md: "60vh" },
+        width: "50%",
+        flexGrow: 1,
         overflow: "hidden",
         borderRadius: 4,
         display: "flex",
@@ -395,6 +394,7 @@ export default function HackathonBanner({
         mt: 6,
         mx: "auto",
         mb: 4,
+        py: 4,
       }}
     >
       {/* effect layer */}
