@@ -31,7 +31,6 @@ export default function Home() {
             <MobileSpeakers />
             <MobileSponsors />
             <MobilePartners />
-            <MobileEthFamily />
             <MobileFooter />
         </Stack>
     );

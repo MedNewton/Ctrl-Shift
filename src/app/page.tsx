@@ -44,7 +44,6 @@ export default function Home() {
       <Speakers />
       <Sponsors />
       <Partners />
-      <EthFamily />
       <Footer />
     </Stack>
   );
