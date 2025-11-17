@@ -340,7 +340,7 @@ export default function MobileHeader() {
                             <Stack spacing={1.1}>
                               {[
                                 { label: "Team", href: "/team" },
-                                { label: "Event Location", href: "/map" },
+                                { label: "Event Location", href: "https://www.google.com/maps?rlz=1C1GCEA_enMA1157MA1157&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIHCAEQLhiABDIGCAIQRRhAMgYIAxBFGDkyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyEwgHEC4YrwEYxwEYgAQYmAUYmQXSAQgxNjYzajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=ma&sa=X&geocode=KSVSUD5UCTsTMWR_h4VL9kmF&daddr=Via+Francesco+Petrarca,+80,+80123+Napoli+NA,+%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A%D8%A7" },
                                 { label: "Archive 2025", href: "https://www.napuleth.org/archive/2025" },
                                 { label: "Archive 2024", href: "https://www.napuleth.org/archive/2024" },
                               ].map((item) => {
