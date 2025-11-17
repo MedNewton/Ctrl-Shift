@@ -339,11 +339,10 @@ export default function MobileHeader() {
                           >
                             <Stack spacing={1.1}>
                               {[
-                                { label: "Speakers", href: "/speakers" },
                                 { label: "Team", href: "/team" },
-                                { label: "FAQ", href: "/faq" },
-                                { label: "Map", href: "/map" },
-                                { label: "Archive", href: "/archive" },
+                                { label: "Event Location", href: "/map" },
+                                { label: "Archive 2025", href: "https://www.napuleth.org/archive/2025" },
+                                { label: "Archive 2024", href: "https://www.napuleth.org/archive/2024" },
                               ].map((item) => {
                                 const isActive =
                                   typeof pathname === "string" &&
