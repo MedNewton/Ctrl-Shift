@@ -339,8 +339,8 @@ export default function HackathonBanner({
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
 
       // Add color stops (0 = start, 1 = end)
-      gradient.addColorStop(0, '#8B2326');    // 0% - top color
-      gradient.addColorStop(1, '#9F282A');    // 100% - bottom color
+      gradient.addColorStop(0, '#942629');    // 0% - top color
+      gradient.addColorStop(1, '#2E0C0D');    // 100% - bottom color
 
       // Use the gradient as fillStyle
       ctx.fillStyle = gradient;

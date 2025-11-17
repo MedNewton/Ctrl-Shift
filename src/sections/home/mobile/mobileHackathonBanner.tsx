@@ -336,7 +336,14 @@ export default function MobileHackathonBanner({
       // red background behind whatever remains
       ctx.save();
       ctx.globalCompositeOperation = "destination-over";
-      ctx.fillStyle = bg;
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+
+      // Add color stops (0 = start, 1 = end)
+      gradient.addColorStop(0, '#942629');    // 0% - top color
+      gradient.addColorStop(1, '#2E0C0D');    // 100% - bottom color
+
+      // Use the gradient as fillStyle
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, w, h);
       ctx.restore();
 
@@ -376,7 +383,7 @@ export default function MobileHackathonBanner({
       sx={{
         backgroundColor: "transparent",
         position: "relative",
-        width: "92%",
+        width: "100%",
         height: "100%",
         minHeight: { xs: "50vh", md: "60vh" },
         overflow: "hidden",
@@ -385,7 +392,7 @@ export default function MobileHackathonBanner({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        mt: 6,
+        mt: 2,
         mx: "auto",
         mb: 4,
       }}

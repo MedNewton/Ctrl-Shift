@@ -26,8 +26,11 @@ export default function Home() {
             <MobileSpeakers />
             <MobileSponsors />
             <MobilePartners />
-            <MobileVisions />
-            <MobileHackathonBanner />
+            <Stack px={4} width={"100%"} alignItems={"center"} justifyContent={"center"}>
+                <MobileVisions />
+                <MobileHackathonBanner />
+            </Stack>
+            
             <MobileFooter />
         </Stack>
     );

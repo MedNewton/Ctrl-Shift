@@ -84,7 +84,10 @@ export default function MobileVisions() {
             height="100%" 
             position="relative"
             sx={{
-                mb: 4
+                background: "linear-gradient(180deg, #942629 0%, #2E0C0D 100%)",
+                borderRadius: 4,
+                py: 4,
+                overflow: "hidden",
             }}
         >
             {/* Image - animates first */}
@@ -103,7 +106,7 @@ export default function MobileVisions() {
                 position="relative" 
                 sx={{ zIndex: 1, transform: 'translateY(-15%)' }}
             >
-                <Image src={visionsAssets} alt="Visions" width={500} height={500} />
+                <Image src={visionsAssets} alt="Visions" width={300} height={300} />
             </Stack>
 
             {/* Title - animates second */}
