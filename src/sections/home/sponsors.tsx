@@ -99,11 +99,6 @@ const Sponsors = () => {
         isolation: "isolate",
         "& .sponsor-card-wrapper": {
           cursor: "pointer",
-          filter: "brightness(0) invert(1)",
-          transition: "filter 0.2s ease-in-out",
-          "&:hover": {
-            filter: "brightness(1) invert(0)"
-          }
         }
       }}
     >
@@ -131,22 +126,82 @@ const Sponsors = () => {
           sx={{ mt: 2 }}
         >
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor1} alt="Sponsor 1" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor2} alt="Sponsor 2" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor5} alt="Sponsor 5" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor1} alt="Sponsor 1" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor2} alt="Sponsor 2" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor5} alt="Sponsor 5" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
         </Stack>
 
@@ -160,22 +215,82 @@ const Sponsors = () => {
           sx={{ mt: 2 }}
         >
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor1} alt="Sponsor 1" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor2} alt="Sponsor 2" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor5} alt="Sponsor 5" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor1} alt="Sponsor 1" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor2} alt="Sponsor 2" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
           <Box className="sponsor-card-wrapper">
-            <Image src={sponsor5} alt="Sponsor 5" width={150} height={150} />
+            <Stack width="100%" direction="row" alignItems="center" justifyContent="center" gap={2} sx={{
+              backgroundColor: "#252525",
+              paddingY: 2.5,
+              paddingX: 4,
+              borderRadius: 2,
+              boxShadow: theme.shadows[1],
+            }}>
+              <Typography variant="body1" color={theme.palette.text.primary}>
+                Your Logo Here
+              </Typography>
+            </Stack>
           </Box>
         </Stack>
       </Box>
