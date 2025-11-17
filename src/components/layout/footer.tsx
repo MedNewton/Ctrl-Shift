@@ -160,34 +160,54 @@ const Footer = () => {
                                 key={`social-${i}`}
                                 variants={circleVariants}
                             >
-                                <IconButton
-                                    component={motion.a}
-                                    href={href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={label}
-                                    whileHover={{ scale: 1.1 }}
-                                    transition={{ duration: 0.2 }}
+                                <Stack
+                                    component="div"
+                                    onClick={() => {
+                                        window.open(href, '_blank');
+                                    }}
                                     sx={{
-                                        width: 40,
-                                        height: 40,
-                                        border: `2px solid ${theme.palette.text.primary}`,
-                                        borderRadius: "50%",
-                                        backgroundColor: "transparent",
-                                        color: theme.palette.text.primary,
-                                        display: "flex",
-                                        alignItems: "center",
+                                        cursor: "pointer",
+                                        padding: 1.2,
+                                        alignItems: "center",   
                                         justifyContent: "center",
+                                        borderRadius: "50%",
+                                        position: "relative",
+                                        backgroundColor: "rgba(255, 255, 255, 0.025)",
+                                        backdropFilter: "blur(4px)",
+                                        WebkitBackdropFilter: "blur(4px)",
+                                        boxShadow: `
+      inset 0 1px 0px rgba(255, 255, 255, 0.35),
+      0 0 9px rgba(0, 0, 0, 0.2),
+      0 3px 0px rgba(0, 0, 0, 0.15)
+    `,
                                         transition: "all 0.3s ease",
                                         "&:hover": {
-                                            backgroundColor: theme.palette.brand.napulETHRed.main,
-                                            borderColor: theme.palette.brand.napulETHRed.main,
-                                            color: theme.palette.text.primary,
+                                            backgroundColor: "rgba(149, 37, 39, 0.26)",
+                                            backdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                            WebkitBackdropFilter: "blur(12px) saturate(150%) contrast(125%)",
+                                        },
+                                        "&::before": {
+                                            content: '""',
+                                            position: "absolute",
+                                            inset: 0,
+                                            borderRadius: "50%",
+                                            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6), transparent, transparent)",
+                                            opacity: 0.7,
+                                            pointerEvents: "none",
+                                        },
+                                        "&::after": {
+                                            content: '""',
+                                            position: "absolute",
+                                            inset: 0,
+                                            borderRadius: "50%",
+                                            background: "linear-gradient(315deg, rgba(255, 255, 255, 0.3), transparent, transparent)",
+                                            opacity: 0.5,
+                                            pointerEvents: "none",
                                         },
                                     }}
                                 >
-                                    <Icon sx={{ fontSize: 20 }} />
-                                </IconButton>
+                                    <Icon component={Icon} sx={{ fontSize: 20, color: theme.palette.text.primary }} />
+                                </Stack>
                             </motion.div>
                         ))}
                     </motion.div>
