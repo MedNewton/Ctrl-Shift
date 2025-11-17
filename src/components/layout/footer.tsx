@@ -495,39 +495,10 @@ const Footer = () => {
                     alignItems="center"
                     justifyContent="space-between"
                 >
-                    <Stack width="25%">
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
+                    <Stack width="100%" alignItems="center">
+                        <Typography sx={{ fontSize: 13, color: "#8a8a8a", textAlign: "center" }}>
                             © All rights reserved - Ctrl/Shift 2026
                         </Typography>
-                    </Stack>
-
-                    <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        justifyContent="center"
-                        width="50%"
-                    >
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
-                            Privacy Policy
-                        </Typography>
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
-                            Terms & Conditions
-                        </Typography>
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>
-                            Cookie Policy
-                        </Typography>
-                    </Stack>
-
-                    <Stack
-                        direction="row"
-                        spacing={3}
-                        alignItems="center"
-                        justifyContent="end"
-                        width="25%"
-                    >
-                        <Typography sx={{ fontSize: 13 }}>English</Typography>
-                        <Typography sx={{ fontSize: 13, color: "#8a8a8a" }}>Italian</Typography>
                     </Stack>
                 </Stack>
             </motion.div>
