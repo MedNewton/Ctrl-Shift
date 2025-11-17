@@ -138,45 +138,18 @@ export default function Header() {
                                                         </Stack>
                                                     </Stack>
                                                     <Stack direction={"row"} alignItems={"center"} gap={1.5} onMouseEnter={() => {
-                                                        setHoveredAboutItem(3);
-                                                    }} onMouseLeave={() => {
-                                                        setHoveredAboutItem(0);
-                                                    }}>
-                                                        <Stack gap={0.5}>
-                                                            <Typography component="p" variant="subtitle1" fontWeight={600} lineHeight={1.2} >
-                                                                FAQ
-                                                                <span style={{
-                                                                    color: theme.palette.grey[900],
-                                                                    backgroundColor: theme.palette.grey[700],
-                                                                    padding: "2px 4px",
-                                                                    borderRadius: 20,
-                                                                    fontSize: 12,
-                                                                    marginLeft: 3,
-                                                                    fontWeight: 500,
-                                                                }}>Coming Soon
-                                                                </span>
-                                                            </Typography>
-                                                            <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Answers to common questions.</Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                    <Stack direction={"row"} alignItems={"center"} gap={1.5} onMouseEnter={() => {
                                                         setHoveredAboutItem(4);
                                                     }} onMouseLeave={() => {
                                                         setHoveredAboutItem(0);
-                                                    }}>
+                                                    }}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        window.location.href = "https://maps.app.goo.gl/eXBj6TjTjL6Haj4HA";
+                                                    }}
+                                                    >
                                                         <Stack gap={0.5}>
                                                         <Typography component="p" variant="subtitle1" fontWeight={600} lineHeight={1.2} >
-                                                                Map
-                                                                <span style={{
-                                                                    color: theme.palette.grey[900],
-                                                                    backgroundColor: theme.palette.grey[700],
-                                                                    padding: "2px 4px",
-                                                                    borderRadius: 20,
-                                                                    fontSize: 12,
-                                                                    marginLeft: 3,
-                                                                    fontWeight: 500,
-                                                                }}>Coming Soon
-                                                                </span>
+                                                                Event Location
                                                             </Typography>                                                            
                                                             <Typography component="span" variant="body2" lineHeight={1.2} color={theme.palette.text.secondary}>Find the location of the event.</Typography>
                                                         </Stack>
