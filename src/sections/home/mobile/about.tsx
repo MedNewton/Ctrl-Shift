@@ -211,7 +211,7 @@ const MobileAbout: FC = () => {
                 aria-label="Apply as event speaker"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.href = "https://docsend.com/view/zaw8ij7k9avkcg6z";
+                  window.location.href = "https://speak.ctrlshift.events";
                 }}
                 sx={{
                   px: 4,
