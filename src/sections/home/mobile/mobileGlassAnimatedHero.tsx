@@ -119,7 +119,7 @@ const MobileGlassAnimatedHero = () => {
                         <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"} sx={{
                             width: { xs: "95%", md: "100%" },
                         }}>
-                            8–14 June 2026 · Naples, Italy
+                            10 - 13 June 2026 · Naples, Italy
                             <br />
                             A world-class summit uniting the pioneers ofAI, Quantum Computing, and Web3.
                         </Typography>
