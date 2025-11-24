@@ -419,7 +419,7 @@ const Footer = () => {
 
                                         <Stack spacing={0.7}>
                                             <Typography sx={{ fontSize: 15 }}>
-                                                8 - 14 June 2026
+                                                10 - 13 June 2026
                                             </Typography>
                                         </Stack>
                                     </Stack>

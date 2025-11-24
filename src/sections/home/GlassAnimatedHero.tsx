@@ -118,7 +118,7 @@ const GlassAnimatedHero = () => {
                         <Typography variant="h6" component="h6" fontWeight={500} textAlign={"center"} sx={{
                             width: { xs: "85%", md: "100%" },
                         }}>
-                            8–14 June 2026 · Naples, Italy
+                            10 -13 June 2026 · Naples, Italy
                             <br />
                             A world-class summit uniting the pioneers of AI, Quantum Computing, and Web3.
                         </Typography>
@@ -132,18 +132,21 @@ const GlassAnimatedHero = () => {
                     className="relative"
                 >
                     <Stack direction={"row"} gap={2}>
+                        <Link href="https://luma.com/i03cosbf?locale=en-GB"  target="_blank" rel="noopener noreferrer" underline="none" sx={{
+                            width: "fit-content",
+                            height: "fit-content",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
                         <GlowButton
-                            hoverText={
-                                <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
-                                    Coming Soon...
-                                </Typography>
-                            }
                             sx={{ paddingX: 3, paddingY: 1 }}
                         >
                             <Typography component="span" variant="subtitle1" fontWeight={600} whiteSpace={"nowrap"}>
                                 Get Your Tickets
                             </Typography>
                         </GlowButton>
+                        </Link>
                         <Link href="https://docsend.com/v/sbjcj/ctrlshift2026" target="_blank" rel="noopener noreferrer" underline="none" sx={{
                             width: "fit-content",
                             height: "fit-content",
