@@ -26,25 +26,7 @@ export default function Home() {
       overflow: "visible",
     }}>
       <GlassAnimatedHero />
-      <About />
-      <Stack
-        minHeight={{ xs: "70vh", md: "50vh" }}
-        direction={"row"}
-        alignItems={"stretch"}
-        justifyContent={"center"}
-        gap={3}
-        width={"100%"}
-        px={8}
-      >
-        <Topics />
-        <HackathonBanner />
-      </Stack>
-      <LastVersionStackedCardsSection />
-      <LastVersionStatsSection />
-      <Speakers />
-      <Sponsors />
-      <Partners />
-      <Footer />
+      
     </Stack>
   );
 }
